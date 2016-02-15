@@ -8,3 +8,4 @@ set wildmenu  " cycle through command matches (TAB)
 set showmatch " highlight matching [{()}]
 set incsearch " search as characters are entered
 set hlsearch  " highlight matched characters
+set ruler     " Show line and character numbers
