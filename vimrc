@@ -10,6 +10,7 @@ set incsearch      " search as characters are entered
 set hlsearch       " highlight matched characters
 set ruler          " Show line and character numbers
 set statusline+=%F " Always show full file path 
+set mouse=a        " Mouse-related interations in gvim
 
 " tmux will send xterm-style keys when its xterm-keys option is on
 if &term =~ '^screen'
