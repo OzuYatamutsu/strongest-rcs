@@ -1,5 +1,8 @@
 # strongest-rcs
 The strongest config files for my shell/vim, myan!
 
-# Install
+# Installing on OSX/Linux
 Run `install.sh`, then restart any open shells/vim.
+
+# Installing on Windows (PowerShell >= 3)
+Run `.\install.ps1`, then restart any open shells/vim.
