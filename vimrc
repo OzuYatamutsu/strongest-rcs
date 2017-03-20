@@ -1,6 +1,6 @@
-set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab
 syntax enable
 set nocp
+set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab
 set shell=fish
 set number                     " line numbers
 set showcmd                    " show last command below
@@ -20,3 +20,8 @@ if &term =~ '^screen'
     execute "set <xRight>=\e[1;*C"
     execute "set <xLeft>=\e[1;*D"
 endif
+
+" Plugins
+execute pathogen#infect() 
+set laststatus=2              " Enables powerline
+set noshowmode                " Disable repeat status mode (-- INSERT --)
