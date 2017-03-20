@@ -2,6 +2,7 @@ syntax enable
 set nocp
 set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab
 set shell=fish
+set t_Co=256                   " Use 256 colors
 set number                     " line numbers
 set showcmd                    " show last command below
 set wildmenu                   " cycle through command matches (TAB)  

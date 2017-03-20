@@ -5,6 +5,9 @@ curl -LSso ~\vimfiles\autoload\pathogen.vim https://tpo.pe/pathogen.vim
 # Download vim-airline
 git clone https://github.com/vim-airline/vim-airline ~\vimfiles\bundle\vim-airline
 
+# Download vim-airline-themes
+git clone https://github.com/vim-airline/vim-airline-themes ~\vimfiles\bundle\vim-airline-themes
+
 cp profile.ps1 $profile
 cp vimrc ~/.vimrc
 
