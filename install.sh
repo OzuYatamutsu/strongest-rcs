@@ -9,10 +9,18 @@ mkdir -p ~/.vim/autoload ~/.vim/bundle
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
 # Download vim-airline
-git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
+if [ ! -d ~/.vim/bundle/vim-airline ]; then
+  git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
+else
+  echo "vim-airline looks like it exists already; not cloning."
+fi
 
 # Download vim-airline-themes
-git clone https://github.com/vim-airline/vim-airline-themes ~/.vim/bundle/vim-airline-themes
+if [ ! -d ~/.vim/bundle/vim-airline-themes ]; then
+  git clone https://github.com/vim-airline/vim-airline-themes ~/.vim/bundle/vim-airline-themes
+else
+  echo "vim-airline-themes looks like it exists already; not cloning."
+fi
 
 cp -fv config.fish ~/.config/fish/
 cp -fv vimrc ~/.vimrc
