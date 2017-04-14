@@ -22,5 +22,12 @@ else
   echo "vim-airline-themes looks like it exists already; not cloning."
 fi
 
+# Download bass (backwards-compatibility for fish)
+git clone https://github.com/edc/bass.git
+cd bass
+make install
+cd ..
+rm -Rf bass
+
 cp -fv config.fish ~/.config/fish/
 cp -fv vimrc ~/.vimrc
