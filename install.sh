@@ -4,6 +4,10 @@
 sed "s|default-shell[[:space:]].*$|default-shell $(which fish)|g" tmux.conf > tmux_temp
 mv -fv tmux_temp ~/.tmux.conf
 
+# Inject tmux,screen graphical terminal native scrolling
+echo "set -ga terminal-overrides ',${TERM}*:smcup@:rmcup@'" >> ~/.tmux.conf
+echo "termcapinfo ${TERM}*|xs|rxvt|terminal ti@:te@" >> ~/.screenrc
+
 # Install Pathogen (plugin manager)
 mkdir -p ~/.vim/autoload ~/.vim/bundle
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
