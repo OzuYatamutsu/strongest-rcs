@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ "$#" -ne 1 ]; then
+    echo 'youtube_url'
+    exit 1
+fi
+
+youtube-dl --extract-audio --audio-format 'mp3' --audio-quality 0 $1
+
