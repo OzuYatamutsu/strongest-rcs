@@ -230,3 +230,16 @@ function fish_prompt
   set_color normal
   echo -n "> "
 end
+
+function emphasize_text
+  set_color $argv[1]; printf $argv[2]; set_color normal  
+end
+
+function welcome_text
+  printf 'Yo! Welcome to %s on %s, %s!\n' (emphasize_text blue 'CATLAB') (emphasize_text magenta (hostname)) (emphasize_text blue (whoami))
+  printf 'It\'s currently %s.\n' (emphasize_text green (date))
+  printf 'What will your %s be?\n' (emphasize_text magenta 'first sequence of the day')
+  echo ''
+end
+
+welcome_text
