@@ -235,11 +235,44 @@ function emphasize_text
   set_color $argv[1]; printf $argv[2]; set_color normal  
 end
 
-function welcome_text
-  printf 'Yo! Welcome to %s on %s, %s!\n' (emphasize_text blue 'CATLAB') (emphasize_text magenta (hostname)) (emphasize_text blue (whoami))
-  printf 'It\'s currently %s.\n' (emphasize_text green (date))
-  printf 'What will your %s be?\n' (emphasize_text magenta 'first sequence of the day')
+function __health_check_results
+  printf "\n%s\n" (emphasize_text magenta 'Status report!!')
+  
+  # Ping
+  if nc -zw1 google.com 80 2>/dev/null;
+    printf ' %s Your internet connection looks %s, dood!\n' (emphasize_text green '✓') (emphasize_text green 'OK')
+  else
+    printf ' %s Your internet connection looks %s, dood.\n' (emphasize_text red '✗') (emphasize_text red 'degraded')
+  end
+
+  # Space
+  set CAPACITY_PCT (df / | awk '{print $5}' | tail -n 1 | sed 's/%//')
+  if [ $CAPACITY_PCT -lt 80 ]
+    printf ' %s You have %s on / (%s full)!\n' (emphasize_text green '✓') (emphasize_text green 'plenty of space') (emphasize_text green "$CAPACITY_PCT%%")
+  else
+    printf " %s You're %s on / (%s% full)!\n" (emphasize_text red '✗') (emphasize_text red "runnin' out of space") (emphasize_text red "$CAPACITY_PCT%%") 
+  end
+
+  # Time
+  set TIME_HOUR (date +%H)
+  if [ $TIME_HOUR -gt 23 ]
+    printf ' %s %s. You should go to bed.\n' (emphasize_text red '✗') (emphasize_text red "It's late")
+  else if [ $TIME_HOUR -lt 5 ]
+    printf ' %s %s. You should go to bed.\n' (emphasize_text red '✗') (emphasize_text red "It's late")
+  else
+    printf " %s It's %s!\n" (emphasize_text red '✓') (emphasize_text green "a good day for science")
+  end
+
   echo ''
 end
 
+function welcome_text
+  cat ~/.config/fish/cat_header
+  printf 'Yo! Welcome to %s on %s, %s!\n' (emphasize_text blue 'ＣＡＴＥＬＡＢ') (emphasize_text magenta (hostname)) (emphasize_text blue (whoami))
+  printf 'It\'s currently %s.\n' (emphasize_text green (date))
+  __health_check_results
+  printf 'What will your %s be?\n' (emphasize_text magenta 'first sequence of the day')
+end
+
+set fish_greeting ""  # No greet
 welcome_text

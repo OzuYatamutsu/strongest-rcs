@@ -34,4 +34,5 @@ cd ..
 rm -Rf bass
 
 cp -fv config.fish ~/.config/fish/
+cp -fv cat_header ~/.config/fish/
 cp -fv vimrc ~/.vimrc
