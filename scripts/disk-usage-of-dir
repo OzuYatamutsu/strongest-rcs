@@ -1,0 +1,7 @@
+#!/bin/bash
+du -hd1 $1 2>/dev/null
+
+if [[ $? -ne 0 ]]; then
+    echo 'Some directories were skipped (permissions issue?)'
+fi
+
