@@ -1,0 +1,13 @@
+#!/bin/bash
+
+printf 'Where should your link live? '
+read 'src'
+
+printf 'Where should your link point to? '
+read 'dest'
+
+echo "For future reference, the command is:"
+echo "ln -s $dest $src"
+
+ln -s $dest src
+
