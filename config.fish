@@ -239,7 +239,7 @@ function __health_check_results
   printf "\n%s\n" (emphasize_text magenta 'Status report!!')
   
   # Ping
-  if nc -zw1 google.com 80 2>/dev/null;
+  if nc -w1 google.com 80 --send-only </dev/null 2>/dev/null;
     printf ' %s Your internet connection looks %s, dood!\n' (emphasize_text green '✓') (emphasize_text green 'OK')
   else
     printf ' %s Your internet connection looks %s, dood.\n' (emphasize_text red '✗') (emphasize_text red 'degraded')
@@ -260,18 +260,28 @@ function __health_check_results
   else if [ $TIME_HOUR -lt 5 ]
     printf ' %s %s. You should go to bed.\n' (emphasize_text red '✗') (emphasize_text red "It's late")
   else
-    printf " %s It's %s!\n" (emphasize_text red '✓') (emphasize_text green "a good day for science")
+    printf " %s It's %s!\n" (emphasize_text green '✓') (emphasize_text green "a good day for science")
   end
 
   echo ''
 end
 
 function welcome_text
+  if [ $FISHRC_NEXT_HEADER_UTIME ]
+    if [ (date +%s%N | cut -b1-13) -lt $FISHRC_NEXT_HEADER_UTIME ]
+      # Don't print header again
+      return
+    end
+  end
+
   cat ~/.config/fish/cat_header
   printf 'Yo! Welcome to %s on %s, %s!\n' (emphasize_text blue 'ＣＡＴＥＬＡＢ') (emphasize_text magenta (hostname)) (emphasize_text blue (whoami))
   printf 'It\'s currently %s.\n' (emphasize_text green (date))
   __health_check_results
   printf 'What will your %s be?\n' (emphasize_text magenta 'first sequence of the day')
+
+  # Add 
+  export FISHRC_NEXT_HEADER_UTIME=(math (date +%s%N | cut -b1-13) + 100)
 end
 
 set fish_greeting ""  # No greet
