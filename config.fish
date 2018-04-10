@@ -239,7 +239,13 @@ function __health_check_results
   printf "\n%s\n" (emphasize_text magenta 'Status report!!')
   
   # Ping
-  if nc -w1 google.com 80 --send-only </dev/null 2>/dev/null;
+  set NET_CMD "nc -zw1 google.com 80 2>/dev/null"
+  if test -e "/etc/redhat-release"
+    set NET_CMD "nc -w1 google.com 80 --send-only </dev/null 2>/dev/null"
+  end
+  eval $NET_CMD
+
+  if [ $status = 0 ]
     printf ' %s Your internet connection looks %s, dood!\n' (emphasize_text green '✓') (emphasize_text green 'OK')
   else
     printf ' %s Your internet connection looks %s, dood.\n' (emphasize_text red '✗') (emphasize_text red 'degraded')
@@ -268,7 +274,7 @@ end
 
 function welcome_text
   if [ $FISHRC_NEXT_HEADER_UTIME ]
-    if [ (date +%s%N | cut -b1-13) -lt $FISHRC_NEXT_HEADER_UTIME ]
+    if [ (python -c "import time; print(int(time.time()*1000))") -lt $FISHRC_NEXT_HEADER_UTIME ]
       # Don't print header again
       return
     end
@@ -281,7 +287,7 @@ function welcome_text
   printf 'What will your %s be?\n' (emphasize_text magenta 'first sequence of the day')
 
   # Add 
-  export FISHRC_NEXT_HEADER_UTIME=(math (date +%s%N | cut -b1-13) + 100)
+  export FISHRC_NEXT_HEADER_UTIME=(math (python -c "import time; print(int(time.time()*1000))") + 100)
 end
 
 set fish_greeting ""  # No greet
