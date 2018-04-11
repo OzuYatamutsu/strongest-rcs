@@ -34,5 +34,7 @@ cd ..
 rm -Rf bass
 
 cp -fv config.fish ~/.config/fish/
+mkdir ~/.config/fish/plugins
+cp -Rfv plugins/*.py ~/.config/fish/plugins/
 cp -fv cat_header ~/.config/fish/
 cp -fv vimrc ~/.vimrc

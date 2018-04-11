@@ -268,8 +268,14 @@ function __health_check_results
   else
     printf " %s It's %s!\n" (emphasize_text green '✓') (emphasize_text green "a good day for science")
   end
+end
 
-  echo ''
+function __plugin_results
+  for file in ~/.config/fish/plugins/*.py
+    if [ $file != './plugins/plugin_helpers.py' ]
+      eval (python $file)
+    end
+  end
 end
 
 function welcome_text
@@ -284,6 +290,9 @@ function welcome_text
   printf 'Yo! Welcome to %s on %s, %s!\n' (emphasize_text blue 'ＣＡＴＥＬＡＢ') (emphasize_text magenta (hostname)) (emphasize_text blue (whoami))
   printf 'It\'s currently %s.\n' (emphasize_text green (date))
   __health_check_results
+  __plugin_results
+  printf '\n'
+  echo ''
   printf 'What will your %s be?\n' (emphasize_text magenta 'first sequence of the day')
 
   # Add 
