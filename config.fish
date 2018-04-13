@@ -228,7 +228,7 @@ function fish_prompt
   
   # End prompt
   set_color normal
-  echo -n "> "
+  echo -n " → "
 end
 
 function emphasize_text
