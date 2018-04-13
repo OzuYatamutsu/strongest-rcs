@@ -261,7 +261,7 @@ function __health_check_results
 
   # Time
   set TIME_HOUR (date +%H)
-  if [ $TIME_HOUR -gt 23 ]
+  if [ $TIME_HOUR -ge 23 ]
     printf ' %s %s. You should go to bed.\n' (emphasize_text red '✗') (emphasize_text red "It's late")
   else if [ $TIME_HOUR -lt 5 ]
     printf ' %s %s. You should go to bed.\n' (emphasize_text red '✗') (emphasize_text red "It's late")
