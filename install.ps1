@@ -18,6 +18,7 @@ If (Test-Path ~\vimfiles\bundle\vim-airline-themes) {
 
 cp profile.ps1 $profile
 cp vimrc ~/.vimrc
+cp cat_header ~/.cat_header
 
 # Replace fish with powershell
 (Get-Content ~/.vimrc).Replace("set shell=fish", "set shell=powershell") `
