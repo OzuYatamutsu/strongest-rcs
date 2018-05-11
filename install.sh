@@ -27,14 +27,14 @@ else
 fi
 
 # Download bass (backwards-compatibility for fish)
-git clone https://github.com/edc/bass.git
-cd bass
-make install
-cd ..
-rm -Rf bass
+git clone https://github.com/edc/bass.git && cd bass && make install && cd .. && rm -Rf bass
 
 cp -fv config.fish ~/.config/fish/
-mkdir ~/.config/fish/plugins
+mkdir ~/.config/fish/plugins || true
 cp -Rfv plugins/*.py ~/.config/fish/plugins/
 cp -fv cat_header ~/.config/fish/
 cp -fv vimrc ~/.vimrc
+
+# Set current directory as update directory
+echo $PWD > ~/.config/fish/.update_dir
+
