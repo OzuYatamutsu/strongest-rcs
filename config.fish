@@ -278,6 +278,36 @@ function __plugin_results
   end
 end
 
+function update_fish_config_from_git 
+  # Check if update file exists; if not, exit
+  ls ~/.config/fish/.update_dir 2>/dev/null
+  if [ $status = 0 ]
+    set UPDATE_DIR (cat ~/.config/fish/.update_dir)
+    ls $UPDATE_DIR
+    if [ $status = 0 ]
+      cd $UPDATE_DIR
+      git pull --rebase 2>/dev/null; or cd -
+      /bin/bash install.sh 2>&1 >/dev/null/; or cd -
+      cd -
+
+      echo 'Update complete.'
+    end
+  end
+end
+
+function __update_if_needed
+  # Don't consider updating if we have no internet connection.
+  set NET_CMD "nc -zw1 google.com 80 2>/dev/null"
+  if test -e "/etc/redhat-release"
+    set NET_CMD "nc -w1 google.com 80 --send-only </dev/null 2>/dev/null"
+  end
+  eval $NET_CMD
+
+  if [ $status = 0 ]
+    update_fish_config_from_git
+  end
+end
+
 function welcome_text
   if [ $FISHRC_NEXT_HEADER_UTIME ]
     if [ (python -c "import time; print(int(time.time()*1000))") -lt $FISHRC_NEXT_HEADER_UTIME ]
@@ -291,6 +321,7 @@ function welcome_text
   printf 'It\'s currently %s.\n' (emphasize_text green (date))
   __health_check_results
   __plugin_results
+  __update_if_needed
   printf '\n'
   echo ''
   printf 'What will your %s be?\n' (emphasize_text magenta 'first sequence of the day')
