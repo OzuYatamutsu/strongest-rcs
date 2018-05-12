@@ -228,7 +228,7 @@ function fish_prompt
   
   # End prompt
   set_color normal
-  echo -n " → "
+  echo -n "> "
 end
 
 function emphasize_text
@@ -261,7 +261,7 @@ function __health_check_results
 
   # Time
   set TIME_HOUR (date +%H)
-  if [ $TIME_HOUR -ge 23 ]
+  if [ $TIME_HOUR -gt 23 ]
     printf ' %s %s. You should go to bed.\n' (emphasize_text red '✗') (emphasize_text red "It's late")
   else if [ $TIME_HOUR -lt 5 ]
     printf ' %s %s. You should go to bed.\n' (emphasize_text red '✗') (emphasize_text red "It's late")
@@ -280,15 +280,17 @@ end
 
 function update_fish_config_from_git 
   # Check if update file exists; if not, exit
-  ls ~/.config/fish/.update_dir 2>/dev/null
+  ls ~/.config/fish/.update_dir 2>/dev/null >/dev/null
   if [ $status = 0 ]
+    echo 'Updating CATELAB...'
     set UPDATE_DIR (cat ~/.config/fish/.update_dir)
-    ls $UPDATE_DIR
+    ls $UPDATE_DIR 2>/dev/null >/dev/null
     if [ $status = 0 ]
+      set CURRENT_DIR $PWD
       cd $UPDATE_DIR
-      git pull --rebase 2>/dev/null; or cd -
-      /bin/bash install.sh 2>&1 >/dev/null/; or cd -
-      cd -
+      git pull --rebase 2>/dev/null >/dev/null; or cd $CURRENT_DIR
+      /bin/bash install.sh 2>/dev/null >/dev/null; or cd $CURRENT_DIR
+      cd $CURRENT_DIR
 
       echo 'Update complete.'
     end
@@ -321,8 +323,8 @@ function welcome_text
   printf 'It\'s currently %s.\n' (emphasize_text green (date))
   __health_check_results
   __plugin_results
+  printf '\n\n'
   __update_if_needed
-  printf '\n'
   echo ''
   printf 'What will your %s be?\n' (emphasize_text magenta 'first sequence of the day')
 
