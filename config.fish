@@ -218,26 +218,26 @@ function fish_prompt
   set last_status $status
   set_color magenta
   printf '%s' (user_hostname_prompt)
-  
+
   # CWD
   set_color $fish_color_cwd
   printf '%s' (prompt_long_pwd)
-  
+
   # Git status
   __informative_git_prompt
-  
+
   # End prompt
   set_color normal
   echo -n "> "
 end
 
 function emphasize_text
-  set_color $argv[1]; printf $argv[2]; set_color normal  
+  set_color $argv[1]; printf $argv[2]; set_color normal
 end
 
 function __health_check_results
   printf "\n%s\n" (emphasize_text magenta 'Status report!!')
-  
+
   # Ping
   set NET_CMD "nc -zw1 google.com 80 2>/dev/null"
   if test -e "/etc/redhat-release"
@@ -256,7 +256,7 @@ function __health_check_results
   if [ $CAPACITY_PCT -lt 80 ]
     printf ' %s You have %s on / (%s full)!\n' (emphasize_text green '✓') (emphasize_text green 'plenty of space') (emphasize_text green "$CAPACITY_PCT%%")
   else
-    printf " %s You're %s on / (%s% full)!\n" (emphasize_text red '✗') (emphasize_text red "runnin' out of space") (emphasize_text red "$CAPACITY_PCT%%") 
+    printf " %s You're %s on / (%s% full)!\n" (emphasize_text red '✗') (emphasize_text red "runnin' out of space") (emphasize_text red "$CAPACITY_PCT%%")
   end
 
   # Time
@@ -278,7 +278,7 @@ function __plugin_results
   end
 end
 
-function update_fish_config_from_git 
+function update_fish_config_from_git
   # Check if update file exists; if not, exit
   ls ~/.config/fish/.update_dir 2>/dev/null >/dev/null
   if [ $status = 0 ]
@@ -306,7 +306,18 @@ function __update_if_needed
   eval $NET_CMD
 
   if [ $status = 0 ]
-    update_fish_config_from_git
+    ls ~/.config/fish/.next_update_utime 2>/dev/null >/dev/null
+    if [ $status != 0 ]
+      python -c "import time; print(int(time.time()*1000)" > ~/.config/fish/.next_update_utime
+    end
+
+    set FISHRC_NEXT_UPDATE_UTIME (cat ~/.config/fish/.next_update_utime)
+    if [ (python -c "import time; print(int(time.time()*1000))") -gt $FISHRC_NEXT_UPDATE_UTIME ]
+      printf '\n\n'
+      update_fish_config_from_git
+    else
+      echo ''
+    end
   end
 end
 
@@ -323,13 +334,14 @@ function welcome_text
   printf 'It\'s currently %s.\n' (emphasize_text green (date))
   __health_check_results
   __plugin_results
-  printf '\n\n'
   __update_if_needed
   echo ''
   printf 'What will your %s be?\n' (emphasize_text magenta 'first sequence of the day')
 
-  # Add 
+  # Add
   export FISHRC_NEXT_HEADER_UTIME=(math (python -c "import time; print(int(time.time()*1000))") + 100)
+  export FISHRC_NEXT_UPDATE_UTIME=(math (python -c "import time; print(int(time.time()*1000))") + 21600000)  # +6 hours
+  echo $FISHRC_NEXT_UPDATE_UTIME > ~/.config/fish/.next_update_utime
 end
 
 set fish_greeting ""  # No greet
