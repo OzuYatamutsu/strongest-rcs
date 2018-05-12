@@ -244,8 +244,9 @@ function __health_check_results
     set NET_CMD "nc -w1 google.com 80 --send-only </dev/null 2>/dev/null"
   end
   eval $NET_CMD
+  set $NET_CMD_STATUS $status
 
-  if [ $status = 0 ]
+  if [ NET_CMD_STATUS = 0 ]
     printf ' %s Your internet connection looks %s, dood!\n' (emphasize_text green '✓') (emphasize_text green 'OK')
   else
     printf ' %s Your internet connection looks %s, dood.\n' (emphasize_text red '✗') (emphasize_text red 'degraded')
@@ -299,13 +300,7 @@ end
 
 function __update_if_needed
   # Don't consider updating if we have no internet connection.
-  set NET_CMD "nc -zw1 google.com 80 2>/dev/null"
-  if test -e "/etc/redhat-release"
-    set NET_CMD "nc -w1 google.com 80 --send-only </dev/null 2>/dev/null"
-  end
-  eval $NET_CMD
-
-  if [ $status = 0 ]
+  if [ NET_CMD_STATUS = 0 ]
     ls ~/.config/fish/.next_update_utime 2>/dev/null >/dev/null
     if [ $status != 0 ]
       python -c "import time; print(int(time.time()*1000)" > ~/.config/fish/.next_update_utime
@@ -318,6 +313,8 @@ function __update_if_needed
     else
       echo ''
     end
+  else
+    echo ''
   end
 end
 
