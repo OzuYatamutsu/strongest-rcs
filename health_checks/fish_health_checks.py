@@ -2,6 +2,7 @@ from health_check_base import HealthCheckBase
 from subprocess import check_output, STDOUT, CalledProcessError
 from shutil import disk_usage
 from os.path import isfile
+from re import findall
 
 
 class FishHealthChecks(HealthCheckBase):
@@ -33,8 +34,20 @@ class FishHealthChecks(HealthCheckBase):
             True
         )
 
-    def format_for_shell(self):
-        raise NotImplementedError
+    def format_for_shell(self, output: str):
+        replace_tokens = ['green', 'red', 'blue']
+        for replace_token in replace_tokens:
+            needle = '\<{token}\>(?P<value>.*?)\<\/{token}\>'.format(token=replace_token)
+            values = findall(needle, output)
+
+            while values:
+                value = values.pop()
+                output = output.replace(
+                    '<{token}>{value}</{token}>'.format(token=replace_token, value=value),
+                    "(emphasize_text {token} '{value}')".format(token=replace_token, value=value)
+                )
+
+        return output
 
     def run_checks(self):
         health_check_results = [
@@ -51,4 +64,8 @@ class FishHealthChecks(HealthCheckBase):
             ("<green>✓</green> " + result_string) if result
             else ("<red>✗</red> " + result_string)
         )
+
+if __name__ == '__main__':
+    health_checker = FishHealthChecks()
+    health_checker.run_checks()
 

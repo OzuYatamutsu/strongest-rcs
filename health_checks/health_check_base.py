@@ -6,16 +6,16 @@ class HealthCheckBase:
 
     _CHECK_RESULT_STATUS_STRINGS = {
         'net': {
-            True: "Your internet connection looks <good>OK</good>, dood!",
-            False: "Your internet connection looks <bad>degraded</bad>, dood."
+            True: "Your internet connection looks <green>OK</green>, dood!",
+            False: "Your internet connection looks <red>degraded</red>, dood."
         },
         'space': {
-            True: "You have <good>plenty of space</good> on / (<good>{percent}</good> full)!",
-            False: "You're <bad>runnin' out of space</bad> on / (<bad>{percent}</bad> full)!"
+            True: "You have <green>plenty of space</green> on / (<green>{percent}</green> full)!",
+            False: "You're <red>runnin' out of space</red> on / (<red>{percent}</red> full)!"
         },
         'time': {
-            True: "It's <good>a good day for science</good>!",
-            False: "It's <bad>late</bad>. You should go to bed."
+            True: "It's <green>a good day for science</green>!",
+            False: "It's <red>late</red>. You should go to bed."
         }
     }
 
