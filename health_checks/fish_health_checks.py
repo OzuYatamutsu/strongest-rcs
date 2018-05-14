@@ -13,7 +13,7 @@ class FishHealthChecks(HealthCheckBase):
 
         net_command = (
             "nc -zw1 {endpoint} 80" if not isfile("/etc/redhat-release")
-            else "nc -w1 {endpoint} 80 --send-only"
+            else "nc -w1 {endpoint} 80 --send-only </dev/null"
         ).format(endpoint=FishHealthChecks._net_check_endpoint)
 
         try:
