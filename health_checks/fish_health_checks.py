@@ -12,9 +12,9 @@ class FishHealthChecks(HealthCheckBase):
         """Checks network connectivity."""
 
         net_command = (
-            "nc -zw1 google.com 80 2>/dev/null" if not isfile("/etc/redhat-release")
-            else "nc -w1 google.com 80 --send-only </dev/null 2>/dev/null"
-        )
+            "nc -zw1 {endpoint} 80 2>/dev/null" if not isfile("/etc/redhat-release")
+            else "nc -w1 {endpoint} 80 --send-only </dev/null 2>/dev/null"
+        ).format(endpoint=FishHealthChecks._net_check_endpoint)
 
         try:
             result = check_output(
