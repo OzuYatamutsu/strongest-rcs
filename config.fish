@@ -265,13 +265,18 @@ function update_fish_config_from_git
       cd $CURRENT_DIR
 
       echo 'Update complete.'
+    
+      # Schedule next update
+      export FISHRC_NEXT_UPDATE_UTIME=(math (python -c "import time; print(int(time.time()*1000))") + 21600000)  # +6 hours
+      echo $FISHRC_NEXT_UPDATE_UTIME > ~/.config/fish/.next_update_utime
     end
   end
 end
 
 function __update_if_needed
   # Don't consider updating if we have no internet connection.
-  if [ NET_CMD_STATUS = 0 ]
+  set NET_CMD_STATUS (cat ~/.config/fish/.net_check_result)
+  if [ $NET_CMD_STATUS = 0 ]
     ls ~/.config/fish/.next_update_utime 2>/dev/null >/dev/null
     if [ $status != 0 ]
       python -c "import time; print(int(time.time()*1000)" > ~/.config/fish/.next_update_utime
@@ -308,8 +313,6 @@ function welcome_text
 
   # Add
   export FISHRC_NEXT_HEADER_UTIME=(math (python -c "import time; print(int(time.time()*1000))") + 100)
-  export FISHRC_NEXT_UPDATE_UTIME=(math (python -c "import time; print(int(time.time()*1000))") + 21600000)  # +6 hours
-  echo $FISHRC_NEXT_UPDATE_UTIME > ~/.config/fish/.next_update_utime
 end
 
 set fish_greeting ""  # No greet

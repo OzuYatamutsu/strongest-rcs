@@ -28,6 +28,7 @@ class FishHealthChecks(HealthCheckBase):
                 False
             )
 
+        self.net_check_status = True
         return self._prepend_state(
             FishHealthChecks._CHECK_RESULT_STATUS_STRINGS['net'][True],
             True
@@ -58,6 +59,10 @@ class FishHealthChecks(HealthCheckBase):
         print(self.format_for_shell("<magenta>Status report!!</magenta>"))
         for line in health_check_results:
             print(self.format_for_shell(line))
+
+        # Expose net check result to fs
+        print("echo {net_check_result} > ~/.config/fish/.net_check_result".format(net_check_result=('0' if self.net_check_status else '-1')))
+        print("set NET_CMD_STATUS {status}".format(status=('0' if self.net_check_status else '-1')))
 
 if __name__ == '__main__':
     health_checker = FishHealthChecks()

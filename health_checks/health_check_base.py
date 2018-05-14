@@ -24,7 +24,7 @@ class HealthCheckBase:
     _time_check_bounds = (5, 23)
 
     def __init__(self):
-        self.net_status = None
+        self.net_check_status = False
 
     def check_network(self) -> str:
         """Checks network connectivity."""
