@@ -1,5 +1,5 @@
 from datetime import datetime, time
-
+from shutil import disk_usage
 
 class HealthCheckBase:
     """Interface to run OS health checks to show in shell welcome text"""
@@ -39,10 +39,10 @@ class HealthCheckBase:
         free_space_percent = (disk_usage(root).free / disk_usage(root).total) * 100
 
         return (self._prepend_state(
-            FishHealthChecks._CHECK_RESULT_STATUS_STRINGS['space'][True],
+            HealthCheckBase._CHECK_RESULT_STATUS_STRINGS['space'][True],
             True
-        ) if free_space_percent >= FishHealthChecks._space_check_threshold else self._prepend_state(
-            FishHealthChecks._CHECK_RESULT_STATUS_STRINGS['space'][False],
+        ) if free_space_percent >= HealthCheckBase._space_check_threshold else self._prepend_state(
+            HealthCheckBase._CHECK_RESULT_STATUS_STRINGS['space'][False],
             False
         )).format(percent=str(int(round(free_space_percent, 0))) + '%')
 

@@ -1,6 +1,5 @@
-from health_check_base import HealthCheckBase
 from subprocess import check_output, STDOUT, CalledProcessError
-from shutil import disk_usage
+from health_check_base import HealthCheckBase
 from os.path import isfile
 from re import findall
 
