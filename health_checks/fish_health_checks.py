@@ -43,10 +43,10 @@ class FishHealthChecks(HealthCheckBase):
                 value = values.pop()
                 output = output.replace(
                     '<{token}>{value}</{token}>'.format(token=replace_token, value=value),
-                    "(emphasize_text {token} '{value}')".format(token=replace_token, value=value)
+                    '(emphasize_text {token} "{value}")'.format(token=replace_token, value=value)
                 )
 
-        return output
+        return 'echo {output}'.format(output=output).replace('%', '%%')
 
     def run_checks(self):
         health_check_results = [

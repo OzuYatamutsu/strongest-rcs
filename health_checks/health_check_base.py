@@ -10,12 +10,12 @@ class HealthCheckBase:
             False: "Your internet connection looks <red>degraded</red>, dood."
         },
         'space': {
-            True: "You have <green>plenty of space</green> on / (<green>{percent}</green> full)!",
-            False: "You're <red>runnin' out of space</red> on / (<red>{percent}</red> full)!"
+            True: "You have <green>plenty of space</green> on / \(<green>{percent}</green> full\)!",
+            False: "You're <red>runnin\\' out of space</red> on / \(<red>{percent}</red> full\)!"
         },
         'time': {
-            True: "It's <green>a good day for science</green>!",
-            False: "It's <red>late</red>. You should go to bed."
+            True: "It\\'s <green>a good day for science</green>!",
+            False: "It\\'s <red>late</red>. You should go to bed."
         }
     }
 
