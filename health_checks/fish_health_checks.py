@@ -1,4 +1,4 @@
-from subprocess import check_output, STDOUT, CalledProcessError
+from subprocess import check_output, STDOUT, CalledProcessError, DEVNULL 
 from health_check_base import HealthCheckBase
 from os.path import isfile
 from re import findall
@@ -13,13 +13,14 @@ class FishHealthChecks(HealthCheckBase):
 
         net_command = (
             "nc -zw1 {endpoint} 80" if not isfile("/etc/redhat-release")
-            else "nc -w1 {endpoint} 80 --send-only </dev/null"
+            else "nc -w1 {endpoint} 80 --send-only"
         ).format(endpoint=FishHealthChecks._net_check_endpoint)
 
         try:
             result = check_output(
                 net_command.split(),
                 stderr=STDOUT,
+                stdin=DEVNULL,
                 universal_newlines=True
             )
         except CalledProcessError:
