@@ -82,7 +82,7 @@ class HealthCheckBase:
 
     def _prepend_state(self, result_string: str, result: bool):
         return (
-            ("<green>✓</green> " + result_string) if result
-            else ("<red>✗</red> " + result_string)
+            ("<green> ✓</green> " + result_string) if result
+            else ("<red> ✗</red> " + result_string)
         )
 

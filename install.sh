@@ -29,9 +29,12 @@ fi
 # Download bass (backwards-compatibility for fish)
 git clone https://github.com/edc/bass.git && cd bass && make install && cd .. && rm -Rf bass
 
+# Install fishrc + plugin and health checks
 cp -fv config.fish ~/.config/fish/
 mkdir ~/.config/fish/plugins || true
+mkdir ~/.config/fish/health_checks || true
 cp -Rfv plugins/*.py ~/.config/fish/plugins/
+cp -Rfv health_checks/*.py ~/.config/fish/health_checks/
 cp -fv cat_header ~/.config/fish/
 cp -fv vimrc ~/.vimrc
 

@@ -34,7 +34,7 @@ class FishHealthChecks(HealthCheckBase):
         )
 
     def format_for_shell(self, output: str):
-        replace_tokens = ['green', 'red', 'blue']
+        replace_tokens = ['green', 'red', 'blue', 'magenta']
         for replace_token in replace_tokens:
             needle = '\<{token}\>(?P<value>.*?)\<\/{token}\>'.format(token=replace_token)
             values = findall(needle, output)
@@ -55,14 +55,9 @@ class FishHealthChecks(HealthCheckBase):
             self.check_time()
         ]
 
+        print(self.format_for_shell("<magenta>Status report!!</magenta>"))
         for line in health_check_results:
             print(self.format_for_shell(line))
-
-    def _prepend_state(self, result_string: str, result: bool):
-        return (
-            ("<green>✓</green> " + result_string) if result
-            else ("<red>✗</red> " + result_string)
-        )
 
 if __name__ == '__main__':
     health_checker = FishHealthChecks()
