@@ -245,7 +245,7 @@ end
 function __plugin_results
   for file in ~/.config/fish/plugins/*.py
     if [ $file != './plugins/plugin_helpers.py' ]
-      eval (python $file)
+      eval (python3 $file)
     end
   end
 end
