@@ -5,6 +5,9 @@ set green (set_color green)
 set red (set_color red)
 set gray (set_color -o black)
 
+### ENV VARIABLES
+export CATLAB_SOURCE_DIR="INSTALL_SOURCE_DIR"
+
 ### GIT STUFF
 set -g fish_color_git_clean green
 set -g fish_color_git_branch magenta
@@ -250,50 +253,6 @@ function __plugin_results
   end
 end
 
-function update_fish_config_from_git
-  # Check if update file exists; if not, exit
-  ls ~/.config/fish/.update_dir 2>/dev/null >/dev/null
-  if [ $status = 0 ]
-    echo 'Updating CATELAB...'
-    set UPDATE_DIR (cat ~/.config/fish/.update_dir)
-    ls $UPDATE_DIR 2>/dev/null >/dev/null
-    if [ $status = 0 ]
-      set CURRENT_DIR $PWD
-      cd $UPDATE_DIR
-      git pull --rebase 2>/dev/null >/dev/null; or cd $CURRENT_DIR
-      /bin/bash install.sh 2>/dev/null >/dev/null; or cd $CURRENT_DIR
-      cd $CURRENT_DIR
-
-      echo 'Update complete.'
-    
-      # Schedule next update
-      export FISHRC_NEXT_UPDATE_UTIME=(math (python -c "import time; print(int(time.time()*1000))") + 21600000)  # +6 hours
-      echo $FISHRC_NEXT_UPDATE_UTIME > ~/.config/fish/.next_update_utime
-    end
-  end
-end
-
-function __update_if_needed
-  # Don't consider updating if we have no internet connection.
-  set NET_CMD_STATUS (cat ~/.config/fish/.net_check_result)
-  if [ $NET_CMD_STATUS = 0 ]
-    ls ~/.config/fish/.next_update_utime 2>/dev/null >/dev/null
-    if [ $status != 0 ]
-      python -c "import time; print(int(time.time()*1000)" > ~/.config/fish/.next_update_utime
-    end
-
-    set FISHRC_NEXT_UPDATE_UTIME (cat ~/.config/fish/.next_update_utime)
-    if [ (python -c "import time; print(int(time.time()*1000))") -gt $FISHRC_NEXT_UPDATE_UTIME ]
-      printf '\n\n'
-      update_fish_config_from_git
-    else
-      echo ''
-    end
-  else
-    echo ''
-  end
-end
-
 function welcome_text
   if [ $FISHRC_NEXT_HEADER_UTIME ]
     if [ (python -c "import time; print(int(time.time()*1000))") -lt $FISHRC_NEXT_HEADER_UTIME ]
@@ -307,8 +266,7 @@ function welcome_text
   printf 'It\'s currently %s.\n' (emphasize_text green (date))
   __health_check_results
   __plugin_results
-  __update_if_needed
-  echo ''
+  printf '\n\n'
   printf 'What will your %s be?\n' (emphasize_text magenta 'first sequence of the day')
 
   # Add
