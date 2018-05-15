@@ -8,33 +8,6 @@ class FishHealthChecks(HealthCheckBase):
     def __init__(self):
         super().__init__()
 
-    def check_network(self) -> str:
-        """Checks network connectivity."""
-
-        net_command = (
-            "nc -zw1 {endpoint} 80" if not isfile("/etc/redhat-release")
-            else "nc -w1 {endpoint} 80 --send-only"
-        ).format(endpoint=FishHealthChecks._net_check_endpoint)
-
-        try:
-            result = check_output(
-                net_command.split(),
-                stderr=STDOUT,
-                stdin=DEVNULL,
-                universal_newlines=True
-            )
-        except CalledProcessError:
-            return self._prepend_state(
-                FishHealthChecks._CHECK_RESULT_STATUS_STRINGS['net'][False],
-                False
-            )
-
-        self.net_check_status = True
-        return self._prepend_state(
-            FishHealthChecks._CHECK_RESULT_STATUS_STRINGS['net'][True],
-            True
-        )
-
     def format_for_shell(self, output: str):
         replace_tokens = ['green', 'red', 'blue', 'magenta']
         for replace_token in replace_tokens:

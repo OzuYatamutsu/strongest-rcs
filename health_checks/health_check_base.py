@@ -1,5 +1,7 @@
 from datetime import datetime, time
 from shutil import disk_usage
+from socket import socket, AF_INET, SOCK_STREAM, setdefaulttimeout
+
 
 class HealthCheckBase:
     """Interface to run OS health checks to show in shell welcome text"""
@@ -19,7 +21,7 @@ class HealthCheckBase:
         }
     }
 
-    _net_check_endpoint = 'google.com'
+    _net_check_endpoint = '1.1.1.1'
     _space_check_threshold = 20
     _time_check_bounds = (5, 23)
 
@@ -28,7 +30,24 @@ class HealthCheckBase:
 
     def check_network(self) -> str:
         """Checks network connectivity."""
-        raise NotImplementedError
+        
+        try:
+            setdefaulttimeout(1)  # Wait a max of 1 sec
+            test_socket = socket(AF_INET, SOCK_STREAM)
+            test_socket.connect((HealthCheckBase._net_check_endpoint, 80))
+            self.net_check_status = True
+        except OSError as e:
+            return self._prepend_state(
+                HealthCheckBase._CHECK_RESULT_STATUS_STRINGS['net'][False],
+                False
+            )
+        finally:
+            test_socket.close()
+        
+        return self._prepend_state(
+            HealthCheckBase._CHECK_RESULT_STATUS_STRINGS['net'][True],
+            True
+        )
 
     def check_space(self, root='/') -> str:
         """
