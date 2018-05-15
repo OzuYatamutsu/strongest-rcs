@@ -1,6 +1,6 @@
 from datetime import datetime, time
 from shutil import disk_usage
-from socket import socket, AF_INET, SOCK_STREAM, setdefaulttimeout
+from socket import socket, AF_INET, SOCK_STREAM, setdefaulttimeout, gethostname
 
 
 class HealthCheckBase:
@@ -21,7 +21,10 @@ class HealthCheckBase:
         }
     }
 
-    _net_check_endpoint = '1.1.1.1'
+    _net_check_endpoint = (
+        ('8.8.8.8', 53) if not gethostname().endswith('linkedin.biz')
+        else ('1.1.1.1', 80)
+    )
     _space_check_threshold = 20
     _time_check_bounds = (5, 23)
 
@@ -34,7 +37,7 @@ class HealthCheckBase:
         try:
             setdefaulttimeout(1)  # Wait a max of 1 sec
             test_socket = socket(AF_INET, SOCK_STREAM)
-            test_socket.connect((HealthCheckBase._net_check_endpoint, 80))
+            test_socket.connect(HealthCheckBase._net_check_endpoint)
             self.net_check_status = True
         except OSError as e:
             return self._prepend_state(
