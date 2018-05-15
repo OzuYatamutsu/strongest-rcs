@@ -58,15 +58,15 @@ class HealthCheckBase:
         the root fs is less than a threshold.
         """
 
-        free_space_percent = (disk_usage(root).free / disk_usage(root).total) * 100
+        used_space_percent = (disk_usage(root).used / disk_usage(root).total) * 100
 
         return (self._prepend_state(
             HealthCheckBase._CHECK_RESULT_STATUS_STRINGS['space'][True],
             True
-        ) if free_space_percent >= HealthCheckBase._space_check_threshold else self._prepend_state(
+        ) if used_space_percent >= HealthCheckBase._space_check_threshold else self._prepend_state(
             HealthCheckBase._CHECK_RESULT_STATUS_STRINGS['space'][False],
             False
-        )).format(percent=str(int(round(free_space_percent, 0))) + '%')
+        )).format(percent=str(int(round(used_space_percent, 0))) + '%')
 
     def check_time(self) -> str:
         """
