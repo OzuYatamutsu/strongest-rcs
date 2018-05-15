@@ -5,7 +5,7 @@ from os.path import join, isfile
 from subprocess import check_output
 
 
-_UPDATE_FILE_LOCATION = join('{temp_dir}', '.next_update_utime')
+_UPDATE_FILE_LOCATION = join(gettempdir(), '.next_update_utime')
 
 
 def should_update() -> bool:
@@ -21,7 +21,7 @@ def should_update() -> bool:
 
     return current_time >= next_update_utime
 
-def update() -> None:
+def update_catelab() -> None:
     if 'CATLAB_SOURCE_DIR' not in environ:
         print('Update scheduled, but not updating because CATLAB_SOURCE_DIR is not set.')
         return
@@ -50,5 +50,5 @@ def set_next_update_utime() -> None:
 
 if __name__ == '__main__':
     if should_update():
-        update()
+        update_catelab()
 
