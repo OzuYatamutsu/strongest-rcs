@@ -3,7 +3,7 @@ from plugin_helpers import emphasize_text
 from datetime import date
 
 
-TARGET_DATE = date(2018, 5, 18)
+TARGET_DATE = date(2018, 6, 30)
 days_until = str((TARGET_DATE - date.today()).days)
 
 # Return to evaling shell
