@@ -11,7 +11,7 @@ set incsearch                  " search as characters are entered
 set hlsearch                   " highlight matched characters
 set ruler                      " Show line and character numbers
 set statusline+=%F             " Always show full file path 
-set mouse=a                    " Mouse-related interations in gvim
+"set mouse=a                    " Mouse-related interations in gvim
 set clipboard=unnamed          " Access to OS clipboard if supported
 set backspace=indent,eol,start " Allow all backspacing
 " tmux will send xterm-style keys when its xterm-keys option is on
