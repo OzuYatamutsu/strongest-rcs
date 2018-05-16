@@ -36,7 +36,7 @@ def echo_welcome_screen(base_config_dir: str):
 
     print()
     _print_status_report()
-    _run_and_print_plugin_results()
+    _run_and_print_plugin_results(base_config_dir)
 
     print("What will your {magenta}first sequence of the day{norm} be?".format(
         magenta=Fore.MAGENTA,
@@ -51,9 +51,9 @@ def _print_status_report():
     for line in HealthCheckBase().run_checks():
         print(_colorize(line))
 
-def _run_and_print_plugin_results():
-    plugin_dir = './plugins/'
-    for plugin in [plugin_dir + plugin for plugin in listdir(plugin_dir) if plugin.endswith('.py')]:
+def _run_and_print_plugin_results(base_config_dir):
+    plugin_dir = join(base_config_dir, 'plugins')
+    for plugin in [join(plugin_dir, plugin) for plugin in listdir(plugin_dir) if plugin.endswith('.py')]:
         result = check_output('python3 {path}'.format(path=plugin).split(), universal_newlines=True)
         if not result:
             continue
