@@ -1,23 +1,23 @@
 from datetime import datetime, time
 from shutil import disk_usage
 from socket import socket, AF_INET, SOCK_STREAM, setdefaulttimeout, gethostname
-
+from re import findall
 
 class HealthCheckBase:
     """Interface to run OS health checks to show in shell welcome text"""
 
     _CHECK_RESULT_STATUS_STRINGS = {
         'net': {
-            True: "Your internet connection looks <green>OK</green>, dood!",
-            False: "Your internet connection looks <red>degraded</red>, dood."
+            True: "Your internet connection looks <green>OK<reset>, dood!",
+            False: "Your internet connection looks degraded<reset>, dood."
         },
         'space': {
-            True: "You have <green>plenty of space</green> on / \(<green>{percent}</green> full\)!",
-            False: "You're <red>runnin\\' out of space</red> on / \(<red>{percent}</red> full\)!"
+            True: "You have <green>plenty of space<reset> on / (<green>{percent}<reset> full)!",
+            False: "You're <red>runnin' out of space<reset> on / (<green>{percent}<reset> full)!"
         },
         'time': {
-            True: "It\\'s <green>a good day for science</green>!",
-            False: "It\\'s <red>late</red>. You should go to bed."
+            True: "It's <green>a good day for science<reset>!",
+            False: "It's <red>late<reset>. You should go to bed."
         }
     }
 
@@ -89,22 +89,20 @@ class HealthCheckBase:
             False
         )
 
-    def format_for_shell(self):
-        raise NotImplementedError
-
     def run_checks(self):
-        health_check_results = [
+        return [
             self.check_network(),
             self.check_space(),
             self.check_time()
         ]
 
-        for line in health_check_results:
-            print(self.format_for_shell(line))
-
     def _prepend_state(self, result_string: str, result: bool):
         return (
-            ("<green> ✓</green> " + result_string) if result
-            else ("<red> ✗</red> " + result_string)
+            ("<green> ✓<reset> " + result_string) if result
+            else ("<red> ✗<reset> " + result_string)
         )
+
+if __name__ == '__main__':
+    health_checker = HealthCheckBase()
+    print(str(health_checker.run_checks()))
 

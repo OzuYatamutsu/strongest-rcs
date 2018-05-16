@@ -1,3 +1,4 @@
+from health_checks.health_check_base import HealthCheckBase
 from colorama import init, Fore
 from socket import gethostname
 from datetime import datetime
@@ -44,15 +45,30 @@ def _print_status_report():
     print("{magenta}Status report!!".format(
         magenta=Fore.MAGENTA
     ))
-    print(" {red}x{norm} Dummy result.".format(
-        red=Fore.RED,
-        norm=Fore.RESET
-    ))
-    pass  # TODO
+
+    for line in HealthCheckBase().run_checks():
+        print(_colorize(line))
     print()
 
 def _run_and_print_plugin_results():
     pass
+
+def _colorize(string_with_colors) -> str:
+    replace_kv = {
+        '<black>': Fore.BLACK,
+        '<red>': Fore.RED,
+        '<green>': Fore.GREEN,
+        '<yellow>': Fore.YELLOW,
+        '<blue>': Fore.BLUE,
+        '<magenta>': Fore.MAGENTA,
+        '<cyan>': Fore.CYAN,
+        '<white>': Fore.WHITE,
+        '<reset>': Fore.RESET
+    }
+
+    for color_str, color_enum in replace_kv.items():
+        string_with_colors = string_with_colors.replace(color_str, color_enum)
+    return string_with_colors
 
 if __name__ == "__main__":
     # Pass in base config directory as argument
