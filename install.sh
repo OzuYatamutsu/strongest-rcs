@@ -40,7 +40,7 @@ if [ -d ~/.config/fish ]; then
 fi
 
 # Install fishrc + plugin and health checks
-pip3 install -r requirements.txt
+pip3 install -r requirements.txt --user
 mv -fv config.fish.temp ~/.config/fish/config.fish
 mkdir ~/.config/fish/plugins || true
 mkdir ~/.config/fish/health_checks || true
