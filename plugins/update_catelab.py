@@ -5,8 +5,6 @@ from os import environ, chdir, getcwd
 from os.path import join, isfile
 from subprocess import check_output, DEVNULL
 from platform import platform
-
-
 _UPDATE_FILE_LOCATION = join(gettempdir(), '.next_update_utime')
 
 
@@ -17,7 +15,7 @@ def should_update() -> bool:
         with open(_UPDATE_FILE_LOCATION, 'w') as f:
             f.write('0')
 
-    # Get next update time
+    # Get next update time:
     with open(_UPDATE_FILE_LOCATION, 'r') as f:
         next_update_utime = float(f.read())
 
@@ -25,7 +23,7 @@ def should_update() -> bool:
 
 def update_catelab() -> None:
     if 'CATLAB_SOURCE_DIR' not in environ:
-        print("echo 'Update scheduled, but not updating because CATLAB_SOURCE_DIR is not set.'")
+        print("Update scheduled, but not updating because CATLAB_SOURCE_DIR is not set.")
         return
 
     source_dir = environ['CATLAB_SOURCE_DIR']
