@@ -24,7 +24,11 @@ mkdir ~/.config -ErrorAction SilentlyContinue
 mkdir ~/.config/cateshell -ErrorAction SilentlyContinue
 mkdir ~/.config/cateshell/plugins -ErrorAction SilentlyContinue
 mkdir ~/.config/cateshell/health_checks -ErrorAction SilentlyContinue
+rm ~/.config/cateshell/*.py -ErrorAction SilentlyContinue
+rm ~/.config/cateshell/plugins/* -ErrorAction SilentlyContinue
+rm ~/.config/cateshell/health_checks/* -ErrorAction SilentlyContinue
 
+cp welcome_screen.py ~/.config/cateshell
 cp cat_header ~/.config/cateshell/cat_header
 cp health_checks/*.py ~/.config/cateshell/health_checks/
 cp plugins/*.py ~/.config/cateshell/plugins/
