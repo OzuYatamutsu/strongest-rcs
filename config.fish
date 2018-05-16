@@ -247,7 +247,7 @@ function welcome_text
     end
   end
 
-  python3 welcome_screen.py "$CATLAB_METADATA_DIR"
+  python3 "$CATLAB_METADATA_DIR/welcome_screen.py" "$CATLAB_METADATA_DIR"
 
   # Add
   export FISHRC_NEXT_HEADER_UTIME=(math (python -c "import time; print(int(time.time()*1000))") + 100)
