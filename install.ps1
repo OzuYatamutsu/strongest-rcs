@@ -1,6 +1,7 @@
 # Install Pathogen (plugin manager)
-mkdir -p ~\vimfiles\autoload ~\vimfiles\bundle
-curl -LSso ~\vimfiles\autoload\pathogen.vim https://tpo.pe/pathogen.vim
+mkdir ~\vimfiles\autoload -ErrorAction SilentlyContinue >$null
+mkdir ~\vimfiles\bundle -ErrorAction SilentlyContinue >$null
+Invoke-WebRequest https://tpo.pe/pathogen.vim -OutFile ~\vimfiles\autoload\pathogen.vim  >$null
 
 # Download vim-airline
 If (Test-Path ~\vimfiles\bundle\vim-airline) {
@@ -18,7 +19,18 @@ If (Test-Path ~\vimfiles\bundle\vim-airline-themes) {
 
 cp profile.ps1 $profile
 cp vimrc ~/.vimrc
-cp cat_header ~/.cat_header
+
+mkdir ~/.config -ErrorAction SilentlyContinue
+mkdir ~/.config/cateshell -ErrorAction SilentlyContinue
+mkdir ~/.config/cateshell/plugins -ErrorAction SilentlyContinue
+mkdir ~/.config/cateshell/health_checks -ErrorAction SilentlyContinue
+
+cp cat_header ~/.config/cateshell/cat_header
+cp health_checks/*.py ~/.config/cateshell/health_checks/
+cp plugins/*.py ~/.config/cateshell/plugins/
+
+# Set current directory as update directory
+echo $PWD.Path > ~/.config/cateshell/.update_dir
 
 # Replace fish with powershell
 (Get-Content ~/.vimrc).Replace("set shell=fish", "set shell=powershell") `
