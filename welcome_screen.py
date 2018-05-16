@@ -1,10 +1,12 @@
 from health_checks.health_check_base import HealthCheckBase
+from subprocess import check_output
 from colorama import init, Fore
 from socket import gethostname
 from datetime import datetime
 from getpass import getuser
 from pytz import reference
 from os.path import join
+from os import listdir
 from sys import argv
 init(autoreset=True)
 
@@ -48,10 +50,15 @@ def _print_status_report():
 
     for line in HealthCheckBase().run_checks():
         print(_colorize(line))
-    print()
 
 def _run_and_print_plugin_results():
-    pass
+    plugin_dir = './plugins/'
+    for plugin in [plugin_dir + plugin for plugin in listdir(plugin_dir) if plugin.endswith('.py')]:
+        result = check_output('python3 {path}'.format(path=plugin).split(), universal_newlines=True)
+        if not result:
+            continue
+        for line in result.split('\n'):
+            print(_colorize(line))
 
 def _colorize(string_with_colors) -> str:
     replace_kv = {

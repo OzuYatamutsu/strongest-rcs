@@ -7,6 +7,7 @@ set gray (set_color -o black)
 
 ### ENV VARIABLES
 export CATLAB_SOURCE_DIR="INSTALL_SOURCE_DIR"
+export CATLAB_METADATA_DIR="$HOME/.config/fish"
 
 ### GIT STUFF
 set -g fish_color_git_clean green
@@ -261,13 +262,7 @@ function welcome_text
     end
   end
 
-  cat ~/.config/fish/cat_header
-  printf 'Yo! Welcome to %s on %s, %s!\n' (emphasize_text blue 'ＣＡＴＥＬＡＢ') (emphasize_text magenta (hostname)) (emphasize_text blue (whoami))
-  printf 'It\'s currently %s.\n' (emphasize_text green (date))
-  __health_check_results
-  __plugin_results
-  printf '\n\n'
-  printf 'What will your %s be?\n' (emphasize_text magenta 'first sequence of the day')
+  python3 welcome_screen.py "$CATLAB_METADATA_DIR"
 
   # Add
   export FISHRC_NEXT_HEADER_UTIME=(math (python -c "import time; print(int(time.time()*1000))") + 100)

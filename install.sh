@@ -32,6 +32,13 @@ git clone https://github.com/edc/bass.git && cd bass && make install && cd .. &&
 # Set source directory
 sed "s|INSTALL_SOURCE_DIR|$(echo $PWD)|g" config.fish > config.fish.temp
 
+# Clear old source files in directory
+if [ -d ~/.config/fish ]; then
+    rm -Rf ~/.config/fish/*.py || true
+    rm -Rf ~/.config/fish/plugins || true
+    rm -Rf ~/.config/fish/health_checks || true
+fi
+
 # Install fishrc + plugin and health checks
 mv -fv config.fish.temp ~/.config/fish/config.fish
 mkdir ~/.config/fish/plugins || true
@@ -40,6 +47,7 @@ cp -Rfv plugins/*.py ~/.config/fish/plugins/
 cp -Rfv health_checks/*.py ~/.config/fish/health_checks/
 cp -fv cat_header ~/.config/fish/
 cp -fv vimrc ~/.vimrc
+cp -fv welcome_screen.py ~/.config/fish/
 
 # Set current directory as update directory
 echo $PWD > ~/.config/fish/.update_dir
