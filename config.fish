@@ -239,21 +239,6 @@ function emphasize_text
   set_color $argv[1]; printf $argv[2]; set_color normal
 end
 
-function __health_check_results
-    echo ''
-    for line in (python3 ~/.config/fish/health_checks/fish_health_checks.py)
-        eval $line
-    end
-end
-
-function __plugin_results
-  for file in ~/.config/fish/plugins/*.py
-    if [ $file != './plugins/plugin_helpers.py' ]
-      eval (python3 $file)
-    end
-  end
-end
-
 function welcome_text
   if [ $FISHRC_NEXT_HEADER_UTIME ]
     if [ (python -c "import time; print(int(time.time()*1000))") -lt $FISHRC_NEXT_HEADER_UTIME ]
