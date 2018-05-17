@@ -209,7 +209,7 @@ end
 
 function user_hostname_prompt --description "Displays the username and the hostname"
     echo -n "$USER@"
-    echo -n (hostname)
+    echo -n (hostname -s)
     echo -n " "
 end
 
