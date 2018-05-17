@@ -29,15 +29,17 @@ def update_catelab() -> None:
     source_dir = environ['CATLAB_SOURCE_DIR']
     current_dir = getcwd()
 
-    stderr.write('\n\n')
-    stderr.write('Updating ＣＡＴＥＬＡＢ...\n')
+    update_text = 'Updating ＣＡＴＥＬＡＢ...\n'
+    if 'Windows' in platform():
+        update_text = update_text.replace('ＣＡＴＥＬＡＢ', 'C A T E L A B')
+    stderr.write(update_text)
     stderr.flush()
 
     # Update and reinstall
     chdir(source_dir)
     check_output('git pull'.split(), universal_newlines=True)
     if 'Windows' in platform():
-        check_output('./install.ps1'.split(), universal_newlines=True, stderr=DEVNULL)
+        check_output('powershell.exe -noprofile ./install.ps1'.split(), universal_newlines=True, stderr=DEVNULL)
     else:
         check_output('./install.sh'.split(), universal_newlines=True, stderr=DEVNULL)
 
