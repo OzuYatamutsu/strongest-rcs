@@ -38,6 +38,7 @@ def echo_welcome_screen(base_config_dir: str):
     print()
     _print_status_report()
     _run_and_print_plugin_results(base_config_dir)
+    print()
 
     shell_agnostic_print("What will your {magenta}first sequence of the day{norm} be?".format(
         magenta=Fore.MAGENTA,
@@ -58,7 +59,7 @@ def _run_and_print_plugin_results(base_config_dir):
         result = check_output(['python3', plugin], universal_newlines=True)
         if not result:
             continue
-        for line in result.split('\n'):
+        for line in result.strip('\n').split('\n'):
             shell_agnostic_print(_colorize(line))
 
 def _colorize(string_with_colors) -> str:

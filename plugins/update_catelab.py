@@ -29,7 +29,7 @@ def update_catelab() -> None:
     source_dir = environ['CATLAB_SOURCE_DIR']
     current_dir = getcwd()
 
-    update_text = 'Updating ＣＡＴＥＬＡＢ...\n'
+    update_text = '\nUpdating ＣＡＴＥＬＡＢ...\n'
     if 'Windows' in platform():
         update_text = update_text.replace('ＣＡＴＥＬＡＢ', 'C A T E L A B')
     stderr.write(update_text)

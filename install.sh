@@ -27,7 +27,7 @@ else
 fi
 
 # Download bass (backwards-compatibility for fish)
-git clone https://github.com/edc/bass.git && cd bass && make install && cd .. && rm -Rf bass
+git clone https://github.com/edc/bass.git 2>&1 && cd bass && make install 2>&1 && cd .. && rm -Rf bass
 
 # Set source directory
 sed "s|INSTALL_SOURCE_DIR|$(echo $PWD)|g" config.fish > config.fish.temp
