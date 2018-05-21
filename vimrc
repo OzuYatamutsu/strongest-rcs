@@ -14,6 +14,7 @@ set statusline+=%F             " Always show full file path
 "set mouse=a                    " Mouse-related interations in gvim
 set clipboard=unnamed          " Access to OS clipboard if supported
 set backspace=indent,eol,start " Allow all backspacing
+set encoding=utf-8
 " tmux will send xterm-style keys when its xterm-keys option is on
 if &term =~ '^screen'
     execute "set <xUp>=\e[1;*A"
