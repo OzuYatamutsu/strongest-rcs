@@ -56,7 +56,9 @@ echo $PWD > ~/.config/fish/.update_dir
 
 ## BASH INSTALLATION
 # Append welcome screen
-grep -q -F 'python3 ~/.config/fish/welcome_screen.py ~/.config/fish' ~/.bashrc || echo 'python3 ~/.config/fish/welcome_screen.py ~/.config/fish' >> ~/.bashrc
+grep -q -F 'if shopt -q login_shell; then' ~/.bashrc || echo 'if shopt -q login_shell; then' >> ~/.bashrc
+grep -q -F '  python3 ~/.config/fish/welcome_screen.py ~/.config/fish' ~/.bashrc || echo '  python3 ~/.config/fish/welcome_screen.py ~/.config/fish' >> ~/.bashrc
+grep -q -F 'if shopt -q login_shell; then' ~/.bashrc || echo 'fi' >> ~/.bashrc
 
 # Append colorization
 grep -q -F "PS1='\e[35m\u@\h \e[32m\w\e[39m> '" ~/.bashrc || echo "PS1='\e[35m\u@\h \e[32m\w\e[39m> '" >> ~/.bashrc
