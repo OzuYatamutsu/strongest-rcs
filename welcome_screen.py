@@ -1,5 +1,5 @@
 from health_checks.health_check_base import HealthCheckBase
-from subprocess import check_output
+from subprocess import check_output, Popen
 from colorama import init, Fore
 from socket import gethostname
 from datetime import datetime
@@ -56,7 +56,11 @@ def _print_status_report():
 def _run_and_print_plugin_results(base_config_dir):
     plugin_dir = join(base_config_dir, 'plugins')
     for plugin in [join(plugin_dir, plugin) for plugin in listdir(plugin_dir) if plugin.endswith('.py')]:
-        result = check_output(['python3', plugin], universal_newlines=True)
+        if 'async' in plugin:
+            Popen(['python3', plugin])
+            result = None
+        else:
+            result = check_output(['python3', plugin], universal_newlines=True)
         if not result:
             continue
         for line in result.strip('\n').split('\n'):
