@@ -63,7 +63,7 @@ class HealthCheckBase:
         return (self._prepend_state(
             HealthCheckBase._CHECK_RESULT_STATUS_STRINGS['space'][True],
             True
-        ) if used_space_percent >= HealthCheckBase._space_check_threshold else self._prepend_state(
+        ) if used_space_percent <= HealthCheckBase._space_check_threshold else self._prepend_state(
             HealthCheckBase._CHECK_RESULT_STATUS_STRINGS['space'][False],
             False
         )).format(percent=str(int(round(used_space_percent, 0))) + '%')
