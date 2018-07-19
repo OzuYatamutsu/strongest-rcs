@@ -13,7 +13,7 @@ class HealthCheckBase:
         },
         'space': {
             True: "You have <green>plenty of space<reset> on / (<green>{percent}<reset> full)!",
-            False: "You're <red>runnin' out of space<reset> on / (<green>{percent}<reset> full)!"
+            False: "You're <red>runnin' out of space<reset> on / (<red>{percent}<reset> full)!"
         },
         'time': {
             True: "It's <green>a good day for science<reset>!",
