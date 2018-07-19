@@ -25,7 +25,7 @@ class HealthCheckBase:
         ('8.8.8.8', 53) if not gethostname().endswith('linkedin.biz')
         else ('1.1.1.1', 80)
     )
-    _space_check_threshold = 20
+    _space_check_threshold = 80
     _time_check_bounds = (5, 23)
 
     def __init__(self):
