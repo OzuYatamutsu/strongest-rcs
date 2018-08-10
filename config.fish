@@ -206,6 +206,11 @@ function fish_user_key_bindings
 end
 ## END !!, !$ bash support
 
+## Aliases and various functions
+function bottom
+  htop -d 1
+end
+## END Aliases and various functions
 
 function user_hostname_prompt --description "Displays the username and the hostname"
     echo -n "$USER@"
