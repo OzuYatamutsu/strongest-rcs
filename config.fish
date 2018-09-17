@@ -5,6 +5,10 @@ set green (set_color green)
 set red (set_color red)
 set gray (set_color -o black)
 
+### Workarounds
+# If we're using an old version of fish and export isn't defined
+export 2>&1 >/dev/null || alias export "true"  # Make export a no-op
+
 ### ENV VARIABLES
 export CATLAB_SOURCE_DIR="INSTALL_SOURCE_DIR"
 export CATLAB_METADATA_DIR="$HOME/.config/fish"
