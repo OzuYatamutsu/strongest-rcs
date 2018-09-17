@@ -9,6 +9,9 @@ set gray (set_color -o black)
 export CATLAB_SOURCE_DIR="INSTALL_SOURCE_DIR"
 export CATLAB_METADATA_DIR="$HOME/.config/fish"
 
+### OTHER ENV
+export LC_ALL='en_US.utf8'
+
 ### GIT STUFF
 set -g fish_color_git_clean green
 set -g fish_color_git_branch magenta

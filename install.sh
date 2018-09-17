@@ -65,4 +65,6 @@ grep -q -F '  python3 ~/.config/fish/welcome_screen.py ~/.config/fish' ~/.bashrc
 # Append colorization
 grep -q -F "PS1='\e[35m\u@\h \e[32m\w\e[39m> '" ~/.bashrc || echo "PS1='\e[35m\u@\h \e[32m\w\e[39m> '" >> ~/.bashrc
 
+# Set default locale
+grep -q -F "export LC_ALL='en_US.utf8'" ~/.bashrc || echo "export LC_ALL='en_US.utf8'" >> ~/.bashrc
 
