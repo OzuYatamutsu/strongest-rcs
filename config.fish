@@ -1,3 +1,7 @@
+### NOTES
+# Don't use export, use set --export for backwards compatibility
+# Catelab requires Python>=3.6 to work properly
+
 set normal (set_color normal)
 set magenta (set_color magenta)
 set yellow (set_color yellow)
@@ -5,16 +9,12 @@ set green (set_color green)
 set red (set_color red)
 set gray (set_color -o black)
 
-### Workarounds
-# If we're using an old version of fish and export isn't defined
-export 2>&1 >/dev/null || alias export "true"  # Make export a no-op
-
 ### ENV VARIABLES
-export CATLAB_SOURCE_DIR="INSTALL_SOURCE_DIR"
-export CATLAB_METADATA_DIR="$HOME/.config/fish"
+set --export CATLAB_SOURCE_DIR "INSTALL_SOURCE_DIR"
+set --export CATLAB_METADATA_DIR "$HOME/.config/fish"
 
 ### OTHER ENV
-export LC_ALL='en_US.utf8'
+set --export LC_ALL='en_US.utf8'
 
 ### GIT STUFF
 set -g fish_color_git_clean green
@@ -262,7 +262,7 @@ function welcome_text
   python3 "$CATLAB_METADATA_DIR/welcome_screen.py" "$CATLAB_METADATA_DIR"
 
   # Add
-  export FISHRC_NEXT_HEADER_UTIME=(math (python -c "import time; print(int(time.time()*1000))") + 100)
+  set --export FISHRC_NEXT_HEADER_UTIME=(math (python -c "import time; print(int(time.time()*1000))") + 100)
 end
 
 set fish_greeting ""  # No greet
