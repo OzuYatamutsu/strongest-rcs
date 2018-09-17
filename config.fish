@@ -13,6 +13,9 @@ export 2>&1 >/dev/null || alias export "true"  # Make export a no-op
 export CATLAB_SOURCE_DIR="INSTALL_SOURCE_DIR"
 export CATLAB_METADATA_DIR="$HOME/.config/fish"
 
+### OTHER ENV
+export LC_ALL='en_US.utf8'
+
 ### GIT STUFF
 set -g fish_color_git_clean green
 set -g fish_color_git_branch magenta
