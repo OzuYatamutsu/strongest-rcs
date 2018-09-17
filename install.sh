@@ -53,6 +53,9 @@ cp -fv welcome_screen.py ~/.config/fish/
 # Set current directory as update directory
 echo $PWD > ~/.config/fish/.update_dir
 
+# Install scripts
+mkdir ~/scripts || true
+cp -Rfv scripts/* ~/scripts/
 
 ## BASH INSTALLATION
 # Append welcome screen
