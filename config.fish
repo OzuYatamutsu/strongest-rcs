@@ -14,7 +14,7 @@ set --export CATLAB_SOURCE_DIR "INSTALL_SOURCE_DIR"
 set --export CATLAB_METADATA_DIR "$HOME/.config/fish"
 
 ### OTHER ENV
-set --export LC_ALL='en_US.utf8'
+set --export LC_ALL 'en_US.utf8'
 
 ### GIT STUFF
 set -g fish_color_git_clean green
@@ -262,7 +262,7 @@ function welcome_text
   python3 "$CATLAB_METADATA_DIR/welcome_screen.py" "$CATLAB_METADATA_DIR"
 
   # Add
-  set --export FISHRC_NEXT_HEADER_UTIME=(math (python -c "import time; print(int(time.time()*1000))") + 100)
+  set --export FISHRC_NEXT_HEADER_UTIME (math (python -c "import time; print(int(time.time()*1000))") + 100)
 end
 
 set fish_greeting ""  # No greet
