@@ -7,16 +7,22 @@ class CatelabStore:
     __KEY_TABLE = 'metadata'
 
     def __init__(self, base_config_dir: str):
-        self.conn = connect(join(base_config_dir, CatelabStore._METADATA_STORE_FILENAME))
+        self.conn = connect(join(
+            base_config_dir, CatelabStore._METADATA_STORE_FILENAME
+        ))
         self.conn.row_factory = Row
-        self.conn.execute("CREATE TABLE IF NOT EXISTS metadata(key TEXT PRIMARY KEY, value TEXT)")
+        self.conn.execute(
+            "CREATE TABLE IF NOT EXISTS metadata("
+            "key TEXT PRIMARY KEY, value TEXT"
+            ")"
+        )
         self.conn.commit()
 
     def get_last_update_utime(self) -> int:
-        return load_config_key('LAST_UPDATE_UTIME')
+        return self.load_config_key('LAST_UPDATE_UTIME')
 
     def get_catelab_source_dir(self) -> str:
-        return load_config_key('SOURCE_DIR')
+        return self.load_config_key('SOURCE_DIR')
 
     def write_config_key(self, key: str, value: str) -> str:
         cursor = self.conn.cursor()
@@ -48,4 +54,3 @@ class CatelabStore:
         )
 
         self.conn.commit()
-

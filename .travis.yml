@@ -4,7 +4,7 @@ python:
     - "3.6"
 install:
     - pyenv global system 3.6
-    - pip3.6 install flake8 --user
+    - pip3.6 install flake8 pytest --user
 script:
     - flake8
     - pytest
