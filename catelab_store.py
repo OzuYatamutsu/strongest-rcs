@@ -1,5 +1,6 @@
 from sqlite3 import connect, Row
 from os.path import join
+from os import environ
 from sys import argv
 
 
@@ -54,10 +55,14 @@ class CatelabStore:
 if __name__ == '__main__':
     if len(argv) == 2:
         # Doing a read
-        result = CatelabStore().load_config_key(key=argv[1])
+        result = CatelabStore(
+            base_config_dir=environ['CATLAB_METADATA_DIR']
+        ).load_config_key(key=argv[1])
     elif len(argv) == 3:
         # Doing a write
-        CatelabStore().write_config_key(key=argv[1], value=argv[2])
+        CatelabStore(
+            base_config_dir=environ['CATLAB_METADATA_DIR']
+        ).write_config_key(key=argv[1], value=argv[2])
         result = ''
     else:
         print("Pass 2 or 3 arguments.")
