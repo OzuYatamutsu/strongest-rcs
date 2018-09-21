@@ -17,13 +17,12 @@ def main(base_config_dir: str):
     health_checker = HealthCheckBase()    
 
     # Cat art, datetime, welcome text
-    print_header()
+    print_header(base_config_dir)
     print()
 
     # Health checks (internet status, space check, ...)
     print_status_report(health_checker)
     have_internet_connection = health_checker.net_check_status
-    print()
 
     # Run all plugins in plugin directory (lexographically)
     run_and_print_plugin_results(base_config_dir, have_internet_connection)
@@ -43,7 +42,7 @@ def print_header(base_config_dir: str) -> None:
     # Welcome text
     shell_agnostic_print(
         f"Yo! Welcome to {Fore.BLUE}ＣＡＴＥＬＡＢ{Fore.RESET} on {Fore.MAGENTA}{gethostname()}{Fore.RESET}, {Fore.BLUE}{getuser()}!\n"
-        f"It's currently {Fore.GREEN}{_get_humaized_timestamp()}."
+        f"It's currently {Fore.GREEN}{ _get_humanized_timestamp()}."
     )
 
 
@@ -60,10 +59,10 @@ def run_and_print_plugin_results(base_config_dir: str, has_internet: bool) -> No
     plugin_dir = join(base_config_dir, 'plugins')
     for plugin in [join(plugin_dir, plugin) for plugin in listdir(plugin_dir) if plugin.endswith('.py')]:
         if 'async' in plugin:
-            Popen(['python3', plugin, has_internet])
+            Popen(['python3', plugin, str(has_internet)])
             result = None
         else:
-            result = check_output(['python3', plugin, has_internet], universal_newlines=True)
+            result = check_output(['python3', plugin, str(has_internet)], universal_newlines=True)
         if not result:
             continue
         for line in result.strip('\n').split('\n'):

@@ -1,10 +1,10 @@
-from tempfile import gettempdir
-from time import time
-from sys import stderr
+from subprocess import check_output, DEVNULL
 from os import environ, chdir, getcwd
 from os.path import join, isfile
-from subprocess import check_output, DEVNULL
+from tempfile import gettempdir
 from platform import platform
+from sys import stderr, argv
+from time import time
 _UPDATE_FILE_LOCATION = join(gettempdir(), '.next_update_utime')
 
 
@@ -24,6 +24,7 @@ def should_update(has_internet) -> bool:
         next_update_utime = float(f.read())
 
     return current_time >= next_update_utime
+
 
 def update_catelab() -> None:
     if 'CATLAB_SOURCE_DIR' not in environ:
@@ -53,6 +54,7 @@ def update_catelab() -> None:
 
     set_next_update_utime()
 
+
 def set_next_update_utime() -> None:
     current_time = time()
     next_update_utime = time() + 21600  # + 6 hours
@@ -62,6 +64,8 @@ def set_next_update_utime() -> None:
 
 
 if __name__ == '__main__':
-    if should_update(argv[1]):
+    has_internet = argv[1] == 'True'
+
+    if should_update(has_internet):
         update_catelab()
 
