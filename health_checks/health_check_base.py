@@ -9,7 +9,7 @@ class HealthCheckBase:
     _CHECK_RESULT_STATUS_STRINGS = {
         'net': {
             True: "Your internet connection looks <green>OK<reset>, dood!",
-            False: "Your internet connection looks degraded<reset>, dood."
+            False: "Your internet connection looks <red>degraded<reset>, dood."
         },
         'space': {
             True: (

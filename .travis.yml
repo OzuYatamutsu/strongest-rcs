@@ -1,13 +1,12 @@
 language: python3
 sudo: enabled
 python:
-    - 3.6
-before_install:
-    - sudo apt-get install python3-pip
+    - "3.6"
 install:
-    - pip3 install flake8 --user
+    - pyenv global system 3.6
+    - pip3.6 install flake8 --user
 script:
     - flake8
     - /bin/bash install.sh
-    - python welcome_screen.py .
+    - python3.6 welcome_screen.py .
 
