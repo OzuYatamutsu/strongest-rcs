@@ -1,5 +1,6 @@
 from sqlite3 import connect, Row
 from os.path import join
+from sys import argv
 
 
 class CatelabStore:
@@ -17,12 +18,6 @@ class CatelabStore:
             ")"
         )
         self.conn.commit()
-
-    def get_last_update_utime(self) -> int:
-        return self.load_config_key('LAST_UPDATE_UTIME')
-
-    def get_catelab_source_dir(self) -> str:
-        return self.load_config_key('SOURCE_DIR')
 
     def write_config_key(self, key: str, value: str) -> str:
         cursor = self.conn.cursor()
@@ -54,3 +49,17 @@ class CatelabStore:
         )
 
         self.conn.commit()
+
+
+if __name__ == '__main__':
+    if len(argv) == 2:
+        # Doing a read
+        result = CatelabStore().load_config_key(key=argv[1])
+    elif len(argv) == 3:
+        # Doing a write
+        CatelabStore().write_config_key(key=argv[1], value=argv[2])
+        result = ''
+    else:
+        print("Pass 2 or 3 arguments.")
+        exit(-1)
+    print(result)
