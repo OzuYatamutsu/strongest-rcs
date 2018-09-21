@@ -1,7 +1,8 @@
+from socket import socket, AF_INET, SOCK_STREAM, setdefaulttimeout, gethostname
 from datetime import datetime, time
 from shutil import disk_usage
-from socket import socket, AF_INET, SOCK_STREAM, setdefaulttimeout, gethostname
 from re import findall
+
 
 class HealthCheckBase:
     """Interface to run OS health checks to show in shell welcome text"""

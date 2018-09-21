@@ -8,7 +8,11 @@ from platform import platform
 _UPDATE_FILE_LOCATION = join(gettempdir(), '.next_update_utime')
 
 
-def should_update() -> bool:
+def should_update(has_internet) -> bool:
+    # Don't update if we don't have internet
+    if not has_internet:
+        return False
+
     current_time = time()
 
     if not isfile(_UPDATE_FILE_LOCATION):
@@ -58,6 +62,6 @@ def set_next_update_utime() -> None:
 
 
 if __name__ == '__main__':
-    if should_update():
+    if should_update(argv[1]):
         update_catelab()
 
