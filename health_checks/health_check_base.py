@@ -1,7 +1,6 @@
 from socket import socket, AF_INET, SOCK_STREAM, setdefaulttimeout, gethostname
 from datetime import datetime, time
 from shutil import disk_usage
-from re import findall
 
 
 class HealthCheckBase:
@@ -13,8 +12,14 @@ class HealthCheckBase:
             False: "Your internet connection looks degraded<reset>, dood."
         },
         'space': {
-            True: "You have <green>plenty of space<reset> on / (<green>{percent}<reset> full)!",
-            False: "You're <red>runnin' out of space<reset> on / (<red>{percent}<reset> full)!"
+            True: (
+                "You have <green>plenty of space<reset> "
+                "on / (<green>{percent}<reset> full)!"
+            ),
+            False: (
+                "You're <red>runnin' out of space<reset> "
+                "on / (<red>{percent}<reset> full)!"
+            )
         },
         'time': {
             True: "It's <green>a good day for science<reset>!",
@@ -34,7 +39,7 @@ class HealthCheckBase:
 
     def check_network(self) -> str:
         """Checks network connectivity."""
-        
+
         try:
             setdefaulttimeout(1)  # Wait a max of 1 sec
             test_socket = socket(AF_INET, SOCK_STREAM)
@@ -47,7 +52,7 @@ class HealthCheckBase:
             )
         finally:
             test_socket.close()
-        
+
         return self._prepend_state(
             HealthCheckBase._CHECK_RESULT_STATUS_STRINGS['net'][True],
             True
@@ -59,12 +64,16 @@ class HealthCheckBase:
         the root fs is less than a threshold.
         """
 
-        used_space_percent = (disk_usage(root).used / disk_usage(root).total) * 100
+        used_space_percent = (
+            disk_usage(root).used / disk_usage(root).total
+        ) * 100
 
         return (self._prepend_state(
             HealthCheckBase._CHECK_RESULT_STATUS_STRINGS['space'][True],
             True
-        ) if used_space_percent <= HealthCheckBase._space_check_threshold else self._prepend_state(
+        ) if (
+            used_space_percent <= HealthCheckBase._space_check_threshold
+        ) else self._prepend_state(
             HealthCheckBase._CHECK_RESULT_STATUS_STRINGS['space'][False],
             False
         )).format(percent=str(int(round(used_space_percent, 0))) + '%')
@@ -74,7 +83,7 @@ class HealthCheckBase:
         Checks to see if the current time is after
         a certain hour.
         """
-        
+
         now = datetime.now().time()
         if (
             now >= time(HealthCheckBase._time_check_bounds[0], 0)
@@ -103,7 +112,7 @@ class HealthCheckBase:
             else ("<red> ✗<reset> " + result_string)
         )
 
+
 if __name__ == '__main__':
     health_checker = HealthCheckBase()
     print(str(health_checker.run_checks()))
-

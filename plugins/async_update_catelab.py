@@ -28,7 +28,11 @@ def should_update(has_internet) -> bool:
 
 def update_catelab() -> None:
     if 'CATLAB_SOURCE_DIR' not in environ:
-        print("Update scheduled, but not updating because CATLAB_SOURCE_DIR is not set.")
+        print(
+            "Update scheduled, but not updating "
+            "because CATLAB_SOURCE_DIR is not set."
+        )
+
         return
 
     source_dir = environ['CATLAB_SOURCE_DIR']
@@ -44,9 +48,15 @@ def update_catelab() -> None:
     chdir(source_dir)
     check_output('git pull'.split(), universal_newlines=True)
     if 'Windows' in platform():
-        check_output('powershell.exe -noprofile ./install.ps1'.split(), universal_newlines=True, stderr=DEVNULL)
+        check_output(
+            'powershell.exe -noprofile ./install.ps1'.split(),
+            universal_newlines=True, stderr=DEVNULL
+        )
     else:
-        check_output('./install.sh'.split(), universal_newlines=True, stderr=DEVNULL)
+        check_output(
+            './install.sh'.split(),
+            universal_newlines=True, stderr=DEVNULL
+        )
 
     chdir(current_dir)
     stderr.write('Update complete.\n')
@@ -56,7 +66,6 @@ def update_catelab() -> None:
 
 
 def set_next_update_utime() -> None:
-    current_time = time()
     next_update_utime = time() + 21600  # + 6 hours
 
     with open(_UPDATE_FILE_LOCATION, 'w') as f:
@@ -68,4 +77,3 @@ if __name__ == '__main__':
 
     if should_update(has_internet):
         update_catelab()
-

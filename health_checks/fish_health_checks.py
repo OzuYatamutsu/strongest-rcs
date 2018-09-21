@@ -1,6 +1,4 @@
-from subprocess import check_output, STDOUT, CalledProcessError, DEVNULL 
 from health_check_base import HealthCheckBase
-from os.path import isfile
 from re import findall
 
 
@@ -11,17 +9,17 @@ class FishHealthChecks(HealthCheckBase):
     def format_for_shell(self, output: str):
         replace_tokens = ['green', 'red', 'blue', 'magenta']
         for replace_token in replace_tokens:
-            needle = '\<{token}\>(?P<value>.*?)\<\/{token}\>'.format(token=replace_token)
+            needle = f'\<{replace_token}\>(?P<value>.*?)\<\/{replace_token}\>'
             values = findall(needle, output)
 
             while values:
                 value = values.pop()
                 output = output.replace(
-                    '<{token}>{value}</{token}>'.format(token=replace_token, value=value),
-                    '(emphasize_text {token} "{value}")'.format(token=replace_token, value=value)
+                    f'<{replace_token}>{value}</{replace_token}>',
+                    f'(emphasize_text {replace_token} "{value}")'
                 )
 
-        return 'echo {output}'.format(output=output).replace('%', '%%')
+        return f'echo {output}'.replace('%', '%%')
 
     def run_checks(self):
         health_check_results = [
@@ -35,10 +33,13 @@ class FishHealthChecks(HealthCheckBase):
             print(self.format_for_shell(line))
 
         # Expose net check result to fs
-        print("echo {net_check_result} > ~/.config/fish/.net_check_result".format(net_check_result=('0' if self.net_check_status else '-1')))
-        print("set NET_CMD_STATUS {status}".format(status=('0' if self.net_check_status else '-1')))
+        print(
+            f"echo {'0' if self.net_check_status else '-1'} "
+            "> ~/.config/fish/.net_check_result"
+        )
+        print("set NET_CMD_STATUS {'0' if self.net_check_status else '-1'}")
+
 
 if __name__ == '__main__':
     health_checker = FishHealthChecks()
     health_checker.run_checks()
-

@@ -2,7 +2,7 @@ from health_checks.health_check_base import HealthCheckBase
 from subprocess import check_output, Popen
 from colorama import init, Fore
 from socket import gethostname
-from platform import platform 
+from platform import platform
 from datetime import datetime
 from getpass import getuser
 from pytz import reference
@@ -14,7 +14,7 @@ init(autoreset=True)
 
 def main(base_config_dir: str):
     # Health checker
-    health_checker = HealthCheckBase()    
+    health_checker = HealthCheckBase()
 
     # Cat art, datetime, welcome text
     print_header(base_config_dir)
@@ -29,7 +29,8 @@ def main(base_config_dir: str):
     print()
 
     shell_agnostic_print(
-        f"What will your {Fore.MAGENTA}first sequence of the day{Fore.RESET} be?"
+        f"What will your {Fore.MAGENTA}first sequence "
+        f"of the day{Fore.RESET} be?"
     )
 
 
@@ -41,7 +42,9 @@ def print_header(base_config_dir: str) -> None:
 
     # Welcome text
     shell_agnostic_print(
-        f"Yo! Welcome to {Fore.BLUE}ＣＡＴＥＬＡＢ{Fore.RESET} on {Fore.MAGENTA}{gethostname()}{Fore.RESET}, {Fore.BLUE}{getuser()}!\n"
+        f"Yo! Welcome to {Fore.BLUE}ＣＡＴＥＬＡＢ{Fore.RESET} "
+        f"on {Fore.MAGENTA}{gethostname()}{Fore.RESET}, "
+        f"{Fore.BLUE}{getuser()}!\n"
         f"It's currently {Fore.GREEN}{ _get_humanized_timestamp()}."
     )
 
@@ -55,14 +58,26 @@ def print_status_report(health_checker=None) -> None:
         shell_agnostic_print(_colorize(line))
 
 
-def run_and_print_plugin_results(base_config_dir: str, has_internet: bool) -> None:
+def run_and_print_plugin_results(base_config_dir: str,
+                                 has_internet: bool) -> None:
+    def _get_all_plugins() -> list:
+        return [
+            join(base_config_dir, 'plugins', plugin)
+            for plugin in listdir(plugin_dir)
+            if plugin.endswith('.py')
+        ]
+
     plugin_dir = join(base_config_dir, 'plugins')
-    for plugin in [join(plugin_dir, plugin) for plugin in listdir(plugin_dir) if plugin.endswith('.py')]:
+    for plugin in _get_all_plugins():
         if 'async' in plugin:
-            Popen(['python3', plugin, str(has_internet)])
+            Popen([
+                'python3', plugin, str(has_internet)
+            ])
             result = None
         else:
-            result = check_output(['python3', plugin, str(has_internet)], universal_newlines=True)
+            result = check_output([
+                'python3', plugin, str(has_internet)
+            ], universal_newlines=True)
         if not result:
             continue
         for line in result.strip('\n').split('\n'):
@@ -75,11 +90,12 @@ def shell_agnostic_print(text) -> None:
         print(text)
         return
 
-    print(text\
-        .replace('ＣＡＴＥＬＡＢ', 'C A T E L A B')\
-        .replace(Fore.BLUE, Fore.CYAN)\
-        .replace(Fore.MAGENTA, Fore.RED)\
-        .replace('✓', '[OK]')\
+    print(
+        text
+        .replace('ＣＡＴＥＬＡＢ', 'C A T E L A B')
+        .replace(Fore.BLUE, Fore.CYAN)
+        .replace(Fore.MAGENTA, Fore.RED)
+        .replace('✓', '[OK]')
         .replace('✗', '[NG]')
     )
 
@@ -105,10 +121,12 @@ def _colorize(string_with_colors) -> str:
 def _get_humanized_timestamp():
     current_datetime = datetime.now()
     current_timezone: str = reference.LocalTimezone().tzname(current_datetime)
-    return current_datetime.strftime('%A, %B %d %Y at %I:%M:%S %p ') + current_timezone 
+    return (
+        current_datetime.strftime('%A, %B %d %Y at %I:%M:%S %p ') +
+        current_timezone
+    )
 
 
 if __name__ == "__main__":
     # Pass in base config directory as argument
     main(argv[1])
-

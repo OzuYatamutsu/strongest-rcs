@@ -9,5 +9,5 @@ install:
 script:
     - flake8
     - /bin/bash install.sh
-    - python3 welcome_screen.py .
+    - python welcome_screen.py .
 
