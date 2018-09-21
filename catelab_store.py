@@ -8,7 +8,8 @@ class CatelabStore:
     _METADATA_STORE_FILENAME = 'catelab_metadata.sqlite3'
     __KEY_TABLE = 'metadata'
 
-    def __init__(self, base_config_dir: str):
+    def __init__(self, base_config_dir=None):
+        base_config_dir = base_config_dir or environ['CATLAB_METADATA_DIR']
         self.conn = connect(join(
             base_config_dir, CatelabStore._METADATA_STORE_FILENAME
         ))
@@ -24,7 +25,7 @@ class CatelabStore:
         cursor = self.conn.cursor()
         cursor.execute(
             f"INSERT OR REPLACE INTO {CatelabStore.__KEY_TABLE}(key, value) "
-            "VALUES (?, ?)", (key, value)
+            "VALUES (?, ?)", (key.strip(), value.strip())
         )
 
         self.conn.commit()
@@ -33,7 +34,7 @@ class CatelabStore:
         cursor = self.conn.cursor()
         cursor.execute(
             f"SELECT value FROM {CatelabStore.__KEY_TABLE} "
-            "WHERE key = ?", (key,)
+            "WHERE key = ?", (key.strip(),)
         )
 
         result = cursor.fetchone() or {}

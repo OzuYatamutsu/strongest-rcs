@@ -1,43 +1,30 @@
 from subprocess import check_output, DEVNULL
-from os import environ, chdir, getcwd
-from os.path import join, isfile
-from tempfile import gettempdir
+from os import chdir, getcwd, environ
+from sys import stderr, argv, path
 from platform import platform
-from sys import stderr, argv
 from time import time
-_UPDATE_FILE_LOCATION = join(gettempdir(), '.next_update_utime')
+
+path.append(environ['CATLAB_METADATA_DIR'])
+from catelab_store import CatelabStore  # noqa
 
 
 def should_update(has_internet) -> bool:
     # Don't update if we don't have internet
     if not has_internet:
         return False
-
-    current_time = time()
-
-    if not isfile(_UPDATE_FILE_LOCATION):
-        with open(_UPDATE_FILE_LOCATION, 'w') as f:
-            f.write('0')
-
-    # Get next update time:
-    with open(_UPDATE_FILE_LOCATION, 'r') as f:
-        next_update_utime = float(f.read())
-
-    return current_time >= next_update_utime
+    return time() >= get_next_update_utime()
 
 
 def update_catelab() -> None:
-    if 'CATLAB_SOURCE_DIR' not in environ:
+    source_dir = get_source_dir()
+    if not source_dir:
         print(
             "Update scheduled, but not updating "
-            "because CATLAB_SOURCE_DIR is not set."
+            "because CATELAB_SOURCE_DIR is not set."
         )
 
         return
-
-    source_dir = environ['CATLAB_SOURCE_DIR']
     current_dir = getcwd()
-
     update_text = '\nUpdating ＣＡＴＥＬＡＢ...\n'
     if 'Windows' in platform():
         update_text = update_text.replace('ＣＡＴＥＬＡＢ', 'C A T E L A B')
@@ -60,16 +47,33 @@ def update_catelab() -> None:
 
     chdir(current_dir)
     stderr.write('Update complete.\n')
+    stderr.write('\n')
     stderr.flush()
 
     set_next_update_utime()
 
 
 def set_next_update_utime() -> None:
-    next_update_utime = time() + 21600  # + 6 hours
+    # Now + 6 hours
+    CatelabStore().write_config_key(
+        'NEXT_UPDATE_UTIME', str(time() + 21600)
+    )
 
-    with open(_UPDATE_FILE_LOCATION, 'w') as f:
-        f.write(str(next_update_utime))
+
+def get_next_update_utime() -> float:
+    result = CatelabStore().load_config_key(
+        'NEXT_UPDATE_UTIME'
+    )
+
+    if not result:
+        return 0
+    return float(result)
+
+
+def get_source_dir() -> str:
+    return CatelabStore().load_config_key(
+       'CATELAB_SOURCE_DIR'
+    )
 
 
 if __name__ == '__main__':

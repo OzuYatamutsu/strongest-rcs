@@ -1,4 +1,5 @@
 #!/bin/bash
+CATLAB_METADATA_DIR="$HOME/.config/fish"
 
 # Get location of fish
 sed "s|default-shell[[:space:]].*$|default-shell $(which fish)|g" tmux.conf > tmux_temp
@@ -49,9 +50,12 @@ cp -Rfv health_checks/*.py ~/.config/fish/health_checks/
 cp -fv cat_header ~/.config/fish/
 cp -fv vimrc ~/.vimrc
 cp -fv welcome_screen.py ~/.config/fish/
+cp -fv catelab_store.py ~/.config/fish/
 
 # Set current directory as update directory
-echo $PWD > ~/.config/fish/.update_dir
+python3 "${CATLAB_METADATA_DIR}/catelab_store.py" CATLAB_METADATA_DIR $CATLAB_METADATA_DIR
+python3 "${CATLAB_METADATA_DIR}/catelab_store.py" INSTALL_SOURCE_DIR $PWD
+python3 "${CATLAB_METADATA_DIR}/catelab_store.py" CATELAB_SOURCE_DIR $PWD
 
 # Install scripts
 mkdir ~/scripts || true

@@ -1,4 +1,5 @@
 # Install Pathogen (plugin manager)
+$CATLAB_METADATA_DIR = "$env:USERPROFILE\.config\cateshell"
 mkdir ~\vimfiles\autoload -ErrorAction SilentlyContinue >$null
 mkdir ~\vimfiles\bundle -ErrorAction SilentlyContinue >$null
 Invoke-WebRequest https://tpo.pe/pathogen.vim -OutFile ~\vimfiles\autoload\pathogen.vim  >$null
@@ -29,13 +30,16 @@ rm ~/.config/cateshell/plugins/* -Recurse -ErrorAction SilentlyContinue
 rm ~/.config/cateshell/health_checks/* -Recurse -ErrorAction SilentlyContinue
 
 cp welcome_screen.py ~/.config/cateshell
+cp catelab_store.py ~/.config/cateshell
 cp cat_header ~/.config/cateshell/cat_header
 cp health_checks/*.py ~/.config/cateshell/health_checks/
 cp plugins/*.py ~/.config/cateshell/plugins/
 pip3 install -r requirements.txt
 
 # Set current directory as update directory
-echo $PWD.Path > ~/.config/cateshell/.update_dir
+python3 "${CATLAB_METADATA_DIR}/catelab_store.py" CATLAB_METADATA_DIR $CATLAB_METADATA_DIR
+python3 "${CATLAB_METADATA_DIR}/catelab_store.py" CATELAB_SOURCE_DIR $PWD.Path
+python3 "${CATLAB_METADATA_DIR}/catelab_store.py" INSTALL_SOURCE_DIR $PWD.Path
 
 # Replace fish with powershell
 (Get-Content ~/.vimrc).Replace("set shell=fish", "set shell=powershell") `
