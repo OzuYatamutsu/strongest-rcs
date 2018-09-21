@@ -1,4 +1,4 @@
-# strongest-rcs
+# strongest-rcs [![Build Status](https://travis-ci.org/OzuYatamutsu/strongest-rcs.svg?branch=master)](https://travis-ci.org/OzuYatamutsu/strongest-rcs)
 The strongest config files for my shell/vim, myan!
 
 ![](image.png)
