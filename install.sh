@@ -32,9 +32,6 @@ git clone https://github.com/edc/bass.git 2>&1 && cd bass && make install 2>&1 &
 
 # Clear old source files in directory
 if [ -d ~/.config/fish ]; then
-    rm -Rf ~/.config/fish/*.py || true
-    rm -Rf ~/.config/fish/plugins || true
-    rm -Rf ~/.config/fish/health_checks || true
     rm -Rf ~/.config/fish/* || true
 fi
 
