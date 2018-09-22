@@ -45,7 +45,7 @@ class HealthCheckBase:
             test_socket = socket(AF_INET, SOCK_STREAM)
             test_socket.connect(HealthCheckBase._net_check_endpoint)
             self.net_check_status = True
-        except OSError as e:
+        except OSError:
             return self._prepend_state(
                 HealthCheckBase._CHECK_RESULT_STATUS_STRINGS['net'][False],
                 False

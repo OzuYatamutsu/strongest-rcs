@@ -4,3 +4,4 @@ __pycache__
 *.pyc
 .pytest_cache/
 catelab_metadata.sqlite3
+.vscode/

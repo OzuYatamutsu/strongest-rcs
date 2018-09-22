@@ -4,15 +4,16 @@ from sys import stderr, argv, path
 from platform import platform
 from time import time
 
-path.append(environ['CATLAB_METADATA_DIR'])
+path.append(environ['CATELAB_METADATA_DIR'])
 from catelab_store import CatelabStore  # noqa
 
 
-def should_update(has_internet) -> bool:
+def should_update(has_internet: bool) -> bool:
     # Don't update if we don't have internet
-    if not has_internet:
-        return False
-    return time() >= get_next_update_utime()
+    return (
+        not has_internet
+        and time() >= get_next_update_utime()
+    )
 
 
 def update_catelab() -> None:

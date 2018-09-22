@@ -1,5 +1,5 @@
 #!/bin/bash
-CATLAB_METADATA_DIR="$HOME/.config/fish"
+export CATELAB_METADATA_DIR="$HOME/.config/fish"
 
 # Get location of fish
 sed "s|default-shell[[:space:]].*$|default-shell $(which fish)|g" tmux.conf > tmux_temp
@@ -30,9 +30,6 @@ fi
 # Download bass (backwards-compatibility for fish)
 git clone https://github.com/edc/bass.git 2>&1 && cd bass && make install 2>&1 && cd .. && rm -Rf bass
 
-# Set source directory
-sed "s|INSTALL_SOURCE_DIR|$(echo $PWD)|g" config.fish > config.fish.temp
-
 # Clear old source files in directory
 if [ -d ~/.config/fish ]; then
     rm -Rf ~/.config/fish/*.py || true
@@ -42,7 +39,7 @@ fi
 
 # Install fishrc + plugin and health checks
 pip3 install -r requirements.txt --user
-mv -fv config.fish.temp ~/.config/fish/config.fish
+mv -fv config.fish ~/.config/fish/config.fish
 mkdir ~/.config/fish/plugins || true
 mkdir ~/.config/fish/health_checks || true
 cp -Rfv plugins/*.py ~/.config/fish/plugins/
@@ -53,9 +50,8 @@ cp -fv welcome_screen.py ~/.config/fish/
 cp -fv catelab_store.py ~/.config/fish/
 
 # Set current directory as update directory
-python3 "${CATLAB_METADATA_DIR}/catelab_store.py" CATLAB_METADATA_DIR $CATLAB_METADATA_DIR
-python3 "${CATLAB_METADATA_DIR}/catelab_store.py" INSTALL_SOURCE_DIR $PWD
-python3 "${CATLAB_METADATA_DIR}/catelab_store.py" CATELAB_SOURCE_DIR $PWD
+python3 "${CATELAB_METADATA_DIR}/catelab_store.py" CATELAB_METADATA_DIR $CATELAB_METADATA_DIR
+python3 "${CATELAB_METADATA_DIR}/catelab_store.py" CATELAB_SOURCE_DIR $PWD
 
 # Install scripts
 mkdir ~/scripts || true

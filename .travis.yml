@@ -10,4 +10,3 @@ script:
     - pytest
     - /bin/bash install.sh
     - python3.6 welcome_screen.py .
-
