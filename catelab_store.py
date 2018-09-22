@@ -53,8 +53,11 @@ class CatelabStore:
         result = cursor.fetchall()
         if not result:
             return {}
-        
-        return {row['key']: row['value'] for row in [dict(row) for row in result]}
+
+        return {
+            row['key']: row['value']
+            for row in [dict(row) for row in result]
+        }
 
     def clear(self) -> None:
         cursor = self.conn.cursor()
