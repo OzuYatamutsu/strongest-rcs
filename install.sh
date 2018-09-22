@@ -35,11 +35,12 @@ if [ -d ~/.config/fish ]; then
     rm -Rf ~/.config/fish/*.py || true
     rm -Rf ~/.config/fish/plugins || true
     rm -Rf ~/.config/fish/health_checks || true
+    rm -Rf ~/.config/fish/* || true
 fi
 
 # Install fishrc + plugin and health checks
 pip3 install -r requirements.txt --user
-mv -fv config.fish ~/.config/fish/config.fish
+cp -fv config.fish ~/.config/fish/config.fish
 mkdir ~/.config/fish/plugins || true
 mkdir ~/.config/fish/health_checks || true
 cp -Rfv plugins/*.py ~/.config/fish/plugins/
