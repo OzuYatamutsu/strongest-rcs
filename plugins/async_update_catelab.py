@@ -11,7 +11,7 @@ from catelab_store import CatelabStore  # noqa
 def should_update(has_internet: bool) -> bool:
     # Don't update if we don't have internet
     return (
-        not has_internet
+        has_internet
         and time() >= get_next_update_utime()
     )
 
