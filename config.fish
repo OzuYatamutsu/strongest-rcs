@@ -215,7 +215,13 @@ end
 
 ## Aliases and various functions
 function is_git_repo
-  git rev-parse --is-inside-work-tree
+  set -l is_inside_work_tree (git rev-parse --is-inside-work-tree ^/dev/null )
+
+  if test -z $is_inside_work_tree
+    echo 'false'
+  else
+    echo 'true'
+  end
 end
 
 function get_utime_ms
@@ -233,7 +239,14 @@ function prompt_long_pwd --description 'Print the current working directory'
     echo $PWD | sed -e "s|^$HOME|~|" -e 's|^/private||'
 end
 
+function git_prompt --description 'Print git information'
+  python3 "$CATELAB_METADATA_DIR/git_support.py" 
+end
+
 function fish_prompt
+  python3 "$CATELAB_METADATA_DIR/prompt.py"
+  return
+
   # User + hostname
   set last_status $status
   set_color magenta
@@ -244,7 +257,9 @@ function fish_prompt
   printf '%s' (prompt_long_pwd)
 
   # Git status
-  __informative_git_prompt
+  if test 'true' = (is_git_repo)
+    printf '%s' (git_prompt)
+  end
 
   # End prompt
   set_color normal

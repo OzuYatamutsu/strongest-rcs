@@ -44,8 +44,10 @@ cp -Rfv plugins/*.py ~/.config/fish/plugins/
 cp -Rfv health_checks/*.py ~/.config/fish/health_checks/
 cp -fv cat_header ~/.config/fish/
 cp -fv vimrc ~/.vimrc
+cp -fv prompt.py ~/.config/fish/
 cp -fv welcome_screen.py ~/.config/fish/
 cp -fv catelab_store.py ~/.config/fish/
+cp -fv git_support.py ~/.config/fish/
 
 # Set current directory as update directory
 python3 "${CATELAB_METADATA_DIR}/catelab_store.py" CATELAB_METADATA_DIR $CATELAB_METADATA_DIR

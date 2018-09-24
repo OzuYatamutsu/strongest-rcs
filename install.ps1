@@ -29,9 +29,11 @@ rm ~/.config/cateshell/*.py -Recurse -ErrorAction SilentlyContinue
 rm ~/.config/cateshell/plugins/* -Recurse -ErrorAction SilentlyContinue
 rm ~/.config/cateshell/health_checks/* -Recurse -ErrorAction SilentlyContinue
 
-cp welcome_screen.py ~/.config/cateshell
-cp catelab_store.py ~/.config/cateshell
-cp cat_header ~/.config/cateshell/cat_header
+cp -fv prompt.py ~/.config/cateshell/
+cp -fv welcome_screen.py ~/.config/cateshell
+cp -fv catelab_store.py ~/.config/cateshell
+cp -fv git_support.py ~/.config/cateshell/
+cp -fv cat_header ~/.config/cateshell/
 cp health_checks/*.py ~/.config/cateshell/health_checks/
 cp plugins/*.py ~/.config/cateshell/plugins/
 pip3 install -r requirements.txt
