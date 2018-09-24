@@ -14,6 +14,7 @@ set --export CATELAB_METADATA_DIR "$HOME/.config/fish"
 
 ### OTHER ENV
 set --export LC_ALL 'en_US.utf8'
+set -gx PATH ~/scripts $PATH
 
 ### CONFIG DB
 function catelab_db --description 'Access Catelab config vars from db'
@@ -213,6 +214,10 @@ end
 ## END !!, !$ bash support
 
 ## Aliases and various functions
+function is_git_repo
+  git rev-parse --is-inside-work-tree
+end
+
 function get_utime_ms
   python -c "import time; print(int(time.time()*1000))"
 end
