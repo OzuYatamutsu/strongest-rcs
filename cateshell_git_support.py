@@ -85,13 +85,29 @@ def shell_format(prefix=False) -> str:
         f'{Fore.WHITE}(' +
         f'{Fore.MAGENTA}{Style.BRIGHT}{current_branch}{Style.NORMAL}' +
         f'{Fore.WHITE}|' +
-        (f'{Fore.GREEN}↑{Fore.WHITE}{num_unpushed_commits}' if num_unpushed_commits else '') +
-        (f'{Fore.GREEN}↓{Fore.WHITE}{num_unpulled_commits}' if num_unpulled_commits else '') +
-        (f'{Fore.GREEN}+{Fore.WHITE}{num_added_files}' if num_added_files else '') +
-        (f'{Fore.GREEN}Δ{Fore.WHITE}{num_changed_files}' if num_changed_files else '') +
-        (f'{Fore.CYAN}…{Fore.WHITE}{num_untracked_files}' if num_untracked_files else '') +
+        (
+            f'{Fore.GREEN}↑{Fore.WHITE}'
+            f'{num_unpushed_commits}' if num_unpushed_commits else ''
+        ) +
+        (
+            f'{Fore.GREEN}↓{Fore.WHITE}'
+            f'{num_unpulled_commits}' if num_unpulled_commits else ''
+        ) +
+        (
+            f'{Fore.GREEN}+{Fore.WHITE}'
+            f'{num_added_files}' if num_added_files else ''
+        ) +
+        (
+            f'{Fore.GREEN}Δ{Fore.WHITE}'
+            f'{num_changed_files}' if num_changed_files else ''
+        ) +
+        (
+            f'{Fore.CYAN}…{Fore.WHITE}'
+            f'{num_untracked_files}' if num_untracked_files else ''
+        ) +
         f'{Fore.WHITE})'
     )
+
 
 if __name__ == '__main__':
     print(shell_format().replace('\x1b', '\\x1b'))

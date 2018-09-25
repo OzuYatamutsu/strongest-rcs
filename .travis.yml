@@ -9,4 +9,5 @@ script:
     - flake8
     - pytest
     - /bin/bash install.sh
-    - python3.6 welcome_screen.py .
+    - bash -c 'exit'
+    - fish -c 'exit'

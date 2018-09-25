@@ -3,7 +3,7 @@ from unittest import TestCase
 from os import unlink
 
 
-class TestMetadatStore(TestCase):
+class TestMetadataStore(TestCase):
     def setUp(self):
         self.store = CateshellStore('.')
 

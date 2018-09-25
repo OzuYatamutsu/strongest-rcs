@@ -46,7 +46,8 @@ def print_header(base_config_dir: str) -> None:
         f"Yo! Welcome to {Fore.BLUE}ＣＡＴＥＳＨＥＬＬ{Fore.RESET}"
         f" on {Fore.MAGENTA}{gethostname()}{Fore.RESET}, "
         f"{Fore.BLUE}{getuser()}{Fore.RESET}!\n"
-        f"It's currently {Fore.GREEN}{ _get_humanized_timestamp()}{Fore.RESET}.\n"
+        f"It's currently {Fore.GREEN}"
+        f"{ _get_humanized_timestamp()}{Fore.RESET}.\n"
         f"You're running {Fore.BLUE}CATESHELL, version 2.0.1{Fore.RESET}."
     )
 

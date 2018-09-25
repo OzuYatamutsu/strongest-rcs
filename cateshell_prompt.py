@@ -20,5 +20,6 @@ def prompt() -> str:
         f'> '  # >
     )
 
+
 if __name__ == '__main__':
     print(prompt().replace('\x1b', '\\x1b'))
