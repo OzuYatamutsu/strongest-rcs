@@ -1,4 +1,4 @@
-from colorama import init, Fore
+from colorama import init, Fore, Style
 from git import Repo
 init(autoreset=True)
 
@@ -62,15 +62,15 @@ def shell_format() -> str:
     num_untracked_files = get_num_untracked_files(repo=repo)
 
     return (
-        f'{Fore.RESET}(' +
-        f'{Fore.GREEN}{current_branch}' +
-        f'{Fore.RESET}|' +
-        (f'{Fore.GREEN}↑{num_unpushed_commits}' if num_unpushed_commits else '') +
-        (f'{Fore.GREEN}↓{num_unpulled_commits}' if num_unpulled_commits else '') +
-        (f'{Fore.GREEN}+{num_added_files}' if num_added_files else '') +
-        (f'{Fore.CYAN}…{num_untracked_files}' if num_untracked_files else '') +
-        f'{Fore.RESET})'
+        f'{Fore.WHITE}(' +
+        f'{Fore.MAGENTA}{Style.BRIGHT}{current_branch}{Style.NORMAL}' +
+        f'{Fore.WHITE}|' +
+        (f'{Fore.GREEN}↑{Fore.WHITE}{num_unpushed_commits}' if num_unpushed_commits else '') +
+        (f'{Fore.GREEN}↓{Fore.WHITE}{num_unpulled_commits}' if num_unpulled_commits else '') +
+        (f'{Fore.GREEN}+{Fore.WHITE}{num_added_files}' if num_added_files else '') +
+        (f'{Fore.CYAN}…{Fore.WHITE}{num_untracked_files}' if num_untracked_files else '') +
+        f'{Fore.WHITE})'
     )
 
 if __name__ == '__main__':
-    print(shell_format())
+    print(shell_format().replace('\x1b', '\\x1b'))
