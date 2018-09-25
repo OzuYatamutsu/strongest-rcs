@@ -22,7 +22,36 @@ function catelab_db --description 'Access Catelab config vars from db'
   end
 end
 
-### CATELAB-SPECIFIC KEY BINDINGS
+## CATELAB SHELL BUILT-IN FUNCTIONS
+function current_shell
+  which fish
+end
+
+function get_utime_ms
+  python -c "import time; print(int(time.time()*1000))"
+end
+
+## PROMPT
+function prompt
+  printf (python3 "$CATELAB_METADATA_DIR/cateshell_prompt.py")
+end
+
+## WELCOME HEADER
+function welcome_header
+  set NEXT_HEADER_UTIME (catelab_db FISHRC_NEXT_HEADER_UTIME)
+  if [ "$NEXT_HEADER_UTIME" = '' ]
+    set NEXT_HEADER_UTIME '0'
+  end
+  if [ (get_utime_ms) -lt $NEXT_HEADER_UTIME ]
+    # Don't print header again
+    return
+  end
+
+  python3 "$CATELAB_METADATA_DIR/welcome_screen.py" "$CATELAB_METADATA_DIR"
+  catelab_db FISHRC_NEXT_HEADER_UTIME (math (get_utime_ms) + 100)
+end
+
+### FISH-SPECIFIC IMPLEMENTATION
 function bind_bang
   switch (commandline -t)
   case "!"
@@ -47,30 +76,10 @@ function fish_user_key_bindings
   bind '$' bind_dollar
 end
 
-## OTHER FUNCTIONS
-function get_utime_ms
-  python -c "import time; print(int(time.time()*1000))"
-end
-
-## PROMPT
 function fish_prompt
-  printf (python3 "$CATELAB_METADATA_DIR/cateshell_prompt.py")
+  prompt
 end
 
-## WELCOME TEXT
-function welcome_text
-  set NEXT_HEADER_UTIME (catelab_db FISHRC_NEXT_HEADER_UTIME)
-  if [ "$NEXT_HEADER_UTIME" = '' ]
-    set NEXT_HEADER_UTIME '0'
-  end
-  if [ (get_utime_ms) -lt $NEXT_HEADER_UTIME ]
-    # Don't print header again
-    return
-  end
-
-  python3 "$CATELAB_METADATA_DIR/welcome_screen.py" "$CATELAB_METADATA_DIR"
-  catelab_db FISHRC_NEXT_HEADER_UTIME (math (get_utime_ms) + 100)
-end
-
-set fish_greeting ""  # No greet
-welcome_text
+# No greet
+set fish_greeting "" 
+welcome_header

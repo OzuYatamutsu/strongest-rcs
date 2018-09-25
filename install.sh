@@ -44,6 +44,7 @@ cp -Rfv plugins/*.py ~/.config/fish/plugins/
 cp -Rfv health_checks/*.py ~/.config/fish/health_checks/
 cp -fv cat_header ~/.config/fish/
 cp -fv vimrc ~/.vimrc
+cp -fv cateshell_bash.sh ~/.config/
 cp -fv cateshell_prompt.py ~/.config/fish/
 cp -fv welcome_screen.py ~/.config/fish/
 cp -fv catelab_store.py ~/.config/fish/
@@ -58,13 +59,4 @@ mkdir ~/scripts || true
 cp -Rfv scripts/* ~/scripts/
 
 ## BASH INSTALLATION
-# Append welcome screen
-grep -q -F 'if shopt -q login_shell; then' ~/.bashrc || echo 'if shopt -q login_shell; then' >> ~/.bashrc
-grep -q -F '  python3 ~/.config/fish/welcome_screen.py ~/.config/fish' ~/.bashrc || echo -e '  python3 ~/.config/fish/welcome_screen.py ~/.config/fish\nfi' >> ~/.bashrc
-
-# Append colorization
-grep -q -F "PS1='\e[35m\u@\h \e[32m\w\e[39m> '" ~/.bashrc || echo "PS1='\e[35m\u@\h \e[32m\w\e[39m> '" >> ~/.bashrc
-
-# Set default locale
-grep -q -F "export LC_ALL='en_US.utf8'" ~/.bashrc || echo "export LC_ALL='en_US.utf8'" >> ~/.bashrc
-
+grep -q -F 'source ~/.config/cateshell_bash.sh' ~/.bashrc || echo 'source ~/.config/cateshell_bash.sh' >> ~/.bashrc
