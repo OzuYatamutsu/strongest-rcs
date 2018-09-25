@@ -44,15 +44,7 @@ def get_num_unpulled_commits(repo=None) -> int:
 
 def get_num_changed_files(repo=None) -> int:
     repo = repo or Repo('.')
-
-    # TODO HACK
-    from subprocess import check_output  # noqa
-    return sum(
-        1 for line in check_output([
-            'git', 'status', '--porcelain'
-        ], universal_newlines=True).split('\n')
-        if line.strip().startswith('M')
-    )
+    return sum(1 for diff in repo.index.diff(None))
 
 
 def get_num_added_files(repo=None) -> int:
