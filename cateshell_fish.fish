@@ -1,4 +1,4 @@
-### C A T E L A B
+### C A T E S H E L L
 ### (fish implementation)
 ### ...by Sean Collins!
 
@@ -7,22 +7,22 @@
 # Catelab requires Python>=3.6 to work properly
 
 ### CATELAB-SPECIFIC ENV VARIABLES
-set --export CATELAB_METADATA_DIR "$HOME/.config/fish"
+set --export CATESHELL_HOME "_CATESHELL_HOME"
 
 ### OTHER ENV VARIABLES
 set --export LC_ALL 'en_US.utf8'
 set -gx PATH ~/scripts $PATH
 
 ### CATELAB-SPECIFIC FUNCTIONS
-function catelab_db --description 'Access Catelab config vars from db'
+function cateshell_db --description 'Access CATESHELL config vars from db'
   if test (count $argv) -eq 2
-    python3 "$CATELAB_METADATA_DIR/catelab_store.py" $argv 2>&1 >/dev/null
+    python3 "$CATESHELL_HOME/cateshell_store.py" $argv 2>&1 >/dev/null
   else
-    python3 "$CATELAB_METADATA_DIR/catelab_store.py" $argv
+    python3 "$CATESHELL_HOME/cateshell_store.py" $argv
   end
 end
 
-## CATELAB SHELL BUILT-IN FUNCTIONS
+## CATESHELL SHELL BUILT-IN FUNCTIONS
 function current_shell
   which fish
 end
@@ -33,12 +33,12 @@ end
 
 ## PROMPT
 function prompt
-  printf (python3 "$CATELAB_METADATA_DIR/cateshell_prompt.py")
+  printf (python3 "$CATESHELL_HOME/cateshell_prompt.py")
 end
 
 ## WELCOME HEADER
 function welcome_header
-  set NEXT_HEADER_UTIME (catelab_db FISHRC_NEXT_HEADER_UTIME)
+  set NEXT_HEADER_UTIME (cateshell_db FISHRC_NEXT_HEADER_UTIME)
   if [ "$NEXT_HEADER_UTIME" = '' ]
     set NEXT_HEADER_UTIME '0'
   end
@@ -47,8 +47,8 @@ function welcome_header
     return
   end
 
-  python3 "$CATELAB_METADATA_DIR/welcome_screen.py" "$CATELAB_METADATA_DIR"
-  catelab_db FISHRC_NEXT_HEADER_UTIME (math (get_utime_ms) + 100)
+  python3 "$CATESHELL_HOME/cateshell_welcome_screen.py" "$CATESHELL_HOME"
+  cateshell_db FISHRC_NEXT_HEADER_UTIME (math (get_utime_ms) + 100)
 end
 
 ### FISH-SPECIFIC IMPLEMENTATION

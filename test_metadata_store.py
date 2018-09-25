@@ -1,11 +1,11 @@
-from catelab_store import CatelabStore
+from cateshell_store import CateshellStore
 from unittest import TestCase
 from os import unlink
 
 
 class TestMetadatStore(TestCase):
     def setUp(self):
-        self.store = CatelabStore('.')
+        self.store = CateshellStore('.')
 
     def test_can_write_arbitrary_config_key(self):
         self.store.write_config_key(
@@ -47,4 +47,4 @@ class TestMetadatStore(TestCase):
             == 0
 
     def tearDown(self):
-        unlink(CatelabStore._METADATA_STORE_FILENAME)  # noqa
+        unlink(CateshellStore._METADATA_STORE_FILENAME)  # noqa

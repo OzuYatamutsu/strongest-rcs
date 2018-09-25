@@ -1,4 +1,4 @@
-from git_support import shell_format
+from cateshell_git_support import shell_format
 from colorama import init, Fore
 from getpass import getuser
 from platform import node

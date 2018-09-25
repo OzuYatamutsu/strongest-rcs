@@ -36,14 +36,14 @@ def main(base_config_dir: str):
 
 def print_header(base_config_dir: str) -> None:
     # Print cat header
-    with open(join(base_config_dir, "cat_header"), 'r') as f:
+    with open(join(base_config_dir, "cateshell_cat_header.txt"), 'r') as f:
         for line in f:
             shell_agnostic_print(line.strip('\n'))
 
     # Welcome text
     # TODO get shell type and version
     shell_agnostic_print(
-        f"Yo! Welcome to {Fore.BLUE}ＣＡＴＥＬＡＢ{Fore.RESET}"
+        f"Yo! Welcome to {Fore.BLUE}ＣＡＴＥＳＨＥＬＬ{Fore.RESET}"
         f" on {Fore.MAGENTA}{gethostname()}{Fore.RESET}, "
         f"{Fore.BLUE}{getuser()}{Fore.RESET}!\n"
         f"It's currently {Fore.GREEN}{ _get_humanized_timestamp()}{Fore.RESET}.\n"
@@ -94,7 +94,7 @@ def shell_agnostic_print(text) -> None:
 
     print(
         text
-        .replace('ＣＡＴＥＬＡＢ', 'C A T E L A B')
+        .replace('ＣＡＴＥＳＨＥＬＬ', 'C A T E S H E L L')
         .replace(Fore.BLUE, Fore.CYAN)
         .replace(Fore.MAGENTA, Fore.RED)
         .replace('✓', '[OK]')

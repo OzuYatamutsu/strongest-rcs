@@ -1,27 +1,27 @@
-### C A T E L A B
+### C A T E S H E L L
 ### (bash implementation)
 ### ...by Sean Collins!
 
 ### NOTES
-# Catelab requires Python>=3.6 to work properly
+# CATESHELL requires Python>=3.6 to work properly
 
-### CATELAB-SPECIFIC ENV VARIABLES
-export CATELAB_METADATA_DIR="$HOME/.config/fish"
+### CATESHELL-SPECIFIC ENV VARIABLES
+export CATESHELL_HOME="_CATESHELL_HOME"
 
 ### OTHER ENV VARIABLES
 export LC_ALL='en_US.utf8'
 export PATH=~/scripts:$PATH
 
-### CATELAB-SPECIFIC FUNCTIONS
-function catelab_db {  # Access Catelab config vars from db
+### CATESHELL-SPECIFIC FUNCTIONS
+function cateshell_db {  # Access CATESHELL config vars from db
     if [ "$#" -eq 2 ]; then
-      python3 "$CATELAB_METADATA_DIR/catelab_store.py" $@ 2>&1 >/dev/null
+      python3 "$CATESHELL_HOME/cateshell_store.py" $@ 2>&1 >/dev/null
     else
-      python3 "$CATELAB_METADATA_DIR/catelab_store.py" $@
+      python3 "$CATESHELL_HOME/cateshell_store.py" $@
     fi
 }
 
-## CATELAB SHELL BUILT-IN FUNCTIONS
+## CATESHELL SHELL BUILT-IN FUNCTIONS
 function current_shell() {
   echo $SHELL
 }
@@ -32,12 +32,12 @@ function get_utime_ms() {
 
 ## PROMPT
 function prompt() {
-  python3 "$CATELAB_METADATA_DIR/cateshell_prompt.py"
+  python3 "$CATESHELL_HOME/cateshell_prompt.py"
 }
 
 ## WELCOME HEADER
 function welcome_header() {
-  NEXT_HEADER_UTIME="$(catelab_db BASHRC_NEXT_HEADER_UTIME)"
+  NEXT_HEADER_UTIME="$(cateshell_db BASHRC_NEXT_HEADER_UTIME)"
   if [[ "$NEXT_HEADER_UTIME" == '' ]]; then
     NEXT_HEADER_UTIME='0'
   fi
@@ -46,8 +46,8 @@ function welcome_header() {
     return
   fi
 
-  python3 "${CATELAB_METADATA_DIR}/welcome_screen.py" "${CATELAB_METADATA_DIR}"
-  catelab_db BASHRC_NEXT_HEADER_UTIME "$(get_utime_ms + 100)"
+  python3 "${CATESHELL_HOME}/cateshell_welcome_screen.py" "${CATESHELL_HOME}"
+  cateshell_db BASHRC_NEXT_HEADER_UTIME "$(get_utime_ms + 100)"
 }
 
 ### BASH-SPECIFIC IMPLEMENTATIONS
