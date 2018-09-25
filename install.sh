@@ -44,6 +44,7 @@ cp -Rfv plugins/*.py ~/.config/fish/plugins/
 cp -Rfv health_checks/*.py ~/.config/fish/health_checks/
 cp -fv cat_header ~/.config/fish/
 cp -fv vimrc ~/.vimrc
+cp -fv cateshell_prompt.py ~/.config/fish/
 cp -fv welcome_screen.py ~/.config/fish/
 cp -fv catelab_store.py ~/.config/fish/
 cp -fv git_support.py ~/.config/fish/

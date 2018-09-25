@@ -1,5 +1,5 @@
+from git import Repo, InvalidGitRepositoryError
 from colorama import init, Fore, Style
-from git import Repo
 init(autoreset=True)
 
 
@@ -53,8 +53,13 @@ def get_num_untracked_files(repo=None) -> int:
 
 
 # Format:
-def shell_format() -> str:
-    repo = Repo('.')
+def shell_format(prefix=False) -> str:
+    try:
+        repo = Repo('.')
+    except InvalidGitRepositoryError:
+        # Current dir is not a git repo.
+        return ''
+
     current_branch = get_current_branch(repo=repo)
     num_unpushed_commits = get_num_unpushed_commits(repo=repo)
     num_unpulled_commits = get_num_unpulled_commits(repo=repo)
@@ -62,6 +67,7 @@ def shell_format() -> str:
     num_untracked_files = get_num_untracked_files(repo=repo)
 
     return (
+        f'{" " if prefix else ""}'
         f'{Fore.WHITE}(' +
         f'{Fore.MAGENTA}{Style.BRIGHT}{current_branch}{Style.NORMAL}' +
         f'{Fore.WHITE}|' +
