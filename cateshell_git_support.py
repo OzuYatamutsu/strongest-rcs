@@ -79,34 +79,44 @@ def shell_format(prefix=False) -> str:
     num_added_files = get_num_added_files(repo=repo)
     num_changed_files = get_num_changed_files(repo=repo)
     num_untracked_files = get_num_untracked_files(repo=repo)
+    no_changes = (
+        num_unpushed_commits + num_unpulled_commits
+        + num_added_files + num_changed_files
+        + num_untracked_files
+    ) == 0
 
-    return (
+    prompt = (
         f'{" " if prefix else ""}'
         f'{Fore.WHITE}(' +
         f'{Fore.MAGENTA}{Style.BRIGHT}{current_branch}{Style.NORMAL}' +
-        f'{Fore.WHITE}|' +
-        (
+        f'{Fore.WHITE}'
+    )
+
+    if not no_changes:
+        prompt += '|'
+        prompt += (
             f'{Fore.GREEN}↑{Fore.WHITE}'
             f'{num_unpushed_commits}' if num_unpushed_commits else ''
-        ) +
-        (
+        )
+        prompt += (
             f'{Fore.GREEN}↓{Fore.WHITE}'
             f'{num_unpulled_commits}' if num_unpulled_commits else ''
-        ) +
-        (
+        )
+        prompt += (
             f'{Fore.GREEN}+{Fore.WHITE}'
             f'{num_added_files}' if num_added_files else ''
-        ) +
-        (
+        )
+        prompt += (
             f'{Fore.GREEN}Δ{Fore.WHITE}'
             f'{num_changed_files}' if num_changed_files else ''
-        ) +
-        (
+        )
+        prompt += (
             f'{Fore.CYAN}…{Fore.WHITE}'
             f'{num_untracked_files}' if num_untracked_files else ''
-        ) +
-        f'{Fore.WHITE})'
-    )
+        )
+
+    prompt += f'{Fore.WHITE})'
+    return prompt
 
 
 if __name__ == '__main__':
