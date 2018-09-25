@@ -29,7 +29,7 @@ rm ~/.config/cateshell/*.py -Recurse -ErrorAction SilentlyContinue
 rm ~/.config/cateshell/plugins/* -Recurse -ErrorAction SilentlyContinue
 rm ~/.config/cateshell/health_checks/* -Recurse -ErrorAction SilentlyContinue
 
-cp -fv prompt.py ~/.config/cateshell/
+
 cp -fv welcome_screen.py ~/.config/cateshell
 cp -fv catelab_store.py ~/.config/cateshell
 cp -fv git_support.py ~/.config/cateshell/

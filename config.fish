@@ -244,9 +244,6 @@ function git_prompt --description 'Print git information'
 end
 
 function fish_prompt
-  python3 "$CATELAB_METADATA_DIR/prompt.py"
-  return
-
   # User + hostname
   set last_status $status
   set_color magenta
