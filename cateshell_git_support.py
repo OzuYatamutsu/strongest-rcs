@@ -42,6 +42,19 @@ def get_num_unpulled_commits(repo=None) -> int:
     ))
 
 
+def get_num_changed_files(repo=None) -> int:
+    repo = repo or Repo('.')
+
+    # TODO HACK
+    from subprocess import check_output  # noqa
+    return sum(
+        1 for line in check_output([
+            'git', 'status', '--porcelain'
+        ], universal_newlines=True).split('\n')
+        if line.strip().startswith('M')
+    )
+
+
 def get_num_added_files(repo=None) -> int:
     repo = repo or Repo('.')
     return len(repo.commit().diff())
@@ -64,6 +77,7 @@ def shell_format(prefix=False) -> str:
     num_unpushed_commits = get_num_unpushed_commits(repo=repo)
     num_unpulled_commits = get_num_unpulled_commits(repo=repo)
     num_added_files = get_num_added_files(repo=repo)
+    num_changed_files = get_num_changed_files(repo=repo)
     num_untracked_files = get_num_untracked_files(repo=repo)
 
     return (
@@ -74,6 +88,7 @@ def shell_format(prefix=False) -> str:
         (f'{Fore.GREEN}↑{Fore.WHITE}{num_unpushed_commits}' if num_unpushed_commits else '') +
         (f'{Fore.GREEN}↓{Fore.WHITE}{num_unpulled_commits}' if num_unpulled_commits else '') +
         (f'{Fore.GREEN}+{Fore.WHITE}{num_added_files}' if num_added_files else '') +
+        (f'{Fore.GREEN}Δ{Fore.WHITE}{num_changed_files}' if num_changed_files else '') +
         (f'{Fore.CYAN}…{Fore.WHITE}{num_untracked_files}' if num_untracked_files else '') +
         f'{Fore.WHITE})'
     )

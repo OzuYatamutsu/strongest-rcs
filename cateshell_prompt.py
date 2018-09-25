@@ -8,10 +8,15 @@ init(autoreset=True)
 
 
 def prompt() -> str:
+    try:
+        git_status = shell_format(prefix=True)
+    except Exception:
+        # Don't break the prompt on exception
+        git_status = ''
     return (
         f'{Fore.MAGENTA}{getuser()}@{node()}'  # jinhai@catelab
         f' {Fore.GREEN}{getcwd().replace(str(Path.home()), "~")}'  # ~/dev
-        f'{shell_format(prefix=True)}'  # (feature/test|↑1)
+        f'{git_status}'  # (feature/test|↑1)
         f'> '  # >
     )
 

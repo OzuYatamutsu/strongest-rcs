@@ -10,7 +10,7 @@ export CATESHELL_HOME="_CATESHELL_HOME"
 
 ### OTHER ENV VARIABLES
 export LC_ALL='en_US.utf8'
-export PATH=~/scripts:$PATH
+export PATH=~/scripts:$CATESHELL_HOME/scripts:$PATH
 
 ### CATESHELL-SPECIFIC FUNCTIONS
 function cateshell_db {  # Access CATESHELL config vars from db

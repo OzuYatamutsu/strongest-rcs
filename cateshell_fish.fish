@@ -11,7 +11,7 @@ set --export CATESHELL_HOME "_CATESHELL_HOME"
 
 ### OTHER ENV VARIABLES
 set --export LC_ALL 'en_US.utf8'
-set -gx PATH ~/scripts $PATH
+set -gx PATH ~/scripts $CATESHELL_HOME/scripts $PATH
 
 ### CATELAB-SPECIFIC FUNCTIONS
 function cateshell_db --description 'Access CATESHELL config vars from db'
