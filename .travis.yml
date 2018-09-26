@@ -1,12 +1,13 @@
-language: python3
 sudo: enabled
 env:
     - SHELL_TYPE=fish
     - SHELL_TYPE=bash
+    - SHELL_TYPE=powershell
+language: python3
 python:
     - "3.6"
 before_install:
-    - sudo apt-get install -y fish
+    - sudo apt-get install -y fish powershell
 install:
     - pyenv global system 3.6
     - pip3.6 install flake8 pytest --user
@@ -14,6 +15,7 @@ script:
     - flake8
     - pytest
     - /bin/bash install.sh
-    - if [[ $SHELL_TYPE == 'fish' ]]; then fish -c 'exit'; fi
-    - if [[ $SHELL_TYPE == 'bash' ]]; then bash -c 'exit'; fi
+    - if [ $SHELL_TYPE = 'fish' ]; then fish -c 'exit'; fi
+    - if [ $SHELL_TYPE = 'bash' ]; then bash -c 'exit'; fi
+    - if [ $SHELL_TYPE = 'powershell' ]; then pwsh -c 'exit'; fi
 
