@@ -1,5 +1,8 @@
 language: python3
 sudo: enabled
+env:
+    - SHELL_TYPE=fish
+    - SHELL_TYPE=bash
 python:
     - "3.6"
 before_install:
@@ -10,10 +13,7 @@ install:
 script:
     - flake8
     - pytest
-matrix:
-    include:
-        - install: /bin/bash install.sh
-        script: fish -c 'exit'
-        - install: /bin/bash install.sh
-        script: bash -c 'exit'
+    - /bin/bash install.sh
+    - if [[ $SHELL_TYPE == 'fish' ]]; then fish -c 'exit'; fi
+    - if [[ $SHELL_TYPE == 'bash' ]]; then bash -c 'exit'; fi
 
