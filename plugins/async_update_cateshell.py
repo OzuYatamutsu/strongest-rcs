@@ -4,8 +4,8 @@ from sys import stderr, argv, path
 from platform import platform
 from time import time
 
-path.append(environ['CATELAB_METADATA_DIR'])
-from catelab_store import CatelabStore  # noqa
+path.append(environ['CATESHELL_HOME'])
+from cateshell_store import CateshellStore  # noqa
 
 
 def should_update(has_internet: bool) -> bool:
@@ -16,19 +16,19 @@ def should_update(has_internet: bool) -> bool:
     )
 
 
-def update_catelab() -> None:
+def update_cateshell() -> None:
     source_dir = get_source_dir()
     if not source_dir:
         print(
             "Update scheduled, but not updating "
-            "because CATELAB_SOURCE_DIR is not set."
+            "because CATESHELL_HOME is not set."
         )
 
         return
     current_dir = getcwd()
-    update_text = '\nUpdating ＣＡＴＥＬＡＢ...\n'
+    update_text = '\nUpdating ＣＡＴＥＳＨＥＬＬ...\n'
     if 'Windows' in platform():
-        update_text = update_text.replace('ＣＡＴＥＬＡＢ', 'C A T E L A B')
+        update_text = update_text.replace('ＣＡＴＥＳＨＥＬＬ', 'C A T E S H E L L')
     stderr.write(update_text)
     stderr.flush()
 
@@ -56,13 +56,13 @@ def update_catelab() -> None:
 
 def set_next_update_utime() -> None:
     # Now + 6 hours
-    CatelabStore().write_config_key(
+    CateshellStore().write_config_key(
         'NEXT_UPDATE_UTIME', str(time() + 21600)
     )
 
 
 def get_next_update_utime() -> float:
-    result = CatelabStore().load_config_key(
+    result = CateshellStore().load_config_key(
         'NEXT_UPDATE_UTIME'
     )
 
@@ -72,8 +72,8 @@ def get_next_update_utime() -> float:
 
 
 def get_source_dir() -> str:
-    return CatelabStore().load_config_key(
-       'CATELAB_SOURCE_DIR'
+    return CateshellStore().load_config_key(
+       'CATESHELL_SOURCE_DIR'
     )
 
 
@@ -81,4 +81,4 @@ if __name__ == '__main__':
     has_internet = argv[1] == 'True'
 
     if should_update(has_internet):
-        update_catelab()
+        update_cateshell()
