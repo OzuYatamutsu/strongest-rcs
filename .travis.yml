@@ -2,6 +2,8 @@ language: python3
 sudo: enabled
 python:
     - "3.6"
+before_install:
+    - sudo apt-get install -y fish
 install:
     - pyenv global system 3.6
     - pip3.6 install flake8 pytest --user
