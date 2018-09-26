@@ -1,24 +1,26 @@
 sudo: enabled
 language: python
 python: "3.6"
-before_install:
-install:
-    - pyenv global system 3.6
-    - pip3.6 install flake8 pytest
 matrix:
     include: 
         - name: "Fish"
           env: SHELL_TYPE=fish
           before_install:
             - sudo apt-get install -y fish
-          install: /bin/bash install.sh
+          install: 
+            - pyenv global system 3.6
+            - pip3.6 install flake8 pytest --user
+            - /bin/bash install.sh
           script:
             - flake8
             - pytest
             - fish -c 'exit'
         - name: "Bash"
           env: SHELL_TYPE=bash
-          install: /bin/bash install.sh
+          install:
+            - pyenv global system 3.6
+            - pip3.6 install flake8 pytest --user
+            - /bin/bash install.sh
           script:
             - flake8
             - pytest
@@ -29,7 +31,10 @@ matrix:
             - wget https://github.com/PowerShell/PowerShell/releases/download/v6.1.0/powershell_6.1.0-1.ubuntu.14.04_amd64.deb
             - sudo dpkg -i powershell_6.1.0-1.ubuntu.14.04_amd64.deb || true
             - sudo apt-get install -f
-          install: pwsh install.ps1
+          install:
+            - pyenv global system 3.6
+            - pip3.6 install flake8 pytest --user
+            - pwsh install.ps1
           script:
             - flake8
             - pytest
