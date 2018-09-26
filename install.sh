@@ -92,6 +92,7 @@ mkdir "$CATESHELL_HOME/plugins" || true
 cp -Rfv plugins/*.py "$CATESHELL_HOME/plugins/"
 
 # Install CATESHELL scripts
+mkdir ~/scripts || true
 mkdir "$CATESHELL_HOME/scripts" || true
 cp -Rfv scripts/* "$CATESHELL_HOME/scripts/"
 

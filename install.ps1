@@ -27,9 +27,14 @@ if (Test-Path "$env:CATESHELL_HOME") {
 # Python dependencies
 pip3 install -r requirements.txt --user
 
+# - Create directory for vimfiles
+If (!(Test-Path "$env:HOME/vimfiles")) {
+  New-Item -ItemType Directory "$env:HOME/vimfiles"
+  New-Item -ItemType Directory "$env:HOME/vimfiles/autoload"
+  New-Item -ItemType Directory "$env:HOME/vimfiles/bundle"
+}
+
 # - Pathogen (plugin manager for vim)
-New-Item -ItemType Directory -ErrorAction SilentlyContinue ~/vimfiles/autoload >$null
-New-Item -ItemType Directory -ErrorAction SilentlyContinue ~/vimfiles/bundle >$null
 Invoke-WebRequest https://tpo.pe/pathogen.vim -OutFile ~/vimfiles/autoload/pathogen.vim  >$null
 
 # - vim-airline (styling for vim)
@@ -102,6 +107,9 @@ Copy-Item -Recurse -Force -Verbose plugins/*.py `
   "$env:CATESHELL_HOME/plugins/"
 
 # Install CATESHELL scripts
+If (!(Test-Path "$env:HOME/scripts")) {
+  New-Item -ItemType Directory "$env:HOME/scripts"
+}
 If (!(Test-Path "$env:CATESHELL_HOME/scripts")) {
   New-Item -ItemType Directory "$env:CATESHELL_HOME/scripts"
 }
