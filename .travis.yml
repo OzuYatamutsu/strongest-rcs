@@ -10,6 +10,10 @@ install:
 script:
     - flake8
     - pytest
-    - /bin/bash install.sh
-    - bash -c 'exit'
-    - fish -c 'exit'
+matrix:
+    include:
+        - install: /bin/bash install.sh
+        script: fish -c 'exit'
+        - install: /bin/bash install.sh
+        script: bash -c 'exit'
+
