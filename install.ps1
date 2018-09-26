@@ -38,23 +38,23 @@ If (!(Test-Path "$env:HOME/vimfiles")) {
 Invoke-WebRequest https://tpo.pe/pathogen.vim -OutFile ~/vimfiles/autoload/pathogen.vim  >$null
 
 # - vim-airline (styling for vim)
-If (Test-Path ~/vimfiles/bundle/vim-airline) {
+If (!(Test-Path "$env:HOME/vimfiles/bundle/vim-airline")) {
   # Install
-  git clone https://github.com/vim-airline/vim-airline ~/vimfiles/bundle/vim-airline
+  git clone https://github.com/vim-airline/vim-airline "$env:HOME/vimfiles/bundle/vim-airline"
 } Else {
   # ...or update.
-  Set-Location ~/vimfiles/bundle/vim-airline
+  Set-Location "$env:HOME/vimfiles/bundle/vim-airline"
   git pull
   Set-Location $INSTALL_CWD
 }
 
 # - vim-airline-themes (styling for vim)
-If (Test-Path ~/vimfiles/bundle/vim-airline-themes) {
+If (!(Test-Path "$env:HOME/vimfiles/bundle/vim-airline-themes")) {
   # Install
-  git clone https://github.com/vim-airline/vim-airline-themes ~/vimfiles/bundle/vim-airline-themes
+  git clone https://github.com/vim-airline/vim-airline-themes "$env:HOME/vimfiles/bundle/vim-airline-themes"
 } Else {
   # ...or update.
-  Set-Location ~/vimfiles/bundle/vim-airline-themes
+  Set-Location "$env:HOME/vimfiles/bundle/vim-airline-themes"
   git pull
   Set-Location $INSTALL_CWD
 }
