@@ -32,7 +32,7 @@ function get_utime_ms() {
 
 ## PROMPT
 function prompt() {
-  python3 "$CATESHELL_HOME/cateshell_prompt.py"
+  python3 "$CATESHELL_HOME/cateshell_prompt.py" | sed 's/\x1b/\[\\x1b/'
 }
 
 ## WELCOME HEADER
