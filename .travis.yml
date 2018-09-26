@@ -1,11 +1,6 @@
 sudo: enabled
-env:
-    - SHELL_TYPE=fish
-    - SHELL_TYPE=bash
-    - SHELL_TYPE=powershell
-language: python3
-python:
-    - "3.6"
+language: python
+python: "3.6"
 before_install:
     - sudo apt-get install -y fish
     - wget https://github.com/PowerShell/PowerShell/releases/download/v6.1.0/powershell_6.1.0-1.ubuntu.14.04_amd64.deb
@@ -14,11 +9,27 @@ before_install:
 install:
     - pyenv global system 3.6
     - pip3.6 install flake8 pytest --user
-script:
-    - flake8
-    - pytest
-    - /bin/bash install.sh
-    - if [ $SHELL_TYPE = 'fish' ]; then fish -c 'exit'; fi
-    - if [ $SHELL_TYPE = 'bash' ]; then bash -c 'exit'; fi
-    - if [ $SHELL_TYPE = 'powershell' ]; then pwsh -c 'exit'; fi
+matrix:
+    include: 
+        - name: "Fish"
+          env: SHELL_TYPE=fish
+          script:
+            - flake8
+            - pytest
+            - /bin/bash install.sh
+            - fish -c 'exit'
+        - name: "Bash"
+          env: SHELL_TYPE=bash
+          script:
+            - flake8
+            - pytest
+            - /bin/bash install.sh
+            - bash -c 'exit'
+        - name: "PowerShell"
+          env: SHELL_TYPE=powershell
+          script:
+            - flake8
+            - pytest
+            - /bin/bash install.sh
+            - pwsh -c 'exit'
 
