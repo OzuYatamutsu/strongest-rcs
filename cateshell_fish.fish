@@ -23,6 +23,10 @@ function cateshell_db --description 'Access CATESHELL config vars from db'
 end
 
 ## CATESHELL SHELL BUILT-IN FUNCTIONS
+function version_string
+  fish --version | head -n1
+end
+
 function current_shell
   which fish
 end
@@ -47,7 +51,7 @@ function welcome_header
     return
   end
 
-  python3 "$CATESHELL_HOME/cateshell_welcome_screen.py" "$CATESHELL_HOME"
+  python3 "$CATESHELL_HOME/cateshell_welcome_screen.py" "$CATESHELL_HOME" (version_string)
   cateshell_db FISHRC_NEXT_HEADER_UTIME (math (get_utime_ms) + 100)
 end
 

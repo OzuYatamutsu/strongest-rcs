@@ -22,6 +22,10 @@ function cateshell_db {  # Access CATESHELL config vars from db
 }
 
 ## CATESHELL SHELL BUILT-IN FUNCTIONS
+function version_string() {
+  bash --version | head -n1
+}
+
 function current_shell() {
   echo $SHELL
 }
@@ -46,7 +50,7 @@ function welcome_header() {
     return
   fi
 
-  python3 "${CATESHELL_HOME}/cateshell_welcome_screen.py" "${CATESHELL_HOME}"
+  python3 "${CATESHELL_HOME}/cateshell_welcome_screen.py" "${CATESHELL_HOME}" "$(version_string)"
   cateshell_db BASHRC_NEXT_HEADER_UTIME "$(get_utime_ms + 100)"
 }
 

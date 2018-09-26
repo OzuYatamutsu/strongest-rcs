@@ -84,6 +84,9 @@ mv -fv cateshell_fish.fish.temp "$CATESHELL_HOME/cateshell_fish.fish"
 sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_bash.sh \
   > cateshell_bash.sh.temp
 mv -fv cateshell_bash.sh.temp "$CATESHELL_HOME/cateshell_bash.sh"
+sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_zsh.sh \
+  > cateshell_zsh.sh.temp
+mv -fv cateshell_zsh.sh.temp "$CATESHELL_HOME/cateshell_zsh.sh"
 
 # Install CATESHELL health checks and plugins
 mkdir "$CATESHELL_HOME/health_checks" || true
@@ -109,5 +112,9 @@ mkdir "$HOME/.config/fish" || true
 touch "$HOME/.config/fish/config.fish"
 grep -q -F "source ${CATESHELL_HOME}/cateshell_fish.fish" "$HOME/.config/fish/config.fish" \
   || echo "source ${CATESHELL_HOME}/cateshell_fish.fish" >> "$HOME/.config/fish/config.fish"
+
+# Point zsh to zsh CATESHELL config
+grep -q -F "source ${CATESHELL_HOME}/cateshell_zsh.sh" ~/.zshrc \
+  || echo "source ${CATESHELL_HOME}/cateshell_zsh.sh" >> ~/.zshrc
 
 # Done.

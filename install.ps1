@@ -87,6 +87,12 @@ Move-Item -Force -Verbose cateshell_bash.sh.temp `
 Move-Item -Force -Verbose cateshell_fish.fish.temp `
   "$env:CATESHELL_HOME/cateshell_fish.fish"
 
+# Install CATESHELL zsh config
+(Get-Content cateshell_zsh.sh).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `
+  | Set-Content cateshell_zsh.sh.temp
+Move-Item -Force -Verbose cateshell_zsh.sh.temp `
+  "$env:CATESHELL_HOME/cateshell_zsh.sh"
+
 # Install CATESHELL powershell config
 (Get-Content cateshell_powershell.ps1).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `
   | Set-Content cateshell_powershell.ps1.temp

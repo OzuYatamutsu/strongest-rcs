@@ -12,12 +12,12 @@ from sys import argv
 init(autoreset=True)
 
 
-def main(base_config_dir: str):
+def main(base_config_dir: str, version_line: str):
     # Health checker
     health_checker = HealthCheckBase()
 
     # Cat art, datetime, welcome text
-    print_header(base_config_dir)
+    print_header(base_config_dir, version_line)
     print()
 
     # Health checks (internet status, space check, ...)
@@ -34,7 +34,7 @@ def main(base_config_dir: str):
     )
 
 
-def print_header(base_config_dir: str) -> None:
+def print_header(base_config_dir: str, version_line: str) -> None:
     # Print cat header
     with open(join(base_config_dir, "cateshell_cat_header.txt"), 'r') as f:
         for line in f:
@@ -48,7 +48,7 @@ def print_header(base_config_dir: str) -> None:
         f"{Fore.BLUE}{getuser()}{Fore.RESET}!\n"
         f"It's currently {Fore.GREEN}"
         f"{ _get_humanized_timestamp()}{Fore.RESET}.\n"
-        f"You're running {Fore.BLUE}CATESHELL, version 2.0.1{Fore.RESET}."
+        f"You're running {Fore.BLUE}{version_line}{Fore.RESET}."
     )
 
 
@@ -132,4 +132,4 @@ def _get_humanized_timestamp():
 
 if __name__ == "__main__":
     # Pass in base config directory as argument
-    main(argv[1])
+    main(argv[1], argv[2])
