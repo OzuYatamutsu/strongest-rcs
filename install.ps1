@@ -120,10 +120,9 @@ Copy-Item -Recurse -Force -Verbose scripts/*.py `
 python3 "${env:CATESHELL_HOME}/cateshell_store.py" CATESHELL_HOME $env:CATESHELL_HOME
 python3 "${env:CATESHELL_HOME}/cateshell_store.py" CATESHELL_SOURCE_DIR $PWD.Path
 
-# Point powershell to powershell CATESHELL config TODO
-(Get-Content $profile).Replace("TODO", "TODO") `
-  | Set-Content $profile
+# Point powershell to powershell CATESHELL config
+If (!("$(Get-Content -Raw $profile)".Contains(". $env:CATESHELL_HOME/cateshell_powershell.ps1"))) {
+  Write-Output ". $env:CATESHELL_HOME/cateshell_powershell.ps1" >> $profile
+}
 
-# TODO remove this when figure out how to source in powershell
-Copy-Item -Force -Verbose "$env:CATESHELL_HOME/cateshell_powershell.ps1" $profile
 # Done.
