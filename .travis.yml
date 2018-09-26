@@ -1,5 +1,5 @@
 sudo: enabled
-language: python
+language: python3
 python: "3.6"
 matrix:
     include: 
