@@ -41,7 +41,6 @@ def print_header(base_config_dir: str, version_line: str) -> None:
             shell_agnostic_print(line.strip('\n'))
 
     # Welcome text
-    # TODO get shell type and version
     shell_agnostic_print(
         f"Yo! Welcome to {Fore.BLUE}ＣＡＴＥＳＨＥＬＬ{Fore.RESET}"
         f" on {Fore.MAGENTA}{gethostname()}{Fore.RESET}, "
