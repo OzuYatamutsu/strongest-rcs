@@ -3,13 +3,17 @@ $INSTALL_CWD = $PWD.Path
 
 # CATESHELL requires python3 and pip3 to be defined.
 # Fail immediately if this check doesn't pass.
-if (!(which python3).Length) {
+Try {
+  Get-Command python3
+} Catch {
   Write-Host "CATESHELL requires Python >= 3.6, and 'python3' to be defined."
   Write-Host "Please remedy this situation manually."
   return
 }
 
-if (!(which pip3).Length) {
+Try {
+  Get-Command pip3
+} Catch {
   Write-Host "CATESHELL requires Python >= 3.6, and 'pip3' to be defined."
   Write-Host "Please remedy this situation manually."
   return
