@@ -52,7 +52,7 @@ function welcome_header() {
   fi
 
   python3 "${CATESHELL_HOME}/cateshell_welcome_screen.py" "${CATESHELL_HOME}" "$(version_string)"
-  cateshell_db BASHRC_NEXT_HEADER_UTIME "$(get_utime_ms + 100)"
+  cateshell_db BASHRC_NEXT_HEADER_UTIME "$(get_utime_ms + 500)"
 }
 
 ### ZSH-SPECIFIC IMPLEMENTATIONS

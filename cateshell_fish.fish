@@ -52,7 +52,7 @@ function welcome_header
   end
 
   python3 "$CATESHELL_HOME/cateshell_welcome_screen.py" "$CATESHELL_HOME" (version_string)
-  cateshell_db FISHRC_NEXT_HEADER_UTIME (math (get_utime_ms) + 100)
+  cateshell_db FISHRC_NEXT_HEADER_UTIME (math (get_utime_ms) + 500)
 end
 
 ### FISH-SPECIFIC IMPLEMENTATION
@@ -85,5 +85,5 @@ function fish_prompt
 end
 
 # No greet
-set fish_greeting "" 
+set fish_greeting ""
 welcome_header
