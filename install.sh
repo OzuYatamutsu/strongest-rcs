@@ -87,6 +87,9 @@ mv -fv cateshell_bash.sh.temp "$CATESHELL_HOME/cateshell_bash.sh"
 sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_zsh.sh \
   > cateshell_zsh.sh.temp
 mv -fv cateshell_zsh.sh.temp "$CATESHELL_HOME/cateshell_zsh.sh"
+sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_xonsh.py \
+  > cateshell_xonsh.py.temp
+mv -fv cateshell_xonsh.py.temp "$CATESHELL_HOME/cateshell_xonsh.py"
 
 # Install CATESHELL health checks and plugins
 mkdir "$CATESHELL_HOME/health_checks" || true
@@ -117,4 +120,7 @@ grep -q -F "source ${CATESHELL_HOME}/cateshell_fish.fish" "$HOME/.config/fish/co
 grep -q -F "source ${CATESHELL_HOME}/cateshell_zsh.sh" ~/.zshrc \
   || echo "source ${CATESHELL_HOME}/cateshell_zsh.sh" >> ~/.zshrc
 
+# Point xonsh to xonsh CATESHELL config
+grep -q -F "source ${CATESHELL_HOME}/cateshell_xonsh.py" ~/.xonshrc \
+  || echo "source ${CATESHELL_HOME}/cateshell_xonsh.py" >> ~/.xonshrc
 # Done.
