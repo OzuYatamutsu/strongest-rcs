@@ -9,12 +9,12 @@ init(autoreset=True)
 
 
 def prompt(style=None) -> str:
-    def __agnostic_color(color):
-        if not style == 'xonsh'
-        return (
-            color if not style == 'xonsh'
-            else f"{color.name}"
-        )
+    # def __agnostic_color(color):
+    #     if not style == 'xonsh'
+    #    return (
+    #        color if not style == 'xonsh'
+    #        else f"{color.name}"
+    #    )
 
     try:
         git_status = shell_format(prefix=True)
@@ -22,8 +22,8 @@ def prompt(style=None) -> str:
         # Don't break the prompt on exception
         git_status = ''
     return (
-        f'{__agnostic_color(Fore.MAGENTA)}{getuser()}@{node()}'  # jinhai@catelab
-        f' {__agnostic_color(Fore.GREEN)}{getcwd().replace(str(Path.home()), "~")}'  # ~/dev
+        f'{Fore.MAGENTA}{getuser()}@{node()}'  # jinhai@catelab
+        f' {Fore.GREEN}{getcwd().replace(str(Path.home()), "~")}'  # ~/dev
         f'{git_status}'  # (feature/test|↑1)
         f'> '  # >
     )

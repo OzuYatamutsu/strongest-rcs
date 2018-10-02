@@ -44,7 +44,8 @@ def get_utime_ms():
 
 ## PROMPT
 def prompt():
-    return $(python3 "$CATESHELL_HOME/cateshell_prompt.py" --xonsh)
+    pass
+    # return $(python3 "$CATESHELL_HOME/cateshell_prompt.py" --xonsh)
 
 ## WELCOME HEADER
 def welcome_header():
