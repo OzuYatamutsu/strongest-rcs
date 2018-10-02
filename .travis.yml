@@ -67,4 +67,19 @@ matrix:
             - flake8
             - pytest
             - zsh -c 'exit'
+        - name: "Xonsh"
+          env: SHELL_TYPE=xonsh
+          before_install:
+            - sudo add-apt-repository -y ppa:deadsnakes/ppa
+            - sudo apt-get update
+            - sudo apt-get install -y python3.6
+            - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
+          install: 
+            - pyenv global system 3.6
+            - pip3.6 install flake8 pytest xonsh --user
+            - /bin/bash install.sh
+          script:
+            - flake8
+            - pytest
+            - xonsh -c 'exit'
 
