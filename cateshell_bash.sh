@@ -34,6 +34,10 @@ function get_utime_ms() {
   python -c "import time; print(int(time.time()*1000))"
 }
 
+function colorize() {
+  # TODO
+}
+
 ## PROMPT
 function prompt() {
   python3 "$CATESHELL_HOME/cateshell_prompt.py" | sed 's/\x1b/\[\\x1b/'

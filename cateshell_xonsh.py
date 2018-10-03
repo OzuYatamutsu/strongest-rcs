@@ -25,7 +25,8 @@ def cateshell_db(key=None, value=None):
     $value = value if value else ""
 
     if $value:
-        return $(python3 "$CATESHELL_HOME/cateshell_store.py" $key $value > NUL)
+        $(python3 "$CATESHELL_HOME/cateshell_store.py" $key $value)
+        return
     elif $key:
         return $(python3 "$CATESHELL_HOME/cateshell_store.py" $key)
     else:
@@ -42,10 +43,16 @@ def get_utime_ms():
     import time
     return int(time.time()*1000)
 
+def colorize(input_str):
+    from re import sub
+    input_str = sub(r'\<(.+?)\>', r'{\1}', input_str)
+    input_str = sub(r'{BOLD:', r'{BOLD_', input_str)
+    return input_str
+
 ## PROMPT
 def prompt():
-    pass
-    # return $(python3 "$CATESHELL_HOME/cateshell_prompt.py" --xonsh)
+    return colorize($(python3 "$CATESHELL_HOME/cateshell_prompt.py"))\
+        .strip() + ' '
 
 ## WELCOME HEADER
 def welcome_header():
@@ -59,3 +66,4 @@ def welcome_header():
 
 ### XONSH-SPECIFIC IMPLEMENTATION
 welcome_header()
+$PROMPT = lambda: prompt()
