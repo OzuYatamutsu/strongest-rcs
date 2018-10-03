@@ -16,7 +16,7 @@ def prompt() -> str:
         f'<PURPLE>{getuser()}@{node().split(".")[0]}'  # jinhai@catelab
         f' <GREEN>{getcwd().replace(str(Path.home()), "~")}'  # ~/dev
         f'{git_status}'  # (feature/test|↑1)
-        f'> '  # >
+        f'<WHITE>> '  # >
     )
 
 
