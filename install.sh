@@ -76,6 +76,7 @@ cp -fv cateshell_store.py "$CATESHELL_HOME"
 cp -fv cateshell_git_support.py "$CATESHELL_HOME"
 cp -fv cateshell_welcome_screen.py "$CATESHELL_HOME"
 cp -fv cateshell_cat_header.txt "$CATESHELL_HOME"
+cp -fv colorize_bash_like.py "$CATESHELL_HOME"
 
 # Install CATESHELL shell configs
 sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_fish.fish \

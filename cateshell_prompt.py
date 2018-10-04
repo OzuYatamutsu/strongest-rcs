@@ -3,7 +3,6 @@ from getpass import getuser
 from platform import node
 from pathlib import Path
 from os import getcwd
-from sys import argv
 
 
 def prompt() -> str:
@@ -22,4 +21,3 @@ def prompt() -> str:
 
 if __name__ == '__main__':
     print(prompt())
-

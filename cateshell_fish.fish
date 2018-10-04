@@ -36,11 +36,11 @@ function get_utime_ms
 end
 
 function colorize
-  # TODO 
+  python3 "$CATESHELL_HOME/colorize_bash_like.py" $argv
 end
 ## PROMPT
 function prompt
-  printf (python3 "$CATESHELL_HOME/cateshell_prompt.py")
+  printf (colorize (python3 "$CATESHELL_HOME/cateshell_prompt.py"))
 end
 
 ## WELCOME HEADER
