@@ -78,6 +78,7 @@ Copy-Item -Force -Verbose cateshell_store.py "$env:CATESHELL_HOME"
 Copy-Item -Force -Verbose cateshell_git_support.py "$env:CATESHELL_HOME"
 Copy-Item -Force -Verbose cateshell_welcome_screen.py "$env:CATESHELL_HOME"
 Copy-Item -Force -Verbose cateshell_cat_header.txt "$env:CATESHELL_HOME"
+Copy-Item -Force -Verbose colorize_bash_like.py "$env:CATESHELL_HOME"
 
 # Install CATESHELL bash config
 (Get-Content cateshell_bash.sh).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `

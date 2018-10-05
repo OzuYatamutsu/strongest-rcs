@@ -35,9 +35,13 @@ function get_utime_ms
   python -c "import time; print(int(time.time()*1000))"
 end
 
+function colorize
+  python3 "$CATESHELL_HOME/colorize_bash_like.py" $argv
+end
+
 ## PROMPT
 function prompt
-  printf (python3 "$CATESHELL_HOME/cateshell_prompt.py")
+  printf (colorize (python3 "$CATESHELL_HOME/cateshell_prompt.py"))
 end
 
 ## WELCOME HEADER

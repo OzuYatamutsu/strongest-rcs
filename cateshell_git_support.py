@@ -1,6 +1,4 @@
 from git import Repo, InvalidGitRepositoryError
-from colorama import init, Fore, Style
-init(autoreset=True)
 
 
 def get_head_sha(repo=None, num_chars=7) -> str:
@@ -79,37 +77,37 @@ def shell_format(prefix=False) -> str:
 
     prompt = (
         f'{" " if prefix else ""}'
-        f'{Fore.WHITE}(' +
-        f'{Fore.MAGENTA}{Style.BRIGHT}{current_branch}{Style.NORMAL}' +
-        f'{Fore.WHITE}'
+        f'<WHITE>(' +
+        f'<BOLD:PURPLE>{current_branch}' +
+        f'<WHITE>'
     )
 
     if not no_changes:
         prompt += '|'
         prompt += (
-            f'{Fore.GREEN}↑{Fore.WHITE}'
+            f'<GREEN>↑<WHITE>'
             f'{num_unpushed_commits}' if num_unpushed_commits else ''
         )
         prompt += (
-            f'{Fore.GREEN}↓{Fore.WHITE}'
+            f'<GREEN>↓<WHITE>'
             f'{num_unpulled_commits}' if num_unpulled_commits else ''
         )
         prompt += (
-            f'{Fore.GREEN}+{Fore.WHITE}'
+            f'<GREEN>+<WHITE>'
             f'{num_added_files}' if num_added_files else ''
         )
         prompt += (
-            f'{Fore.GREEN}Δ{Fore.WHITE}'
+            f'<GREEN>Δ<WHITE>'
             f'{num_changed_files}' if num_changed_files else ''
         )
         prompt += (
-            f'{Fore.CYAN}…{Fore.WHITE}'
+            f'<CYAN>…<WHITE>'
             f'{num_untracked_files}' if num_untracked_files else ''
         )
 
-    prompt += f'{Fore.WHITE})'
+    prompt += f'<WHITE>)'
     return prompt
 
 
 if __name__ == '__main__':
-    print(shell_format().replace('\x1b', '\\x1b'))
+    print(shell_format())

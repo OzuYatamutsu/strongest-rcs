@@ -34,10 +34,14 @@ function get_utime_ms() {
   python -c "import time; print(int(time.time()*1000))"
 }
 
+function colorize() {
+  python3 "$CATESHELL_HOME/colorize_bash_like.py" $@
+}
+
 ## PROMPT
 function prompt() {
   # TODO zsh is running into the same issue bash was
-  python3 "$CATESHELL_HOME/cateshell_prompt.py" | sed 's/\x1b/\[\\x1b/'
+  colorize $(python3 "$CATESHELL_HOME/cateshell_prompt.py") | sed 's/\x1b/\[\\x1b/'
 }
 
 ## WELCOME HEADER
