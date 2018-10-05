@@ -28,9 +28,10 @@ def cateshell_db(key=None, value=None):
         $(python3 "$CATESHELL_HOME/cateshell_store.py" $key $value)
         return
     elif $key:
-        return $(python3 "$CATESHELL_HOME/cateshell_store.py" $key)
+        return $(python3 "$CATESHELL_HOME/cateshell_store.py" $key).strip()
     else:
-        return $(python3 "$CATESHELL_HOME/cateshell_store.py")
+        return $(python3 "$CATESHELL_HOME/cateshell_store.py")\
+            .split('\n').strip()
 
 ## CATESHELL SHELL BUILT-IN FUNCTIONS
 def version_string():
