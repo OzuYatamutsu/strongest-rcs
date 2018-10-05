@@ -35,12 +35,12 @@ function get_utime_ms() {
 }
 
 function colorize() {
-  # TODO
+  python3 "$CATESHELL_HOME/colorize_bash_like.py" $@
 }
 
 ## PROMPT
 function prompt() {
-  python3 "$CATESHELL_HOME/cateshell_prompt.py" | sed 's/\x1b/\[\\x1b/'
+  colorize $(python3 "$CATESHELL_HOME/cateshell_prompt.py") | sed 's/\x1b/\[\\x1b/'
 }
 
 ## WELCOME HEADER

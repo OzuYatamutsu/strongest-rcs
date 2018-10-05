@@ -38,6 +38,7 @@ end
 function colorize
   python3 "$CATESHELL_HOME/colorize_bash_like.py" $argv
 end
+
 ## PROMPT
 function prompt
   printf (colorize (python3 "$CATESHELL_HOME/cateshell_prompt.py"))
