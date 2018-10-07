@@ -1,3 +1,13 @@
 #!/bin/bash
-brew update && brew upgrade
 
+# Mac -- homebrew
+brew update
+brew upgrade
+brew cleanup
+
+# pip3 upgrade
+pip3 freeze > requirements.txt
+pip3 install -r requirements.txt --upgrade
+rm requirements.txt
+
+pip3 install --upgrade pip
