@@ -6,8 +6,5 @@ brew upgrade
 brew cleanup
 
 # pip3 upgrade
-pip3 freeze > requirements.txt
-pip3 install -r requirements.txt --upgrade
-rm requirements.txt
-
+pip-review --auto
 pip3 install --upgrade pip
