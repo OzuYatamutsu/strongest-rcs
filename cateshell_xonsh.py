@@ -46,6 +46,15 @@ def get_utime_ms():
 
 def colorize(input_str):
     from re import sub
+
+    # Process symbols first
+    input_str = sub(r'<SYM:UP>', '↑', input_str)
+    input_str = sub(r'<SYM:DOWN>', '↓', input_str)
+    input_str = sub(r'<SYM:ADD>', '+', input_str)
+    input_str = sub(r'<SYM:CHG>', 'Δ', input_str)
+    input_str = sub(r'<SYM:UNTRACKED>', '…', input_str)
+
+    # Then colors
     input_str = sub(r'\<(.+?)\>', r'{\1}', input_str)
     input_str = sub(r'{BOLD:', r'{BOLD_', input_str)
     return input_str
