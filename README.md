@@ -4,7 +4,8 @@ The strongest shell-agnostic profile, myan!
 ![](image.png)
 
 Featurin' these nifty things:
- * Cross-shell support (tested: fish, bash, PowerShell, zsh)!
+ * Cross-shell support (tested: xonsh, fish, bash, PowerShell, zsh)!
+ * Shell-agnostic colorization!
  * RCs for vim, screen, and tmux!
  * Git in-line status!
  * Auto-update functionality!
