@@ -20,7 +20,7 @@ Try {
 }
 
 # Where will CATESHELL live?
-$env:CATESHELL_HOME = "$env:HOME/.config/cateshell"
+$env:CATESHELL_HOME = "$env:USERPROFILE/.config/cateshell"
 
 # Clean this directory.
 if (Test-Path "$env:CATESHELL_HOME") {
@@ -79,7 +79,7 @@ Copy-Item -Force -Verbose cateshell_git_support.py "$env:CATESHELL_HOME"
 Copy-Item -Force -Verbose cateshell_welcome_screen.py "$env:CATESHELL_HOME"
 Copy-Item -Force -Verbose cateshell_cat_header.txt "$env:CATESHELL_HOME"
 Copy-Item -Force -Verbose colorize_bash_like.py "$env:CATESHELL_HOME"
-
+Copy-Item -Force -Verbose colorize_powershell_like.py "$env:CATESHELL_HOME"
 # Install CATESHELL bash config
 (Get-Content cateshell_bash.sh).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `
   | Set-Content cateshell_bash.sh.temp
@@ -132,8 +132,11 @@ python3 "${env:CATESHELL_HOME}/cateshell_store.py" CATESHELL_HOME $env:CATESHELL
 python3 "${env:CATESHELL_HOME}/cateshell_store.py" CATESHELL_SOURCE_DIR $PWD.Path
 
 # Point powershell to powershell CATESHELL config
-If (!("$(Get-Content -Raw $profile)".Contains(". $env:CATESHELL_HOME/cateshell_powershell.ps1"))) {
-  Write-Output ". $env:CATESHELL_HOME/cateshell_powershell.ps1" >> $profile
+If (!("$(Get-Content -Raw $profile)".Contains(". '$env:CATESHELL_HOME/cateshell_powershell.ps1'"))) {
+  Write-Output ". '$env:CATESHELL_HOME/cateshell_powershell.ps1'" >> $profile
 }
+
+# Colorization support in native PowerShell terminal
+Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1
 
 # Done.

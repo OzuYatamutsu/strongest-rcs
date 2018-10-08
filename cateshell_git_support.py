@@ -85,23 +85,23 @@ def shell_format(prefix=False) -> str:
     if not no_changes:
         prompt += '|'
         prompt += (
-            f'<GREEN>↑<WHITE>'
+            f'<GREEN><SYM:UP><WHITE>'  # ↑
             f'{num_unpushed_commits}' if num_unpushed_commits else ''
         )
         prompt += (
-            f'<GREEN>↓<WHITE>'
+            f'<GREEN><SYM:DOWN><WHITE>'  # ↓
             f'{num_unpulled_commits}' if num_unpulled_commits else ''
         )
         prompt += (
-            f'<GREEN>+<WHITE>'
+            f'<GREEN><SYM:ADD><WHITE>'  # +
             f'{num_added_files}' if num_added_files else ''
         )
         prompt += (
-            f'<GREEN>Δ<WHITE>'
+            f'<GREEN><SYM:CHG><WHITE>'  # Δ
             f'{num_changed_files}' if num_changed_files else ''
         )
         prompt += (
-            f'<CYAN>…<WHITE>'
+            f'<CYAN><SYM:UNTRACKED><WHITE>'  # …
             f'{num_untracked_files}' if num_untracked_files else ''
         )
 
