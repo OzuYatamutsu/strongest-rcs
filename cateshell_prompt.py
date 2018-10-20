@@ -20,4 +20,8 @@ def prompt() -> str:
 
 
 if __name__ == '__main__':
-    print(prompt())
+    try:
+        print(prompt())
+    except KeyboardInterrupt:
+        pass
+
