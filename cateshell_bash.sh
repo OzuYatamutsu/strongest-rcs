@@ -40,7 +40,7 @@ function colorize() {
 
 ## PROMPT
 function prompt() {
-  colorize $(python3 "$CATESHELL_HOME/cateshell_prompt.py") | sed 's/\x1b/\[\\x1b/'
+  colorize $(python3 "$CATESHELL_HOME/cateshell_prompt.py")
 }
 
 ## WELCOME HEADER
@@ -59,7 +59,7 @@ function welcome_header() {
 }
 
 ### BASH-SPECIFIC IMPLEMENTATIONS
-PS1='$(printf "$(prompt) ")'
+PS1='\[$(printf "$(prompt) ")\]'
 
 welcome_header
 if shopt -q login_shell; then
