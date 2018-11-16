@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import date
-TARGET_DATE = date(2018, 12, 30)
+TARGET_DATE = date(2018, 12, 29)
 
 
 def main():
