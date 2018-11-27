@@ -1,10 +1,15 @@
 #!/bin/bash
+UNAME=$(uname -a)
+if [[ $UNAME == *'Darwin'* ]]; then
+    # Mac -- homebrew
+    brew update
+    brew upgrade
+    brew cleanup
+elif [[ $UNAME == *'Debian'* || $UNAME == *'Ubuntu'* ]]; then
+    sudo apt-get update
+    sudo apt-get -y dist-upgrade
+    sudo apt-get -y autoremove
+else
+    sudo yum upgrade -y
+fi
 
-# Mac -- homebrew
-brew update
-brew upgrade
-brew cleanup
-
-# pip3 upgrade
-pip-review --auto
-pip3 install --upgrade pip
