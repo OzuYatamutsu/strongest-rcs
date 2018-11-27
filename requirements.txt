@@ -1,5 +1,4 @@
 colorama
 pytz
 gitpython
-pip-review
 xonsh
