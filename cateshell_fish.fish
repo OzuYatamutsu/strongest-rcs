@@ -36,7 +36,7 @@ function get_utime_ms
 end
 
 function colorize
-  python3 "$CATESHELL_HOME/colorize_bash_like.py" $argv
+  python3 "$CATESHELL_HOME/colorize_fish_like.py" $argv
 end
 
 ## PROMPT
