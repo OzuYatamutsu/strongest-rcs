@@ -59,7 +59,10 @@ function welcome_header() {
 }
 
 ### BASH-SPECIFIC IMPLEMENTATIONS
-PS1="$(eval prompt) "
+function bash_print_prompt() {
+    printf "$(prompt) "
+}
+PS1="\$(bash_print_prompt)"
 
 welcome_header
 if shopt -q login_shell; then
