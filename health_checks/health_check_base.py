@@ -29,7 +29,7 @@ class HealthCheckBase:
 
     _net_check_endpoint = (
         ('8.8.8.8', 53) if not gethostname().endswith('linkedin.biz')
-        else ('1.1.1.1', 80)
+        else ('1.1.1.2', 80)
     )
     _space_check_threshold = 80
     _time_check_bounds = (5, 23)
