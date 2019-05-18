@@ -5,3 +5,9 @@ __pycache__
 .pytest_cache/
 catelab_metadata.sqlite3
 .vscode/
+.idea/
+*.iml
+
+# Binaries
+cateshell_prompt
+cateshell_welcome_screen

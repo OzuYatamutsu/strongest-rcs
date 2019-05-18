@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/user"
 	"strings"
+	"time"
 )
 
 import "./health"
@@ -44,7 +45,7 @@ func printHeader() {
 	fmt.Print(" on " + color.MagentaString(getHostname()) + ", ")
 	fmt.Print(color.BlueString(getUsername()) + "!\n")
 
-	fmt.Print("It's currently " + color.GreenString("...TODO DATE") + ".\n")
+	fmt.Print("It's currently " + color.GreenString(time.Now().String()) + ".\n")
 
 	fmt.Print("You're running " + color.BlueString("... TODO OS") + ".\n")
 }
@@ -58,7 +59,10 @@ func printHealthChecks() {
 
 func main() {
 	printHeader()
-	fmt.Println()
+	fmt.Println("")
 	printHealthChecks()
 	plugins.RunPlugins()
+	fmt.Println("")
+	fmt.Println("")
+	fmt.Println("What will your " + color.MagentaString("first sequence of the day") + " be?")
 }
