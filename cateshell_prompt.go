@@ -40,15 +40,14 @@ func gitStatus() string {
 		numAdded, numChanged, numUntracked := 0, 0, 0
 		deltaString := ""
 		for _, line := range strings.Split(strings.TrimSuffix(status.String(), "\n"), "\n") {
-			statusShort := strings.Split(line, " ")[0]
-			if strings.Contains(statusShort, "A") {
+			if strings.HasPrefix(line, "?") {
+				numUntracked += 1
+			}
+			if !strings.HasPrefix(line, " "){
 				numAdded += 1
 			}
-			if strings.Contains(statusShort,"M") {
+			if strings.HasPrefix(line, "MM") || strings.HasPrefix(line, " M") {
 				numChanged += 1
-			}
-			if strings.Contains(statusShort, "?") {
-				numUntracked += 1
 			}
 		}
 		if numAdded > 0 {
@@ -68,7 +67,7 @@ func gitStatus() string {
 }
 
 func prompt() {
-	fmt.Printf("%s%s%s %s%s>\n",
+	fmt.Printf("%s%s%s %s%s> \n",
 		color.BlueString(getUsername()),
 		color.BlueString("@"),
 		color.BlueString(getHostname()),
