@@ -1,14 +1,19 @@
 package health
 
 import (
+	"context"
 	"github.com/fatih/color"
 	"net"
+	"time"
 )
 
 const LookupHost = "www.icann.org"
 
 func DnsIsOk() bool {
-	_, err := net.LookupIP(LookupHost)
+	timeoutCtx, cancel := context.WithTimeout(context.TODO(), time.Millisecond * 1000)  // ms
+	defer cancel()
+	var r net.Resolver
+	_, err := r.LookupIPAddr(timeoutCtx, LookupHost)
 	if err != nil {
 		// Lookup failed
 		return false
