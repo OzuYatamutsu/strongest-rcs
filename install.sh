@@ -59,10 +59,9 @@ cp -fv vimrc ~/.vimrc
 
 # Install CATESHELL core
 mkdir "$CATESHELL_HOME" || true
-go build cateshell_welcome_screen.go
-go build cateshell_prompt.go
-cp -fv cateshell_welcome_screen $CATESHELL_HOME
-cp -fv cateshell_prompt $CATESHELL_HOME
+go build -o $CATESHELL_HOME/cateshell_welcome_screen cateshell_welcome_screen.go
+go build -o $CATESHELL_HOME/colorize_fish_like colorize_fish_like.go
+go build -o $CATESHELL_HOME/cateshell_prompt cateshell_prompt.go
 
 # Install CATESHELL shell configs
 sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_fish.fish \

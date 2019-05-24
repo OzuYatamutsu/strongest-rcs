@@ -7,8 +7,6 @@ import (
 	"os/user"
 	"strconv"
 	"strings"
-
-	"github.com/fatih/color"
 )
 
 func getUsername() string {
@@ -51,28 +49,28 @@ func gitStatus() string {
 			}
 		}
 		if numAdded > 0 {
-			deltaString += color.GreenString("+") + strconv.FormatInt(int64(numAdded), 10)
+			deltaString += "<GREEN><SYM:ADD><RESET>" + strconv.FormatInt(int64(numAdded), 10)
 		}
 		if numChanged > 0 {
-			deltaString += color.GreenString("Δ") + strconv.FormatInt(int64(numChanged), 10)
+			deltaString += "<GREEN><SYM:CHG><RESET>" + strconv.FormatInt(int64(numChanged), 10)
 		}
 		if numUntracked > 0 {
-			deltaString += "…" + strconv.FormatInt(int64(numUntracked), 10)
+			deltaString += "<GREEN><SYM:UNTRACKED><RESET>" + strconv.FormatInt(int64(numUntracked), 10)
 		}
-		return " (" + color.HiBlueString(ref.Name().Short()) +
+		return " (<BOLD:BLUE>" + ref.Name().Short() + "<RESET>" +
 			"|" + deltaString + ")"
 	}
 
-	return " (" + color.HiBlueString(ref.Name().Short()) + ")"
+	return " (<BOLD:BLUE>" + ref.Name().Short() + "<RESET>)"
 }
 
 func prompt() {
 	fmt.Printf("%s%s%s %s%s> \n",
-		color.BlueString(getUsername()),
-		color.BlueString("@"),
-		color.BlueString(getHostname()),
-		color.GreenString(getCwd()),
-		gitStatus(),
+		"<BLUE>" + getUsername(),
+		"@",
+		getHostname(),
+		"<GREEN>" + getCwd(),
+		"<RESET>" + gitStatus(),
 	)
 }
 

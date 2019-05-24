@@ -26,10 +26,13 @@ function get_utime_ms
   python -c "import time; print(int(time.time()*1000))"
 end
 
+function colorize
+  $CATESHELL_HOME/colorize_fish_like $argv
+end
+
 ## PROMPT
 function prompt
-  exec "$CATESHELL_HOME/cateshell_prompt"
-  echo ""
+  printf (colorize ($CATESHELL_HOME/cateshell_prompt))
 end
 
 ## WELCOME HEADER
@@ -63,8 +66,7 @@ function fish_user_key_bindings
 end
 
 function fish_prompt
-  # prompt
-  echo ($CATESHELL_HOME/cateshell_prompt)
+  prompt
 end
 
 # No greet

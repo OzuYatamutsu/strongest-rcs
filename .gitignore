@@ -11,3 +11,4 @@ catelab_metadata.sqlite3
 # Binaries
 cateshell_prompt
 cateshell_welcome_screen
+colorize_fish_like
