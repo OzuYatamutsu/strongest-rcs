@@ -25,9 +25,13 @@ function get_utime_ms() {
   python -c "import time; print(int(time.time()*1000))"
 }
 
+function colorize() {
+  $CATESHELL_HOME/colorize_fish_like $@
+}
+
 ## PROMPT
 function prompt() {
-  $CATESHELL_HOME/cateshell_prompt
+  colorize $("$CATESHELL_HOME/cateshell_prompt")
 }
 
 ## WELCOME HEADER

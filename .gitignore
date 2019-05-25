@@ -12,3 +12,4 @@ catelab_metadata.sqlite3
 cateshell_prompt
 cateshell_welcome_screen
 colorize_fish_like
+colorize_bash_like
