@@ -18,21 +18,6 @@ if isfile('/usr/libexec/path_helper'):
     for dir in path_entries.split(':'):
         $PATH.append(dir)
 
-### CATELAB-SPECIFIC FUNCTIONS
-def cateshell_db(key=None, value=None):
-    """Access CATESHELL config vars from db"""
-    $key = key if key else ""
-    $value = value if value else ""
-
-    if $value:
-        $(python3 "$CATESHELL_HOME/cateshell_store.py" $key $value)
-        return
-    elif $key:
-        return $(python3 "$CATESHELL_HOME/cateshell_store.py" $key).strip()
-    else:
-        return $(python3 "$CATESHELL_HOME/cateshell_store.py")\
-            .split('\n').strip()
-
 ## CATESHELL SHELL BUILT-IN FUNCTIONS
 def version_string():
     return $(xonsh --version).strip()
@@ -61,7 +46,7 @@ def colorize(input_str):
 
 ## PROMPT
 def prompt():
-    return colorize($(python3 "$CATESHELL_HOME/cateshell_prompt.py"))\
+    return colorize($("$CATESHELL_HOME/cateshell_prompt"))\
         .strip() + ' '
 
 ## WELCOME HEADER
@@ -71,8 +56,7 @@ def welcome_header():
     if get_utime_ms() < $NEXT_HEADER_UTIME:
         return
 
-    python3 "$CATESHELL_HOME/cateshell_welcome_screen.py" "$CATESHELL_HOME" @(version_string())
-    cateshell_db('FISHRC_NEXT_HEADER_UTIME', get_utime_ms() + 500)
+    "$CATESHELL_HOME/cateshell_welcome_screen" "$CATESHELL_HOME" @(version_string())
 
 ### XONSH-SPECIFIC IMPLEMENTATION
 welcome_header()

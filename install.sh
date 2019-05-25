@@ -2,18 +2,6 @@
 ### Installation script, fish and bash
 INSTALL_CWD=$PWD
 
-# CATESHELL requires python3 and pip3 to be defined.
-# Fail immediately if this check doesn't pass.
-if [[ "$(which python3)" == "" ]]; then
-  echo "CATESHELL requires Python >= 3.6, and 'python3' to be defined."
-  echo "Please remedy this situation manually."
-fi
-
-if [[ "$(which pip3)" == "" ]]; then
-  echo "CATESHELL requires Python >= 3.6, and 'pip3' to be defined."
-  echo "Please remedy this situation manually."
-fi
-
 # Where will CATESHELL live?
 export CATESHELL_HOME="$HOME/.config/cateshell"
 
@@ -71,14 +59,11 @@ cp -fv vimrc ~/.vimrc
 
 # Install CATESHELL core
 mkdir "$CATESHELL_HOME" || true
-cp -fv cateshell_prompt.py "$CATESHELL_HOME"
-cp -fv cateshell_store.py "$CATESHELL_HOME"
-cp -fv cateshell_git_support.py "$CATESHELL_HOME"
-cp -fv cateshell_welcome_screen.py "$CATESHELL_HOME"
-cp -fv cateshell_cat_header.txt "$CATESHELL_HOME"
-cp -fv colorize_bash_like.py "$CATESHELL_HOME"
-cp -fv colorize_fish_like.py "$CATESHELL_HOME"
-cp -fv colorize_powershell_like.py "$CATESHELL_HOME"
+go build -o $CATESHELL_HOME/cateshell_welcome_screen cateshell_welcome_screen.go
+go build -o $CATESHELL_HOME/colorize_fish_like colorize_fish_like.go
+go build -o $CATESHELL_HOME/colorize_bash_like colorize_bash_like.go
+go build -o $CATESHELL_HOME/colorize_powershell_like colorize_powershell_like.go
+go build -o $CATESHELL_HOME/cateshell_prompt cateshell_prompt.go
 
 # Install CATESHELL shell configs
 sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_fish.fish \
@@ -94,20 +79,10 @@ sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_xonsh.py \
   > cateshell_xonsh.py.temp
 mv -fv cateshell_xonsh.py.temp "$CATESHELL_HOME/cateshell_xonsh.py"
 
-# Install CATESHELL health checks and plugins
-mkdir "$CATESHELL_HOME/health_checks" || true
-cp -Rfv health_checks/*.py "$CATESHELL_HOME/health_checks/"
-mkdir "$CATESHELL_HOME/plugins" || true
-cp -Rfv plugins/*.py "$CATESHELL_HOME/plugins/"
-
 # Install CATESHELL scripts
 mkdir ~/scripts || true
 mkdir "$CATESHELL_HOME/scripts" || true
 cp -Rfv scripts/* "$CATESHELL_HOME/scripts/"
-
-# Set current directory as update source
-python3 "${CATESHELL_HOME}/cateshell_store.py" CATESHELL_HOME $CATESHELL_HOME
-python3 "${CATESHELL_HOME}/cateshell_store.py" CATESHELL_SOURCE_DIR $PWD
 
 # Point bash to bash CATESHELL config
 grep -q -F "source ${CATESHELL_HOME}/cateshell_bash.sh" ~/.bashrc \

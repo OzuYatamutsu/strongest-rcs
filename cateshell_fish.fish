@@ -13,15 +13,6 @@ set --export CATESHELL_HOME "_CATESHELL_HOME"
 set --export LC_ALL 'en_US.utf8'
 set -gx PATH ~/scripts $CATESHELL_HOME/scripts $PATH
 
-### CATELAB-SPECIFIC FUNCTIONS
-function cateshell_db --description 'Access CATESHELL config vars from db'
-  if test (count $argv) -eq 2
-    python3 "$CATESHELL_HOME/cateshell_store.py" $argv 2>&1 >/dev/null
-  else
-    python3 "$CATESHELL_HOME/cateshell_store.py" $argv
-  end
-end
-
 ## CATESHELL SHELL BUILT-IN FUNCTIONS
 function version_string
   fish --version | head -n1
@@ -36,27 +27,17 @@ function get_utime_ms
 end
 
 function colorize
-  python3 "$CATESHELL_HOME/colorize_fish_like.py" $argv
+  $CATESHELL_HOME/colorize_fish_like $argv
 end
 
 ## PROMPT
 function prompt
-  printf (colorize (python3 "$CATESHELL_HOME/cateshell_prompt.py"))
+  printf (colorize ($CATESHELL_HOME/cateshell_prompt))
 end
 
 ## WELCOME HEADER
 function welcome_header
-  set NEXT_HEADER_UTIME (cateshell_db FISHRC_NEXT_HEADER_UTIME)
-  if [ "$NEXT_HEADER_UTIME" = '' ]
-    set NEXT_HEADER_UTIME '0'
-  end
-  if [ (get_utime_ms) -lt $NEXT_HEADER_UTIME ]
-    # Don't print header again
-    return
-  end
-
-  python3 "$CATESHELL_HOME/cateshell_welcome_screen.py" "$CATESHELL_HOME" (version_string)
-  cateshell_db FISHRC_NEXT_HEADER_UTIME (math (get_utime_ms) + 500)
+  $CATESHELL_HOME/cateshell_welcome_screen (version_string)
 end
 
 ### FISH-SPECIFIC IMPLEMENTATION

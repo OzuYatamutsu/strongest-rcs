@@ -12,15 +12,6 @@ export CATESHELL_HOME="_CATESHELL_HOME"
 export LC_ALL='en_US.utf8'
 export PATH=~/scripts:$CATESHELL_HOME/scripts:$PATH
 
-### CATESHELL-SPECIFIC FUNCTIONS
-function cateshell_db {  # Access CATESHELL config vars from db
-    if [ "$#" -eq 2 ]; then
-      python3 "$CATESHELL_HOME/cateshell_store.py" $@ 2>&1 >/dev/null
-    else
-      python3 "$CATESHELL_HOME/cateshell_store.py" $@
-    fi
-}
-
 ## CATESHELL SHELL BUILT-IN FUNCTIONS
 function version_string() {
   bash --version | head -n1
@@ -35,27 +26,17 @@ function get_utime_ms() {
 }
 
 function colorize() {
-  python3 "$CATESHELL_HOME/colorize_bash_like.py" $@
+  $CATESHELL_HOME/colorize_fish_like $@
 }
 
 ## PROMPT
 function prompt() {
-  colorize $(python3 "$CATESHELL_HOME/cateshell_prompt.py")
+  colorize $("$CATESHELL_HOME/cateshell_prompt")
 }
 
 ## WELCOME HEADER
 function welcome_header() {
-  NEXT_HEADER_UTIME="$(cateshell_db BASHRC_NEXT_HEADER_UTIME)"
-  if [[ "$NEXT_HEADER_UTIME" == '' ]]; then
-    NEXT_HEADER_UTIME='0'
-  fi
-  if [ "$(get_utime_ms)" -lt "$NEXT_HEADER_UTIME" ]; then
-    # Don't print header again
-    return
-  fi
-
-  python3 "${CATESHELL_HOME}/cateshell_welcome_screen.py" "${CATESHELL_HOME}" "$(version_string)"
-  cateshell_db BASHRC_NEXT_HEADER_UTIME "$(get_utime_ms + 500)"
+  $CATESHELL_HOME/cateshell_welcome_screen $(version_string)
 }
 
 ### BASH-SPECIFIC IMPLEMENTATIONS
