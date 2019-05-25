@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gopkg.in/src-d/go-git.v4"
 	"os"
+	"os/exec"
 	"os/user"
 	"strconv"
 	"strings"
@@ -34,9 +35,17 @@ func gitStatus() string {
 	ref, _ := repo.Head()
 	worktree, _ := repo.Worktree()
 	status, _ := worktree.Status()
+
+	// Call out to shell for num unpushed/unpulled commits
+	rawUnpushed, _ := exec.Command("git", "log", "--pretty=oneline", "@{u}..").Output()
+	rawUnpulled, _ := exec.Command("git", "log", "--pretty=oneline", "..@{u}").Output()
+	numUnpushed := len(strings.Split(string(rawUnpushed), "\n")) - 1
+	numUnpulled := len(strings.Split(string(rawUnpulled), "\n")) - 1
+
 	if !status.IsClean() {
 		numAdded, numChanged, numUntracked := 0, 0, 0
 		deltaString := ""
+
 		for _, line := range strings.Split(strings.TrimSuffix(status.String(), "\n"), "\n") {
 			if strings.HasPrefix(line, "?") {
 				numUntracked += 1
@@ -47,6 +56,12 @@ func gitStatus() string {
 			if strings.HasPrefix(line, "MM") || strings.HasPrefix(line, " M") {
 				numChanged += 1
 			}
+		}
+		if numUnpushed > 0 {
+			deltaString += "<GREEN><SYM:UP><RESET>" + strconv.FormatInt(int64(numUnpushed), 10)
+		}
+		if numUnpulled > 0 {
+			deltaString += "<GREEN><SYM:DOWN><RESET>" + strconv.FormatInt(int64(numUnpulled), 10)
 		}
 		if numAdded > 0 {
 			deltaString += "<GREEN><SYM:ADD><RESET>" + strconv.FormatInt(int64(numAdded), 10)
