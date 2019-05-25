@@ -32,33 +32,33 @@ if (Test-Path "$env:CATESHELL_HOME") {
 pip3 install -r requirements.txt --user
 
 # - Create directory for vimfiles
-If (!(Test-Path "$env:HOME/vimfiles")) {
-  New-Item -ItemType Directory "$env:HOME/vimfiles"
-  New-Item -ItemType Directory "$env:HOME/vimfiles/autoload"
-  New-Item -ItemType Directory "$env:HOME/vimfiles/bundle"
+If (!(Test-Path "$env:USERPROFILE/vimfiles")) {
+  New-Item -ItemType Directory "$env:USERPROFILE/vimfiles"
+  New-Item -ItemType Directory "$env:USERPROFILE/vimfiles/autoload"
+  New-Item -ItemType Directory "$env:USERPROFILE/vimfiles/bundle"
 }
 
 # - Pathogen (plugin manager for vim)
 Invoke-WebRequest https://tpo.pe/pathogen.vim -OutFile ~/vimfiles/autoload/pathogen.vim  >$null
 
 # - vim-airline (styling for vim)
-If (!(Test-Path "$env:HOME/vimfiles/bundle/vim-airline")) {
+If (!(Test-Path "$env:USERPROFILE/vimfiles/bundle/vim-airline")) {
   # Install
-  git clone https://github.com/vim-airline/vim-airline "$env:HOME/vimfiles/bundle/vim-airline"
+  git clone https://github.com/vim-airline/vim-airline "$env:USERPROFILE/vimfiles/bundle/vim-airline"
 } Else {
   # ...or update.
-  Set-Location "$env:HOME/vimfiles/bundle/vim-airline"
+  Set-Location "$env:USERPROFILE/vimfiles/bundle/vim-airline"
   git pull
   Set-Location $INSTALL_CWD
 }
 
 # - vim-airline-themes (styling for vim)
-If (!(Test-Path "$env:HOME/vimfiles/bundle/vim-airline-themes")) {
+If (!(Test-Path "$env:USERPROFILE/vimfiles/bundle/vim-airline-themes")) {
   # Install
-  git clone https://github.com/vim-airline/vim-airline-themes "$env:HOME/vimfiles/bundle/vim-airline-themes"
+  git clone https://github.com/vim-airline/vim-airline-themes "$env:USERPROFILE/vimfiles/bundle/vim-airline-themes"
 } Else {
   # ...or update.
-  Set-Location "$env:HOME/vimfiles/bundle/vim-airline-themes"
+  Set-Location "$env:USERPROFILE/vimfiles/bundle/vim-airline-themes"
   git pull
   Set-Location $INSTALL_CWD
 }
@@ -76,11 +76,11 @@ If (!(Test-Path "$env:CATESHELL_HOME")) {
 go get gopkg.in/src-d/go-git.v4
 go get github.com/shirou/gopsutil/disk
 go get github.com/fatih/color
-go build -o $CATESHELL_HOME/cateshell_welcome_screen cateshell_welcome_screen.go
-go build -o $CATESHELL_HOME/colorize_fish_like colorize_fish_like.go
-go build -o $CATESHELL_HOME/colorize_bash_like colorize_bash_like.go
-go build -o $CATESHELL_HOME/colorize_powershell_like colorize_powershell_like.go
-go build -o $CATESHELL_HOME/cateshell_prompt cateshell_prompt.go
+go build -o "$env:CATESHELL_HOME/cateshell_welcome_screen.exe" cateshell_welcome_screen.go
+go build -o "$env:CATESHELL_HOME/colorize_fish_like.exe" colorize_fish_like.go
+go build -o "$env:CATESHELL_HOME/colorize_bash_like.exe" colorize_bash_like.go
+go build -o "$env:CATESHELL_HOME/colorize_powershell_like.exe" colorize_powershell_like.go
+go build -o "$env:CATESHELL_HOME/cateshell_prompt.exe" cateshell_prompt.go
 
 # Install CATESHELL bash config
 (Get-Content cateshell_bash.sh).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `

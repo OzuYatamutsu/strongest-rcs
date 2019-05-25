@@ -2,9 +2,10 @@ package plugins
 
 import (
 	"fmt"
-	"github.com/fatih/color"
 	"strconv"
 	"time"
+
+	"github.com/fatih/color"
 )
 
 func PluginDaysUntil() {
@@ -12,7 +13,7 @@ func PluginDaysUntil() {
 	currentDate := time.Now()
 	daysUntil := targetDate.Sub(currentDate)
 
-	fmt.Print(color.BlueString(" i ") + "There are ")
-	fmt.Print(color.BlueString(strconv.FormatInt(int64(daysUntil.Hours() / 24), 10)))
-	fmt.Print(" days until " + color.BlueString(targetDate.Format("January 2, 2006")) + ".")
+	fmt.Print(color.GreenString(" i ") + "There are ")
+	fmt.Print(color.GreenString(strconv.FormatInt(int64(daysUntil.Hours()/24), 10)))
+	fmt.Print(" days until " + color.GreenString(targetDate.Format("January 2, 2006")) + ".")
 }

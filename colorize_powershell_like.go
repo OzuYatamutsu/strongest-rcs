@@ -7,17 +7,17 @@ import (
 	"strings"
 )
 
-var IRColorSymMapPowershell = map[string]string {
-	"<*BOLD>": "\u001b[1m",
-	"<PURPLE>": "\u001b[34m",
-	"<GREEN>": "\u001b[32m",
-	"<WHITE>": "\u001b[37m",
-	"<CYAN>": "\u001b[36m",
-	"<RED>": "\u001b[31m",
-	"<YELLOW>": "\u001b[33m",
-	"<BLUE>": "\u001b[34m",
+var IRColorSymMapPowershell = map[string]string{
+	"<*BOLD>":   "\u001b[1m",
+	"<PURPLE>":  "\u001b[36m",
+	"<GREEN>":   "\u001b[32m",
+	"<WHITE>":   "\u001b[37m",
+	"<CYAN>":    "\u001b[36m",
+	"<RED>":     "\u001b[31m",
+	"<YELLOW>":  "\u001b[33m",
+	"<BLUE>":    "\u001b[36m", // "\u001b[34m", (too dark!)
 	"<MAGENTA>": "\u001b[35m",
-	"<RESET>": "\u001b[0m",
+	"<RESET>":   "\u001b[0m",
 	/* Symbol substitutions (will substitute in shell land)
 	"<SYM:UP>": "↑",
 	"<SYM:DOWN>": "↓",
