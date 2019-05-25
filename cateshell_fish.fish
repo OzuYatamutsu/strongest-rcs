@@ -27,12 +27,12 @@ function get_utime_ms
 end
 
 function colorize
-  eval $CATESHELL_HOME/colorize_fish_like $argv
+  eval "$CATESHELL_HOME/colorize_fish_like $argv"
 end
 
 ## PROMPT
 function prompt
-  printf (colorize (eval $CATESHELL_HOME/cateshell_prompt))
+  printf (colorize (eval "$CATESHELL_HOME/cateshell_prompt"))
 end
 
 ## WELCOME HEADER
