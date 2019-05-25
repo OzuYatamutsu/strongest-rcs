@@ -32,7 +32,7 @@ end
 
 ## PROMPT
 function prompt
-  printf (colorize (eval "$CATESHELL_HOME/cateshell_prompt"))
+  printf (colorize '(eval "$CATESHELL_HOME/cateshell_prompt")')
 end
 
 ## WELCOME HEADER
