@@ -72,15 +72,13 @@ Copy-Item -Force -Verbose vimrc ~/.vimrc
 If (!(Test-Path "$env:CATESHELL_HOME")) {
   New-Item -ItemType Directory "$env:CATESHELL_HOME"
 }
-Copy-Item -Force -Verbose cateshell_prompt.py "$env:CATESHELL_HOME"
-Copy-Item -Force -Verbose cateshell_prompt.py "$env:CATESHELL_HOME"
-Copy-Item -Force -Verbose cateshell_store.py "$env:CATESHELL_HOME"
-Copy-Item -Force -Verbose cateshell_git_support.py "$env:CATESHELL_HOME"
-Copy-Item -Force -Verbose cateshell_welcome_screen.py "$env:CATESHELL_HOME"
-Copy-Item -Force -Verbose cateshell_cat_header.txt "$env:CATESHELL_HOME"
-Copy-Item -Force -Verbose colorize_bash_like.py "$env:CATESHELL_HOME"
-Copy-Item -Force -Verbose colorize_fish_like.py "$env:CATESHELL_HOME"
-Copy-Item -Force -Verbose colorize_powershell_like.py "$env:CATESHELL_HOME"
+
+go build -o $CATESHELL_HOME/cateshell_welcome_screen cateshell_welcome_screen.go
+go build -o $CATESHELL_HOME/colorize_fish_like colorize_fish_like.go
+go build -o $CATESHELL_HOME/colorize_bash_like colorize_bash_like.go
+go build -o $CATESHELL_HOME/colorize_powershell_like colorize_powershell_like.go
+go build -o $CATESHELL_HOME/cateshell_prompt cateshell_prompt.go
+
 # Install CATESHELL bash config
 (Get-Content cateshell_bash.sh).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `
   | Set-Content cateshell_bash.sh.temp
@@ -105,19 +103,6 @@ Move-Item -Force -Verbose cateshell_zsh.sh.temp `
 Move-Item -Force -Verbose cateshell_powershell.ps1.temp `
   "$env:CATESHELL_HOME/cateshell_powershell.ps1"
 
-# Install CATESHELL health checks and plugins
-If (!(Test-Path "$env:CATESHELL_HOME/health_checks")) {
-  New-Item -ItemType Directory "$env:CATESHELL_HOME/health_checks"
-}
-Copy-Item -Recurse -Force -Verbose health_checks/*.py `
-  "$env:CATESHELL_HOME/health_checks/"
-
-If (!(Test-Path "$env:CATESHELL_HOME/plugins")) {
-  New-Item -ItemType Directory "$env:CATESHELL_HOME/plugins"
-}
-Copy-Item -Recurse -Force -Verbose plugins/*.py `
-  "$env:CATESHELL_HOME/plugins/"
-
 # Install CATESHELL scripts
 If (!(Test-Path "$env:HOME/scripts")) {
   New-Item -ItemType Directory "$env:HOME/scripts"
@@ -127,10 +112,6 @@ If (!(Test-Path "$env:CATESHELL_HOME/scripts")) {
 }
 Copy-Item -Recurse -Force -Verbose scripts/*.py `
   "$env:CATESHELL_HOME/scripts/"
-
-# Set current directory as update source
-python3 "${env:CATESHELL_HOME}/cateshell_store.py" CATESHELL_HOME $env:CATESHELL_HOME
-python3 "${env:CATESHELL_HOME}/cateshell_store.py" CATESHELL_SOURCE_DIR $PWD.Path
 
 # Point powershell to powershell CATESHELL config
 If (!("$(Get-Content -Raw $profile)".Contains(". '$env:CATESHELL_HOME/cateshell_powershell.ps1'"))) {
