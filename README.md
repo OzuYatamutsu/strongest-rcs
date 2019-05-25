@@ -11,7 +11,7 @@ Featurin' these nifty things:
  * Auto-update functionality!
  * Nifty cat pictures!
 
-Requires `python3` and `pip3`. If `python` points to `python3` and no `python3` binary exists, please symlink `python3` to `python` (same with `pip3`)!
+Requires `python3`, `pip3` and `go`. If `python` points to `python3` and no `python3` binary exists, please symlink `python3` to `python` (same with `pip3`)!
 
 # Installing on OSX/Linux
 Run `install.sh`, then restart any open shells.

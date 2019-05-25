@@ -73,6 +73,9 @@ If (!(Test-Path "$env:CATESHELL_HOME")) {
   New-Item -ItemType Directory "$env:CATESHELL_HOME"
 }
 
+go get gopkg.in/src-d/go-git.v4
+go get github.com/shirou/gopsutil/disk
+go get github.com/fatih/color
 go build -o $CATESHELL_HOME/cateshell_welcome_screen cateshell_welcome_screen.go
 go build -o $CATESHELL_HOME/colorize_fish_like colorize_fish_like.go
 go build -o $CATESHELL_HOME/colorize_bash_like colorize_bash_like.go
