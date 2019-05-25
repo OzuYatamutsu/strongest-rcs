@@ -41,10 +41,17 @@ func gitStatus() string {
 	rawUnpulled, _ := exec.Command("git", "log", "--pretty=oneline", "..@{u}").Output()
 	numUnpushed := len(strings.Split(string(rawUnpushed), "\n")) - 1
 	numUnpulled := len(strings.Split(string(rawUnpulled), "\n")) - 1
+	deltaString := ""
+
+	if numUnpushed > 0 {
+		deltaString += "<GREEN><SYM:UP><RESET>" + strconv.FormatInt(int64(numUnpushed), 10)
+	}
+	if numUnpulled > 0 {
+		deltaString += "<GREEN><SYM:DOWN><RESET>" + strconv.FormatInt(int64(numUnpulled), 10)
+	}
 
 	if !status.IsClean() {
 		numAdded, numChanged, numUntracked := 0, 0, 0
-		deltaString := ""
 
 		for _, line := range strings.Split(strings.TrimSuffix(status.String(), "\n"), "\n") {
 			if strings.HasPrefix(line, "?") {
@@ -57,12 +64,6 @@ func gitStatus() string {
 				numChanged += 1
 			}
 		}
-		if numUnpushed > 0 {
-			deltaString += "<GREEN><SYM:UP><RESET>" + strconv.FormatInt(int64(numUnpushed), 10)
-		}
-		if numUnpulled > 0 {
-			deltaString += "<GREEN><SYM:DOWN><RESET>" + strconv.FormatInt(int64(numUnpulled), 10)
-		}
 		if numAdded > 0 {
 			deltaString += "<GREEN><SYM:ADD><RESET>" + strconv.FormatInt(int64(numAdded), 10)
 		}
@@ -72,6 +73,9 @@ func gitStatus() string {
 		if numUntracked > 0 {
 			deltaString += "<GREEN><SYM:UNTRACKED><RESET>" + strconv.FormatInt(int64(numUntracked), 10)
 		}
+	}
+
+	if len(deltaString) > 0 {
 		return " (<BOLD:BLUE>" + ref.Name().Short() + "<RESET>" +
 			"|" + deltaString + ")"
 	}
