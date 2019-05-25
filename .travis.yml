@@ -13,11 +13,8 @@ matrix:
             - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
           install: 
             - pyenv global system 3.6
-            - pip3.6 install flake8 pytest --user
             - /bin/bash install.sh
           script:
-            - flake8
-            - pytest
             - fish -c 'exit'
         - name: "Bash"
           env: SHELL_TYPE=bash
@@ -28,11 +25,8 @@ matrix:
              - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1 
           install:
             - pyenv global system 3.6
-            - pip3.6 install flake8 pytest --user
             - /bin/bash install.sh
           script:
-            - flake8
-            - pytest
             - bash -c 'exit'
         - name: "PowerShell"
           env: SHELL_TYPE=powershell
@@ -46,11 +40,8 @@ matrix:
              - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1 
           install:
             - pyenv global system 3.6
-            - pip3.6 install flake8 pytest --user
             - pwsh install.ps1
           script:
-            - flake8
-            - pytest
             - pwsh -c 'exit'
         - name: "Zsh"
           env: SHELL_TYPE=zsh
@@ -61,11 +52,8 @@ matrix:
              - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1 
           install:
             - pyenv global system 3.6
-            - pip3.6 install flake8 pytest --user
             - /bin/bash install.sh
           script:
-            - flake8
-            - pytest
             - zsh -c 'exit'
         - name: "Xonsh"
           env: SHELL_TYPE=xonsh
@@ -76,10 +64,7 @@ matrix:
             - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
           install: 
             - pyenv global system 3.6
-            - pip3.6 install flake8 pytest xonsh --user
             - /bin/bash install.sh
           script:
-            - flake8
-            - pytest
             - xonsh -c 'exit'
 
