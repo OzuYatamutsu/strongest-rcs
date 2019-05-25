@@ -2,13 +2,19 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/src-d/go-git.v4"
 	"os"
 	"os/exec"
 	"os/user"
+	"runtime"
 	"strconv"
 	"strings"
+
+	"gopkg.in/src-d/go-git.v4"
 )
+
+func isWindows() bool {
+	return runtime.GOOS == "windows"
+}
 
 func getUsername() string {
 	currentUser, _ := user.Current()
@@ -50,14 +56,21 @@ func gitStatus() string {
 		deltaString += "<GREEN><SYM:DOWN><RESET>" + strconv.FormatInt(int64(numUnpulled), 10)
 	}
 
-	if !status.IsClean() {
+	if !status.IsClean() || isWindows() {
 		numAdded, numChanged, numUntracked := 0, 0, 0
+		statusString := ""
+		if !isWindows() {
+			statusString = status.String()
+		} else {
+			rawStatus, _ := exec.Command("git", "status", "--porcelain").Output()
+			statusString = string(rawStatus)
+		}
 
-		for _, line := range strings.Split(strings.TrimSuffix(status.String(), "\n"), "\n") {
+		for _, line := range strings.Split(strings.TrimSuffix(statusString, "\n"), "\n") {
 			if strings.HasPrefix(line, "?") {
 				numUntracked += 1
 			}
-			if !strings.HasPrefix(line, " "){
+			if !strings.HasPrefix(line, " ") && len(line) > 2 {
 				numAdded += 1
 			}
 			if strings.HasPrefix(line, "MM") || strings.HasPrefix(line, " M") {
@@ -85,11 +98,11 @@ func gitStatus() string {
 
 func prompt() {
 	fmt.Printf("%s%s%s %s%s> \n",
-		"<BLUE>" + getUsername(),
+		"<BLUE>"+getUsername(),
 		"@",
 		getHostname(),
-		"<GREEN>" + getCwd(),
-		"<RESET>" + gitStatus(),
+		"<GREEN>"+getCwd(),
+		"<RESET>"+gitStatus(),
 	)
 }
 
