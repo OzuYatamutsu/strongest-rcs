@@ -46,7 +46,7 @@ func printHeader(versionString string) {
 	fmt.Print(color.BlueString(getUsername()) + "!\n")
 
 	fmt.Print("It's currently " + color.GreenString(time.Now().Format(
-		"Monday, January 2, 2006 at 15:04:05 AM MST"),
+		"Monday, January 2, 2006 at 03:04:05 PM MST"),
 	) + ".\n")
 
 	fmt.Print("You're running " + color.BlueString(versionString) + ".\n")
