@@ -37,7 +37,7 @@ end
 
 ## WELCOME HEADER
 function welcome_header
-  $CATESHELL_HOME/cateshell_welcome_screen
+  $CATESHELL_HOME/cateshell_welcome_screen (version_string)
 end
 
 ### FISH-SPECIFIC IMPLEMENTATION

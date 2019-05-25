@@ -37,7 +37,7 @@ func getHostname() string {
 	return strings.Split(hostname, ".")[0]
 }
 
-func printHeader() {
+func printHeader(versionString string) {
 	fmt.Print(CatHeader)
 	fmt.Println()
 
@@ -45,9 +45,11 @@ func printHeader() {
 	fmt.Print(" on " + color.MagentaString(getHostname()) + ", ")
 	fmt.Print(color.BlueString(getUsername()) + "!\n")
 
-	fmt.Print("It's currently " + color.GreenString(time.Now().String()) + ".\n")
+	fmt.Print("It's currently " + color.GreenString(time.Now().Format(
+		"Monday, January 2, 2006 at 15:04:05 AM MST"),
+	) + ".\n")
 
-	fmt.Print("You're running " + color.BlueString("... TODO OS") + ".\n")
+	fmt.Print("You're running " + color.BlueString(versionString) + ".\n")
 }
 
 func printHealthChecks() {
@@ -58,7 +60,7 @@ func printHealthChecks() {
 }
 
 func main() {
-	printHeader()
+	printHeader(os.Args[1])
 	fmt.Println("")
 	printHealthChecks()
 	plugins.RunPlugins()

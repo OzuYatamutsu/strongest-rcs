@@ -57,7 +57,6 @@ def welcome_header():
         return
 
     "$CATESHELL_HOME/cateshell_welcome_screen" "$CATESHELL_HOME" @(version_string())
-    cateshell_db('FISHRC_NEXT_HEADER_UTIME', get_utime_ms() + 500)
 
 ### XONSH-SPECIFIC IMPLEMENTATION
 welcome_header()

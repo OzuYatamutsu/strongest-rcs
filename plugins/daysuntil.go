@@ -14,5 +14,5 @@ func PluginDaysUntil() {
 
 	fmt.Print(color.BlueString(" i ") + "There are ")
 	fmt.Print(color.BlueString(strconv.FormatInt(int64(daysUntil.Hours() / 24), 10)))
-	fmt.Print(" days until " + targetDate.String() + ".")
+	fmt.Print(" days until " + color.BlueString(targetDate.Format("January 2, 2006")) + ".")
 }
