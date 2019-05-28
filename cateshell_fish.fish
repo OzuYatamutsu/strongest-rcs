@@ -37,7 +37,19 @@ end
 
 ## WELCOME HEADER
 function welcome_header
+  if not test -e ~/.NEXT_HEADER_UTIME
+    echo '0' > ~/.NEXT_HEADER_UTIME
+  end
+
+  set NEXT_HEADER_UTIME (cat ~/.NEXT_HEADER_UTIME)
+
+  if [ (get_utime_ms) -lt $NEXT_HEADER_UTIME ]
+    # Don't print header again
+    return 
+  end
+  
   eval $CATESHELL_HOME/cateshell_welcome_screen "(eval version_string)"
+  echo (math (get_utime_ms) + 500) > ~/.NEXT_HEADER_UTIME
 end
 
 ### FISH-SPECIFIC IMPLEMENTATION

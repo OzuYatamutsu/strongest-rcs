@@ -11,7 +11,7 @@ import (
 const LookupHost = "www.icann.org"
 
 func DnsIsOk() bool {
-	timeoutCtx, cancel := context.WithTimeout(context.TODO(), time.Millisecond*1000) // ms
+	timeoutCtx, cancel := context.WithTimeout(context.TODO(), time.Millisecond*1500) // ms
 	defer cancel()
 	var r net.Resolver
 	_, err := r.LookupIPAddr(timeoutCtx, LookupHost)
