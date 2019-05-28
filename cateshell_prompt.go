@@ -37,7 +37,7 @@ func gitStatus() string {
     rawBranch, _ := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD").Output()
 	rawUnpushed, _ := exec.Command("git", "log", "--pretty=oneline", "@{u}..").Output()
 	rawUnpulled, _ := exec.Command("git", "log", "--pretty=oneline", "..@{u}").Output()
-    status := string(rawStatus)
+    status := strings.TrimSpace(string(rawStatus))
     branch := strings.TrimSpace(string(rawBranch))
     numUnpushed := len(strings.Split(string(rawUnpushed), "\n")) - 1
     numUnpulled := len(strings.Split(string(rawUnpulled), "\n")) - 1
@@ -61,7 +61,7 @@ func gitStatus() string {
 			if strings.HasPrefix(line, "?") {
 				numUntracked += 1
 			}
-			if !strings.HasPrefix(line, " ") && len(line) > 2 {
+			if !strings.HasPrefix(line, " ") && !strings.HasPrefix(line, "?") && len(line) > 2 {
 				numAdded += 1
 			}
 			if strings.HasPrefix(line, "MM") || strings.HasPrefix(line, " M") {
