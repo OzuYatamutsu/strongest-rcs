@@ -8,8 +8,6 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
-
-	"gopkg.in/src-d/go-git.v4"
 )
 
 func isWindows() bool {
@@ -33,40 +31,37 @@ func getCwd() string {
 }
 
 func gitStatus() string {
-	cwd, _ := os.Getwd()
-	repo, err := git.PlainOpen(cwd)
+	// cwd, _ := os.Getwd()
+	/*repo, err := git.PlainOpen(cwd)
 	if err != nil {
 		return ""
 	}
 	ref, _ := repo.Head()
 	worktree, _ := repo.Worktree()
 	status, _ := worktree.Status()
-
+    */
 	// Call out to shell for num unpushed/unpulled commits
+    rawStatus, _ := exec.Command("git", "log", "--porcelain").Output()
+    rawBranch, _ := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD").Output()
 	rawUnpushed, _ := exec.Command("git", "log", "--pretty=oneline", "@{u}..").Output()
 	rawUnpulled, _ := exec.Command("git", "log", "--pretty=oneline", "..@{u}").Output()
-	numUnpushed := len(strings.Split(string(rawUnpushed), "\n")) - 1
-	numUnpulled := len(strings.Split(string(rawUnpulled), "\n")) - 1
-	deltaString := ""
+    status := string(rawStatus)
+    branch := strings.TrimSpace(string(rawBranch))
+    numUnpushed := len(strings.Split(string(rawUnpushed), "\n")) - 1
+    numUnpulled := len(strings.Split(string(rawUnpulled), "\n")) - 1
+    deltaString := ""
 
-	if numUnpushed > 0 {
-		deltaString += "<GREEN><SYM:UP><RESET>" + strconv.FormatInt(int64(numUnpushed), 10)
-	}
-	if numUnpulled > 0 {
-		deltaString += "<GREEN><SYM:DOWN><RESET>" + strconv.FormatInt(int64(numUnpulled), 10)
-	}
+    if numUnpushed > 0 {
+        deltaString += "<GREEN><SYM:UP><RESET>" + strconv.FormatInt(int64(numUnpushed), 10)
+    }
+    if numUnpulled > 0 {
+        deltaString += "<GREEN><SYM:DOWN><RESET>" + strconv.FormatInt(int64(numUnpulled), 10)
+    }
 
-	if !status.IsClean() || isWindows() {
-		numAdded, numChanged, numUntracked := 0, 0, 0
-		statusString := ""
-		if !isWindows() {
-			statusString = status.String()
-		} else {
-			rawStatus, _ := exec.Command("git", "status", "--porcelain").Output()
-			statusString = string(rawStatus)
-		}
+    if len(strings.TrimSpace(status)) != 0 {
+        numAdded, numChanged, numUntracked := 0, 0, 0
 
-		for _, line := range strings.Split(strings.TrimSuffix(statusString, "\n"), "\n") {
+		for _, line := range strings.Split(strings.TrimSuffix(status, "\n"), "\n") {
 			if strings.HasPrefix(line, "?") {
 				numUntracked += 1
 			}
@@ -88,12 +83,13 @@ func gitStatus() string {
 		}
 	}
 
+
 	if len(deltaString) > 0 {
-		return " (<BOLD:BLUE>" + ref.Name().Short() + "<RESET>" +
+		return " (<BOLD:BLUE>" + branch + "<RESET>" +
 			"|" + deltaString + ")"
 	}
 
-	return " (<BOLD:BLUE>" + ref.Name().Short() + "<RESET>)"
+	return " (<BOLD:BLUE>" + branch + "<RESET>)"
 }
 
 func prompt() {
