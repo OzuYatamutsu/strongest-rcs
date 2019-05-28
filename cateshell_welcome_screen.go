@@ -77,21 +77,21 @@ func printHealthChecks() {
 		fmt.Println(health.TimeOkColorizedOutput())
 	} else {
 		fmt.Println(
-			strings.ReplaceAll(
-				strings.ReplaceAll(health.NetCheckColorizedOutput(), "✓", "+"),
-				"✗", "x",
+			strings.Replace(
+				strings.Replace(health.NetCheckColorizedOutput(), "✓", "+", -1),
+				"✗", "x", -1,
 			),
 		)
 		fmt.Println(
-			strings.ReplaceAll(
-				strings.ReplaceAll(health.SpaceCheckColorizedOutput(), "✓", "+"),
-				"✗", "x",
+			strings.Replace(
+				strings.Replace(health.SpaceCheckColorizedOutput(), "✓", "+", -1),
+				"✗", "x", -1,
 			),
 		)
 		fmt.Println(
-			strings.ReplaceAll(
-				strings.ReplaceAll(health.TimeOkColorizedOutput(), "✓", "+"),
-				"✗", "x",
+			strings.Replace(
+				strings.Replace(health.TimeOkColorizedOutput(), "✓", "+", -1),
+				"✗", "x", -1,
 			),
 		)
 	}

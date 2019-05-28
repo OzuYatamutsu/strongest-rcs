@@ -31,7 +31,7 @@ func colorizeBash(rawString string) string {
 	rawString = boldRegex.ReplaceAllString(rawString, `<*BOLD><$1>$2<RESET>$3`)
 
 	for ir, asciiCode := range IRColorSymMapBash {
-		rawString = strings.ReplaceAll(rawString, ir, asciiCode)
+		rawString = strings.Replace(rawString, ir, asciiCode, -1)
 	}
 
 	// Auto revert back to normal colors
@@ -40,10 +40,11 @@ func colorizeBash(rawString string) string {
 
 func main() {
 	fmt.Println(
-		strings.ReplaceAll(
+		strings.Replace(
 			colorizeBash(strings.Join(os.Args[1:], " ")),
 			"\x1b",
 			"\\002\\x1b",
+            -1,
 		),
 	)
 }

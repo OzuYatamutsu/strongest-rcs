@@ -33,7 +33,7 @@ func colorizePowershell(rawString string) string {
 	rawString = boldRegex.ReplaceAllString(rawString, `<*BOLD><$1>$2<RESET>$3`)
 
 	for ir, asciiCode := range IRColorSymMapPowershell {
-		rawString = strings.ReplaceAll(rawString, ir, asciiCode)
+		rawString = strings.Replace(rawString, ir, asciiCode, -1)
 	}
 
 	// Auto revert back to normal colors
@@ -42,10 +42,11 @@ func colorizePowershell(rawString string) string {
 
 func main() {
 	fmt.Println(
-		strings.ReplaceAll(
+		strings.Replace(
 			colorizePowershell(strings.Join(os.Args[1:], " ")),
 			"\x1b",
 			"\\x1b",
+            -1,
 		),
 	)
 }
