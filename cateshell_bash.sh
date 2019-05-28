@@ -36,7 +36,7 @@ function prompt() {
 
 ## WELCOME HEADER
 function welcome_header() {
-  $CATESHELL_HOME/cateshell_welcome_screen $(version_string)
+  $CATESHELL_HOME/cateshell_welcome_screen "$(version_string)"
 }
 
 ### BASH-SPECIFIC IMPLEMENTATIONS

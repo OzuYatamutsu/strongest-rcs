@@ -31,17 +31,8 @@ func getCwd() string {
 }
 
 func gitStatus() string {
-	// cwd, _ := os.Getwd()
-	/*repo, err := git.PlainOpen(cwd)
-	if err != nil {
-		return ""
-	}
-	ref, _ := repo.Head()
-	worktree, _ := repo.Worktree()
-	status, _ := worktree.Status()
-    */
 	// Call out to shell for num unpushed/unpulled commits
-    rawStatus, _ := exec.Command("git", "log", "--porcelain").Output()
+    rawStatus, _ := exec.Command("git", "status", "--porcelain").Output()
     rawBranch, _ := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD").Output()
 	rawUnpushed, _ := exec.Command("git", "log", "--pretty=oneline", "@{u}..").Output()
 	rawUnpulled, _ := exec.Command("git", "log", "--pretty=oneline", "..@{u}").Output()
