@@ -9,7 +9,7 @@ import (
 )
 
 func PluginDaysUntil() {
-	targetDate := time.Date(2019, 7, 20, 0, 0, 0, 0, time.Local)
+	targetDate := time.Date(2019, 8, 31, 0, 0, 0, 0, time.Local)
 	currentDate := time.Now()
 	daysUntil := targetDate.Sub(currentDate)
 
