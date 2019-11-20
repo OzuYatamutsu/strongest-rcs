@@ -12,8 +12,7 @@ matrix:
             - sudo apt-get install -y fish python3.7 golang-go
             - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
           install:
-            - pyenv versions
-            - pyenv global system 3.7.5
+            - pyenv global system 3.7.1
             - /bin/bash install.sh
           script:
             - fish -c 'exit'
@@ -25,7 +24,7 @@ matrix:
              - sudo apt-get install -y python3.7 golang-go
              - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
           install:
-            - pyenv global system 3.7.5
+            - pyenv global system 3.7.1
             - /bin/bash install.sh
           script:
             - bash -c 'exit'
@@ -40,7 +39,7 @@ matrix:
              - sudo apt-get install -y python3.7 golang-go
              - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
           install:
-            - pyenv global system 3.7.5
+            - pyenv global system 3.7.1
             - pwsh install.ps1
           script:
             - pwsh -c 'exit'
@@ -52,7 +51,7 @@ matrix:
              - sudo apt-get install -y python3.7 zsh golang-go
              - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
           install:
-            - pyenv global system 3.7.5
+            - pyenv global system 3.7.1
             - /bin/bash install.sh
           script:
             - zsh -c 'exit'
@@ -64,7 +63,7 @@ matrix:
             - sudo apt-get install -y python3.7 golang-go
             - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
           install:
-            - pyenv global system 3.7.5
+            - pyenv global system 3.7.1
             - /bin/bash install.sh
           script:
             - xonsh -c 'exit'
