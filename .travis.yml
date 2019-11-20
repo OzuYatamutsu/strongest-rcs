@@ -12,6 +12,7 @@ matrix:
             - sudo apt-get install -y fish python3.7 golang-go
             - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
           install:
+            - pyenv versions
             - pyenv global system 3.7.5
             - /bin/bash install.sh
           script:
