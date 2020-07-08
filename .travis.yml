@@ -32,9 +32,9 @@ jobs:
         - name: "PowerShell"
           env: SHELL_TYPE=powershell
           before_install:
-             - sudo apt-get install -y liblttng-ust0 libicu52
-             - wget https://github.com/PowerShell/PowerShell/releases/download/v6.1.0/powershell_6.1.0-1.ubuntu.14.04_amd64.deb
-             - sudo dpkg -i powershell_6.1.0-1.ubuntu.14.04_amd64.deb || true
+             - sudo apt-get update
+             - wget https://github.com/PowerShell/PowerShell/releases/download/v7.0.2/powershell-lts_7.0.2-1.ubuntu.16.04_amd64.deb
+             - sudo dpkg -i powershell-lts_7.0.2-1.ubuntu.16.04_amd64.deb || true
              - sudo apt-get install -f
              - sudo add-apt-repository -y ppa:deadsnakes/ppa
              - sudo apt-get update
