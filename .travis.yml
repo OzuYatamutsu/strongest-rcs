@@ -1,7 +1,8 @@
-sudo: enabled
-language: python3
+os: linux
+dist: xenial
+language: python
 python: "3.7"
-matrix:
+jobs:
     include:
         - name: "Fish"
           env: SHELL_TYPE=fish
@@ -31,6 +32,7 @@ matrix:
         - name: "PowerShell"
           env: SHELL_TYPE=powershell
           before_install:
+             - sudo apt-get install -y liblttng-ust0 libicu52
              - wget https://github.com/PowerShell/PowerShell/releases/download/v6.1.0/powershell_6.1.0-1.ubuntu.14.04_amd64.deb
              - sudo dpkg -i powershell_6.1.0-1.ubuntu.14.04_amd64.deb || true
              - sudo apt-get install -f
@@ -64,6 +66,7 @@ matrix:
             - sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
           install:
             - pyenv global system 3.7.1
+            - pip install xonsh
             - /bin/bash install.sh
           script:
             - xonsh -c 'exit'
