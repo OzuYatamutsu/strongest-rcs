@@ -1,34 +1,67 @@
 package health
 
 import (
-	"context"
-	"net"
-	"time"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
 
 	"github.com/fatih/color"
 )
 
 const LookupHost = "www.icann.org"
 
-func DnsIsOk() bool {
-	timeoutCtx, cancel := context.WithTimeout(context.TODO(), time.Millisecond*1500) // ms
-	defer cancel()
-	var r net.Resolver
-	_, err := r.LookupIPAddr(timeoutCtx, LookupHost)
+func GetPublicIp() string {
+	response, err := http.Get("http://ifconfig.me")
 	if err != nil {
-		// Lookup failed
-		return false
+		// We probably don't have internet connection
+		return ""
 	}
 
-	return true
+	ipAddress, err := ioutil.ReadAll(response.Body)
+	response.Body.Close()
+
+	if err != nil {
+		// We probably don't have internet connection
+		return ""
+	}
+
+	return fmt.Sprintf("%s", ipAddress)
+}
+
+func GetGeoIpSummary(ipAddress string) string {
+	var geoIpSummary map[string]interface{}
+	response, err := http.Get(fmt.Sprintf("https://ipinfo.io/%s", ipAddress))
+	if err != nil {
+		// We probably don't have internet connection
+		return ""
+	}
+
+	apiResponse, err := ioutil.ReadAll(response.Body)
+	response.Body.Close()
+
+	if err != nil {
+		// We probably don't have internet connection
+		return ""
+	}
+
+	json.Unmarshal(apiResponse, &geoIpSummary)
+	return fmt.Sprintf("%s, %s, %s", geoIpSummary["city"], geoIpSummary["region"], geoIpSummary["country"])
 }
 
 func NetCheckColorizedOutput() string {
-	if DnsIsOk() {
-		return color.GreenString(" ✓ ") +
-			"Your internet connection looks " + color.GreenString("OK") + ", dood!"
-	} else {
+	ipAddress := GetPublicIp()
+	if ipAddress == "" {
 		return color.RedString(" ✗ ") +
 			"Your internet connection looks " + color.RedString("degraded") + ", dood."
 	}
+
+	geoIpSummary := GetGeoIpSummary(ipAddress)
+	if geoIpSummary == "" {
+		return color.RedString(" ✗ ") +
+			"Your internet connection looks " + color.RedString("degraded") + ", dood."
+	}
+
+	return color.GreenString(" ✓ ") +
+		"Your public IP is " + color.GreenString(ipAddress) + " (" + color.GreenString(geoIpSummary) + ")"
 }
