@@ -2,8 +2,8 @@ package health
 
 import (
 	"github.com/fatih/color"
+	"github.com/shirou/gopsutil/v3/disk"
 	"strconv"
-	"github.com/shirou/gopsutil/disk"
 )
 
 const SpaceCheckThresholdPercent = 80
@@ -18,12 +18,12 @@ func SpaceCheckColorizedOutput() string {
 	if isOk {
 		return color.GreenString(" ✓ ") +
 			"You have " + color.GreenString("plenty of space") + " on / (" +
-			color.GreenString(strconv.FormatInt(int64(freeSpacePercent), 10) + "%") +
+			color.GreenString(strconv.FormatInt(int64(freeSpacePercent), 10)+"%") +
 			" full)!"
 	} else {
 		return color.RedString(" ✗ ") +
 			"You're " + color.RedString("runnin' out of space") + " on / (" +
-			color.RedString(strconv.FormatInt(int64(freeSpacePercent), 10) + "%") +
+			color.RedString(strconv.FormatInt(int64(freeSpacePercent), 10)+"%") +
 			" full)!"
 	}
 }

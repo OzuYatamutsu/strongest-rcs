@@ -7,6 +7,7 @@ catelab_metadata.sqlite3
 .vscode/
 .idea/
 *.iml
+go.sum
 
 # Binaries
 cateshell_prompt

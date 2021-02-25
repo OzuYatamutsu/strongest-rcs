@@ -5,14 +5,18 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	"github.com/fatih/color"
 )
 
 const LookupHost = "www.icann.org"
+const client = http.Client{
+	Timeout: 2.5 * time.Second,
+}
 
 func GetPublicIp() string {
-	response, err := http.Get("http://ifconfig.me")
+	response, err := client.Get("http://ifconfig.me")
 	if err != nil {
 		// We probably don't have internet connection
 		return ""
@@ -31,7 +35,7 @@ func GetPublicIp() string {
 
 func GetGeoIpSummary(ipAddress string) string {
 	var geoIpSummary map[string]interface{}
-	response, err := http.Get(fmt.Sprintf("https://ipinfo.io/%s", ipAddress))
+	response, err := client.Get(fmt.Sprintf("https://ipinfo.io/%s", ipAddress))
 	if err != nil {
 		// We probably don't have internet connection
 		return ""
