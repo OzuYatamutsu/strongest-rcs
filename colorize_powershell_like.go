@@ -46,7 +46,7 @@ func main() {
 			colorizePowershell(strings.Join(os.Args[1:], " ")),
 			"\x1b",
 			"\\x1b",
-            -1,
+			-1,
 		),
 	)
 }

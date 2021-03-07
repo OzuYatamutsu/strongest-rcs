@@ -2,7 +2,7 @@ package health
 
 import (
 	"github.com/fatih/color"
-	"github.com/shirou/gopsutil/v3/disk"
+	"github.com/shirou/gopsutil/disk"
 	"strconv"
 )
 

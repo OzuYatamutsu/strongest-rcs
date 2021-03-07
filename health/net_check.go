@@ -11,8 +11,8 @@ import (
 )
 
 const LookupHost = "www.icann.org"
-const client = http.Client{
-	Timeout: 2.5 * time.Second,
+var client = http.Client{
+	Timeout: 2 * time.Second,
 }
 
 func GetPublicIp() string {

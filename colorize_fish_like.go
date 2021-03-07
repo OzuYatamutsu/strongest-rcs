@@ -7,21 +7,21 @@ import (
 	"strings"
 )
 
-var IRColorSymMapFish = map[string]string {
-	"<*BOLD>": "\u001b[1m",
-	"<PURPLE>": "\u001b[34m",
-	"<GREEN>": "\u001b[32m",
-	"<WHITE>": "\u001b[37m",
-	"<CYAN>": "\u001b[36m",
-	"<RED>": "\u001b[31m",
-	"<YELLOW>": "\u001b[33m",
-	"<BLUE>": "\u001b[34m",
-	"<MAGENTA>": "\u001b[35m",
-	"<RESET>": "\u001b[0m",
-	"<SYM:UP>": "↑",
-	"<SYM:DOWN>": "↓",
-	"<SYM:ADD>": "+",
-	"<SYM:CHG>": "Δ",
+var IRColorSymMapFish = map[string]string{
+	"<*BOLD>":         "\u001b[1m",
+	"<PURPLE>":        "\u001b[34m",
+	"<GREEN>":         "\u001b[32m",
+	"<WHITE>":         "\u001b[37m",
+	"<CYAN>":          "\u001b[36m",
+	"<RED>":           "\u001b[31m",
+	"<YELLOW>":        "\u001b[33m",
+	"<BLUE>":          "\u001b[34m",
+	"<MAGENTA>":       "\u001b[35m",
+	"<RESET>":         "\u001b[0m",
+	"<SYM:UP>":        "↑",
+	"<SYM:DOWN>":      "↓",
+	"<SYM:ADD>":       "+",
+	"<SYM:CHG>":       "Δ",
 	"<SYM:UNTRACKED>": "…",
 }
 
@@ -44,7 +44,7 @@ func main() {
 			colorizeFish(strings.Join(os.Args[1:], " ")),
 			"\x1b",
 			"\\x1b",
-            -1,
+			-1,
 		),
 	)
 }

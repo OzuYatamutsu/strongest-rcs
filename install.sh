@@ -61,13 +61,12 @@ cp -fv vimrc ~/.vimrc
 mkdir "$CATESHELL_HOME" || true
 go get gopkg.in/src-d/go-git.v4
 go get github.com/shirou/gopsutil/disk
-go get github.com/shirou/gopsutil/v3/disk
 go get github.com/fatih/color
-go build -o $CATESHELL_HOME/cateshell_welcome_screen cateshell_welcome_screen.go
-go build -o $CATESHELL_HOME/colorize_fish_like colorize_fish_like.go
-go build -o $CATESHELL_HOME/colorize_bash_like colorize_bash_like.go
-go build -o $CATESHELL_HOME/colorize_powershell_like colorize_powershell_like.go
-go build -o $CATESHELL_HOME/cateshell_prompt cateshell_prompt.go
+GO111MODULE=auto go build -o $CATESHELL_HOME/cateshell_welcome_screen cateshell_welcome_screen.go
+GO111MODULE=auto go build -o $CATESHELL_HOME/colorize_fish_like colorize_fish_like.go
+GO111MODULE=auto go build -o $CATESHELL_HOME/colorize_bash_like colorize_bash_like.go
+GO111MODULE=auto go build -o $CATESHELL_HOME/colorize_powershell_like colorize_powershell_like.go
+GO111MODULE=auto go build -o $CATESHELL_HOME/cateshell_prompt cateshell_prompt.go
 
 # Install CATESHELL shell configs
 sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_fish.fish \
