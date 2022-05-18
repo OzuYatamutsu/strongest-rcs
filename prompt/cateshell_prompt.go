@@ -5,14 +5,9 @@ import (
 	"os"
 	"os/exec"
 	"os/user"
-	"runtime"
 	"strconv"
 	"strings"
 )
-
-func isWindows() bool {
-	return runtime.GOOS == "windows"
-}
 
 func getUsername() string {
 	currentUser, _ := user.Current()

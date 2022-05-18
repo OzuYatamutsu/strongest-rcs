@@ -1,4 +1,4 @@
-package main
+package bash
 
 import (
 	"fmt"

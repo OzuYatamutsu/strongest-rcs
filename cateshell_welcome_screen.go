@@ -3,13 +3,11 @@ package main
 import (
 	"fmt"
 	"os"
-	"os/user"
-	"runtime"
 	"strings"
 	"time"
 
-	"./health"
-	"./plugins"
+	"github.com/OzuYatamutsu/strongest-rcs/health"
+	"github.com/OzuYatamutsu/strongest-rcs/plugins"
 	"github.com/fatih/color"
 )
 
@@ -27,20 +25,6 @@ const CatHeader = `` +
 	"  .'._.--. `.   `~:~~~~~~:'" + "\n" +
 	"  `-'     `. `.  :        :" + "\n" +
 	`           :__: :________  :___` + "\n"
-
-func getUsername() string {
-	currentUser, _ := user.Current()
-	return currentUser.Username
-}
-
-func getHostname() string {
-	hostname, _ := os.Hostname()
-	return strings.Split(hostname, ".")[0]
-}
-
-func isWindows() bool {
-	return runtime.GOOS == "windows"
-}
 
 func printHeader(versionString string) {
 	fmt.Print(CatHeader)

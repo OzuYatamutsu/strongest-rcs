@@ -76,32 +76,32 @@ If (!(Test-Path "$env:CATESHELL_HOME")) {
 go get gopkg.in/src-d/go-git.v4
 go get github.com/shirou/gopsutil/disk
 go get github.com/fatih/color
-go build -o "$env:CATESHELL_HOME/cateshell_welcome_screen.exe" cateshell_welcome_screen.go
-go build -o "$env:CATESHELL_HOME/colorize_fish_like.exe" colorize_fish_like.go
-go build -o "$env:CATESHELL_HOME/colorize_bash_like.exe" colorize_bash_like.go
-go build -o "$env:CATESHELL_HOME/colorize_powershell_like.exe" colorize_powershell_like.go
-go build -o "$env:CATESHELL_HOME/cateshell_prompt.exe" cateshell_prompt.go
+go build -o "$env:CATESHELL_HOME/cateshell_welcome_screen.exe" .
+go build -o "$env:CATESHELL_HOME/colorize_fish_like.exe" fish/colorize_fish_like.go
+go build -o "$env:CATESHELL_HOME/colorize_bash_like.exe" bash/colorize_bash_like.go
+go build -o "$env:CATESHELL_HOME/colorize_powershell_like.exe" powershell/colorize_powershell_like.go
+go build -o "$env:CATESHELL_HOME/cateshell_prompt.exe" prompt/cateshell_prompt.go
 
 # Install CATESHELL bash config
-(Get-Content cateshell_bash.sh).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `
+(Get-Content bash/cateshell_bash.sh).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `
   | Set-Content cateshell_bash.sh.temp
 Move-Item -Force -Verbose cateshell_bash.sh.temp `
   "$env:CATESHELL_HOME/cateshell_bash.sh"
 
 # Install CATESHELL fish config
-(Get-Content cateshell_fish.fish).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `
+(Get-Content fish/cateshell_fish.fish).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `
   | Set-Content cateshell_fish.fish.temp
 Move-Item -Force -Verbose cateshell_fish.fish.temp `
   "$env:CATESHELL_HOME/cateshell_fish.fish"
 
 # Install CATESHELL zsh config
-(Get-Content cateshell_zsh.sh).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `
+(Get-Content zsh/cateshell_zsh.sh).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `
   | Set-Content cateshell_zsh.sh.temp
 Move-Item -Force -Verbose cateshell_zsh.sh.temp `
   "$env:CATESHELL_HOME/cateshell_zsh.sh"
 
 # Install CATESHELL powershell config
-(Get-Content cateshell_powershell.ps1).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `
+(Get-Content powershell/cateshell_powershell.ps1).Replace("_CATESHELL_HOME", $env:CATESHELL_HOME) `
   | Set-Content cateshell_powershell.ps1.temp
 Move-Item -Force -Verbose cateshell_powershell.ps1.temp `
   "$env:CATESHELL_HOME/cateshell_powershell.ps1"

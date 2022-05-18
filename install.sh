@@ -62,23 +62,23 @@ mkdir "$CATESHELL_HOME" || true
 go get gopkg.in/src-d/go-git.v4
 go get github.com/shirou/gopsutil/disk
 go get github.com/fatih/color
-GO111MODULE=auto go build -o $CATESHELL_HOME/cateshell_welcome_screen cateshell_welcome_screen.go
-GO111MODULE=auto go build -o $CATESHELL_HOME/colorize_fish_like colorize_fish_like.go
-GO111MODULE=auto go build -o $CATESHELL_HOME/colorize_bash_like colorize_bash_like.go
-GO111MODULE=auto go build -o $CATESHELL_HOME/colorize_powershell_like colorize_powershell_like.go
-GO111MODULE=auto go build -o $CATESHELL_HOME/cateshell_prompt cateshell_prompt.go
+GO111MODULE=auto go build -o $CATESHELL_HOME/cateshell_welcome_screen .
+GO111MODULE=auto go build -o $CATESHELL_HOME/colorize_fish_like fish/colorize_fish_like.go
+GO111MODULE=auto go build -o $CATESHELL_HOME/colorize_bash_like bash/colorize_bash_like.go
+GO111MODULE=auto go build -o $CATESHELL_HOME/colorize_powershell_like powershell/colorize_powershell_like.go
+GO111MODULE=auto go build -o $CATESHELL_HOME/cateshell_prompt prompt/cateshell_prompt.go
 
 # Install CATESHELL shell configs
-sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_fish.fish \
+sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" fish/cateshell_fish.fish \
   > cateshell_fish.fish.temp
 mv -fv cateshell_fish.fish.temp "$CATESHELL_HOME/cateshell_fish.fish"
-sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_bash.sh \
+sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" bash/cateshell_bash.sh \
   > cateshell_bash.sh.temp
 mv -fv cateshell_bash.sh.temp "$CATESHELL_HOME/cateshell_bash.sh"
-sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_zsh.sh \
+sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" zsh/cateshell_zsh.sh \
   > cateshell_zsh.sh.temp
 mv -fv cateshell_zsh.sh.temp "$CATESHELL_HOME/cateshell_zsh.sh"
-sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" cateshell_xonsh.py \
+sed "s|_CATESHELL_HOME|$CATESHELL_HOME|g" xonsh/cateshell_xonsh.py \
   > cateshell_xonsh.py.temp
 mv -fv cateshell_xonsh.py.temp "$CATESHELL_HOME/cateshell_xonsh.py"
 
