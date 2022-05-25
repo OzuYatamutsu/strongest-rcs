@@ -1,0 +1,72 @@
+name: strongest-rcs CI
+on: [push]
+jobs:
+  build_fish:
+    runs-on: ubuntu-latest
+    env:
+      SHELL_TYPE: "fish"
+    steps:
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y fish python3 golang-go
+      - name: "Checkout cateshell"
+        uses: actions/checkout@v2
+      - name: "Install cateshell"
+        run: /bin/bash install.sh
+      - name: "Functional test"
+        run: fish -c 'exit'
+  build_bash:
+    runs-on: ubuntu-latest
+    env:
+      SHELL_TYPE: "bash"
+    steps:
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y python3 golang-go
+      - name: "Checkout cateshell"
+        uses: actions/checkout@v2
+      - name: "Install cateshell"
+        run: /bin/bash install.sh
+      - name: "Functional test"
+        run: bash -c 'source ~/.bashrc; exit'
+  build_powershell:
+    runs-on: ubuntu-latest
+    env:
+      SHELL_TYPE: "powershell"
+      USERPROFILE: "/var/tmp"
+      HOME: "/var/tmp"
+      IS_CI_BUILD: 1
+    steps:
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y python3 golang-go powershell
+      - name: "Checkout cateshell"
+        uses: actions/checkout@v2
+      - name: "Install cateshell"
+        run: pwsh install.ps1
+      - name: "Functional test"
+        run: pwsh -c 'exit'
+  build_zsh:
+    runs-on: ubuntu-latest
+    env:
+      SHELL_TYPE: "zsh"
+    steps:
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y python3 golang-go zsh
+      - name: "Checkout cateshell"
+        uses: actions/checkout@v2
+      - name: "Install cateshell"
+        run: /bin/bash install.sh
+      - name: "Functional test"
+        run: zsh -c 'source ~/.zshrc; exit'
+  build_xonsh:
+    runs-on: ubuntu-latest
+    env:
+      SHELL_TYPE: "xonsh"
+    steps:
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y python3 golang-go
+      - name: "Checkout cateshell"
+        uses: actions/checkout@v2
+      - run: pip install pygments==2.12.0 xonsh
+      - name: "Install cateshell"
+        run: /bin/bash install.sh
+      - name: "Functional test"
+        run: xonsh -c 'source ~/.xonshrc; exit'
