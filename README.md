@@ -1,4 +1,4 @@
-# ＣＡＴＥＳＨＥＬＬ [![Build Status](https://travis-ci.org/OzuYatamutsu/strongest-rcs.svg?branch=master)](https://travis-ci.org/OzuYatamutsu/strongest-rcs)
+# ＣＡＴＥＳＨＥＬＬ [![strongest-rcs CI](https://github.com/OzuYatamutsu/strongest-rcs/actions/workflows/ci-actions.yml/badge.svg)](https://github.com/OzuYatamutsu/strongest-rcs/actions/workflows/ci-actions.yml)
 The strongest shell-agnostic profile, myan!
 
 ![](image.png)
