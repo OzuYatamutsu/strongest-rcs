@@ -88,6 +88,7 @@ mkdir "$CATESHELL_HOME/scripts" || true
 cp -Rfv scripts/* "$CATESHELL_HOME/scripts/"
 
 # Point bash to bash CATESHELL config
+touch ~/.bashrc
 grep -q -F "source ${CATESHELL_HOME}/cateshell_bash.sh" ~/.bashrc \
   || echo "source ${CATESHELL_HOME}/cateshell_bash.sh" >> ~/.bashrc
 
@@ -98,10 +99,12 @@ grep -q -F "source ${CATESHELL_HOME}/cateshell_fish.fish" "$HOME/.config/fish/co
   || echo "source ${CATESHELL_HOME}/cateshell_fish.fish" >> "$HOME/.config/fish/config.fish"
 
 # Point zsh to zsh CATESHELL config
+touch ~/.zshrc
 grep -q -F "source ${CATESHELL_HOME}/cateshell_zsh.sh" ~/.zshrc \
   || echo "source ${CATESHELL_HOME}/cateshell_zsh.sh" >> ~/.zshrc
 
 # Point xonsh to xonsh CATESHELL config
+touch ~/.xonshrc
 grep -q -F "source ${CATESHELL_HOME}/cateshell_xonsh.py" ~/.xonshrc \
   || echo "source ${CATESHELL_HOME}/cateshell_xonsh.py" >> ~/.xonshrc
 # Done.

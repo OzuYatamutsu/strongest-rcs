@@ -51,11 +51,6 @@ def prompt():
 
 ## WELCOME HEADER
 def welcome_header():
-    $NEXT_HEADER_UTIME = cateshell_db('FISHRC_NEXT_HEADER_UTIME')
-    $NEXT_HEADER_UTIME = 0 if not $NEXT_HEADER_UTIME else int($NEXT_HEADER_UTIME)
-    if get_utime_ms() < $NEXT_HEADER_UTIME:
-        return
-
     "$CATESHELL_HOME/cateshell_welcome_screen" "$CATESHELL_HOME" @(version_string())
 
 ### XONSH-SPECIFIC IMPLEMENTATION

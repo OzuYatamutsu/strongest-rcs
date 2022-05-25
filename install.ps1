@@ -117,11 +117,16 @@ Copy-Item -Recurse -Force -Verbose scripts/*.py `
   "$env:CATESHELL_HOME/scripts/"
 
 # Point powershell to powershell CATESHELL config
+If (!(Test-Path "$profile")) {
+  New-Item $profile -Force
+}
 If (!("$(Get-Content -Raw $profile)".Contains(". '$env:CATESHELL_HOME/cateshell_powershell.ps1'"))) {
   Write-Output ". '$env:CATESHELL_HOME/cateshell_powershell.ps1'" >> $profile
 }
 
 # Colorization support in native PowerShell terminal
-Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1
+If (!(Test-Path env:IS_CI_BUILD)) {
+  Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1
+}
 
 # Done.
