@@ -37,7 +37,8 @@ function prompt() {
 
 ## WELCOME HEADER
 function welcome_header() {
-  NEXT_HEADER_UTIME="$(cateshell_db BASHRC_NEXT_HEADER_UTIME)"
+  touch ~/.NEXT_HEADER_UTIME
+  NEXT_HEADER_UTIME="$(cat ~/.NEXT_HEADER_UTIME)"
   if [[ "$NEXT_HEADER_UTIME" == '' ]]; then
     NEXT_HEADER_UTIME='0'
   fi
@@ -47,7 +48,7 @@ function welcome_header() {
   fi
 
   "${CATESHELL_HOME}/cateshell_welcome_screen" "${CATESHELL_HOME}" "$(version_string)"
-  cateshell_db BASHRC_NEXT_HEADER_UTIME "$(get_utime_ms + 500)"
+  echo "$(get_utime_ms + 500)" > ~/.NEXT_HEADER_UTIME
 }
 
 ### ZSH-SPECIFIC IMPLEMENTATIONS

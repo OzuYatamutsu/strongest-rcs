@@ -26,7 +26,7 @@ jobs:
       - name: "Install cateshell"
         run: /bin/bash install.sh
       - name: "Functional test"
-        run: bash -c 'source ~/.bashrc; exit'
+        run: bash "$HOME/.config/cateshell/cateshell_bash.sh"; bash -c 'source ~/.bashrc; exit'
   build_powershell:
     runs-on: ubuntu-latest
     env:
