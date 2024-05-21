@@ -1,4 +1,4 @@
-package fish
+package main
 
 import (
 	"fmt"
