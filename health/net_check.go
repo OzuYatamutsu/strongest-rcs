@@ -11,12 +11,13 @@ import (
 )
 
 const LookupHost = "www.icann.org"
+
 var client = http.Client{
 	Timeout: 2 * time.Second,
 }
 
 func GetPublicIpWithGeoIpSummary() (string, string, string, string) {
-    var geoIpSummary map[string]interface{}
+	var geoIpSummary map[string]interface{}
 	response, err := client.Get(fmt.Sprintf("http://ipinfo.io/"))
 	if err != nil {
 		// We probably don't have internet connection
@@ -37,5 +38,5 @@ func NetCheckColorizedOutput() string {
 	}
 
 	return color.GreenString(" ✓ ") +
-		"Your public IP is " + color.GreenString(ip + " (" + fmt.Sprintf("%s, %s, %s", city, region, country) + ")")
+		"Your public IP is " + color.GreenString(ip+" ("+fmt.Sprintf("%s, %s, %s", city, region, country)+")")
 }
