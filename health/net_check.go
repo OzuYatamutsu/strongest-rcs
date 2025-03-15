@@ -16,7 +16,7 @@ var client = http.Client{
 }
 
 func GetPublicIp() string {
-	response, err := client.Get("http://ifconfig.me")
+	response, err := client.Get("https://ifconfig.me")
 	if err != nil {
 		// We probably don't have internet connection
 		return ""
