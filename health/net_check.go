@@ -15,57 +15,27 @@ var client = http.Client{
 	Timeout: 2 * time.Second,
 }
 
-func GetPublicIp() string {
-	response, err := client.Get("https://ifconfig.me")
+func GetPublicIpWithGeoIpSummary() (string, string, string, string) {
+    var geoIpSummary map[string]interface{}
+	response, err := client.Get(fmt.Sprintf("http://ipinfo.io/"))
 	if err != nil {
 		// We probably don't have internet connection
-		return ""
-	}
-
-	ipAddress, err := ioutil.ReadAll(response.Body)
-	response.Body.Close()
-
-	if err != nil {
-		// We probably don't have internet connection
-		return ""
-	}
-
-	return fmt.Sprintf("%s", ipAddress)
-}
-
-func GetGeoIpSummary(ipAddress string) string {
-	var geoIpSummary map[string]interface{}
-	response, err := client.Get(fmt.Sprintf("https://ipinfo.io/%s", ipAddress))
-	if err != nil {
-		// We probably don't have internet connection
-		return ""
+		return "", "", "", ""
 	}
 
 	apiResponse, err := ioutil.ReadAll(response.Body)
 	response.Body.Close()
-
-	if err != nil {
-		// We probably don't have internet connection
-		return ""
-	}
-
 	json.Unmarshal(apiResponse, &geoIpSummary)
-	return fmt.Sprintf("%s, %s, %s", geoIpSummary["city"], geoIpSummary["region"], geoIpSummary["country"])
+	return geoIpSummary["ip"].(string), geoIpSummary["city"].(string), geoIpSummary["region"].(string), geoIpSummary["country"].(string)
 }
 
 func NetCheckColorizedOutput() string {
-	ipAddress := GetPublicIp()
-	if ipAddress == "" {
-		return color.RedString(" ✗ ") +
-			"Your internet connection looks " + color.RedString("degraded") + ", dood."
-	}
-
-	geoIpSummary := GetGeoIpSummary(ipAddress)
-	if geoIpSummary == "" {
+	ip, city, region, country := GetPublicIpWithGeoIpSummary()
+	if ip == "" {
 		return color.RedString(" ✗ ") +
 			"Your internet connection looks " + color.RedString("degraded") + ", dood."
 	}
 
 	return color.GreenString(" ✓ ") +
-		"Your public IP is " + color.GreenString(ipAddress) + " (" + color.GreenString(geoIpSummary) + ")"
+		"Your public IP is " + color.GreenString(ip + " (" + fmt.Sprintf("%s, %s, %s", city, region, country) + ")")
 }
