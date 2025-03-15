@@ -88,5 +88,6 @@ func main() {
 	printHealthChecks()
 	plugins.RunPlugins()
 	fmt.Println("")
+	fmt.Println("")
 	fmt.Println("What will your " + color.MagentaString("first sequence of the day") + " be?")
 }
