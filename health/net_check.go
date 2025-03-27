@@ -19,13 +19,17 @@ var client = http.Client{
 func GetPublicIpWithGeoIpSummary() (string, string, string, string) {
 	var geoIpSummary map[string]interface{}
 	response, err := client.Get(fmt.Sprintf("http://ipinfo.io/"))
-	if err != nil {
+    if err != nil {
 		// We probably don't have internet connection
 		return "", "", "", ""
 	}
 
 	apiResponse, err := ioutil.ReadAll(response.Body)
 	response.Body.Close()
+    if err != nil {
+		// We probably don't have internet connection
+		return "", "", "", ""
+	}
 	json.Unmarshal(apiResponse, &geoIpSummary)
 	return geoIpSummary["ip"].(string), geoIpSummary["city"].(string), geoIpSummary["region"].(string), geoIpSummary["country"].(string)
 }
