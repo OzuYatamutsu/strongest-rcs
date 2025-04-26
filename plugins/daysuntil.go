@@ -11,7 +11,10 @@ import (
 func PluginDaysUntil() {
 	targetDate := time.Date(2025, 04, 28, 0, 0, 0, 0, time.Local)
 	currentDate := time.Now()
-	daysUntil := targetDate.Sub(currentDate)
+	daysUntil := targetDate.Sub(time.Date(
+        currentDate.Year(), currentDate.Month(), currentDate.Day(),
+        0, 0, 0, 0, currentDate.Location(),
+    ))
 
 	fmt.Print(color.GreenString(" i ") + "There are ")
 	fmt.Print(color.GreenString(strconv.FormatInt(int64(daysUntil.Hours()/24), 10)))
