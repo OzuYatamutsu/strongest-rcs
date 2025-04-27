@@ -45,9 +45,9 @@ function welcome_header
 
   if [ (get_utime_ms) -lt $NEXT_HEADER_UTIME ]
     # Don't print header again
-    return 
+    return
   end
-  
+
   eval $CATESHELL_HOME/cateshell_welcome_screen "(eval version_string)"
   echo (math (get_utime_ms) + 500) > ~/.NEXT_HEADER_UTIME
 end
