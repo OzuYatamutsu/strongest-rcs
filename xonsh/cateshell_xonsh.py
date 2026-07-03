@@ -1,6 +1,5 @@
 ### C A T E S H E L L
 ### (xonsh implementation)
-### ...by Sean Collins!
 
 ### CATELAB-SPECIFIC ENV VARIABLES
 $CATESHELL_HOME = "_CATESHELL_HOME"

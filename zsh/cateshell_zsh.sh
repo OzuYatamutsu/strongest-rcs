@@ -1,6 +1,5 @@
 ### C A T E S H E L L
 ### (zsh implementation)
-### ...by Sean Collins!
 
 ### NOTES
 # CATESHELL requires Python>=3.6 to work properly

@@ -1,6 +1,5 @@
 ### C A T E S H E L L
 ### (fish implementation)
-### ...by Sean Collins!
 
 ### NOTES
 # Don't use export, use set --export for backwards compatibility
