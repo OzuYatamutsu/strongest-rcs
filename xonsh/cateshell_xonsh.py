@@ -50,7 +50,8 @@ def prompt():
 
 ## WELCOME HEADER
 def welcome_header():
-    "$CATESHELL_HOME/cateshell_welcome_screen" "$CATESHELL_HOME" @(version_string())
+    version_string_output = version_string()
+    "$CATESHELL_HOME/cateshell_welcome_screen" "$CATESHELL_HOME" "$version_string"
 
 ### XONSH-SPECIFIC IMPLEMENTATION
 welcome_header()
