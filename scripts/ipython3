@@ -1,3 +1,0 @@
-#!/bin/bash
-python3 -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'
-
